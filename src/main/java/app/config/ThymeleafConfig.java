@@ -13,7 +13,7 @@ public class ThymeleafConfig
         // create resolver to find template files
         ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
 
-        // set folder where templates are located (resources/templates/)
+        // set folder where templates are locate (resources/templates/)
         templateResolver.setPrefix("templates/");
 
         // set file extension for templates
