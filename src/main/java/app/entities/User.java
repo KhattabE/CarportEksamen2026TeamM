@@ -1,55 +1,56 @@
 package app.entities;
+
 import java.time.LocalDateTime;
 
 public class User {
-    private int user_id;
-    private String first_name;
-    private String last_name;
+    private int userId;
+    private String firstName;
+    private String lastName;
     private String email;
-    private String password_hash;
+    private String passwordHash;
     private String phone;
     private String address;
-    private String postal_code;
+    private String postalCode;
     private String city;
     private String role;
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
-    public User(int user_id, String first_name, String last_name, String email, String password_hash, String phone, String address, String postal_code, String city, String role, LocalDateTime created_at){
-        this.user_id = user_id;
-        this.first_name = first_name;
-        this.last_name = last_name;
+    public User(int userId, String firstName, String lastName, String email, String passwordHash, String phone, String address, String postalCode, String city, String role, LocalDateTime createdAt) {
+        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
-        this.password_hash = password_hash;
+        this.passwordHash = passwordHash;
         this.phone = phone;
         this.address = address;
-        this.postal_code = postal_code;
+        this.postalCode = postalCode;
         this.city = city;
         this.role = role;
-        this.created_at = created_at;
+        this.createdAt = createdAt;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -60,12 +61,12 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword_hash() {
-        return password_hash;
+    public String getPasswordHash() {
+        return passwordHash;
     }
 
-    public void setPassword_hash(String password_hash) {
-        this.password_hash = password_hash;
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     public String getPhone() {
@@ -84,12 +85,12 @@ public class User {
         this.address = address;
     }
 
-    public String getPostal_code() {
-        return postal_code;
+    public String getPostalCode() {
+        return postalCode;
     }
 
-    public void setPostal_code(String postal_code) {
-        this.postal_code = postal_code;
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 
     public String getCity() {
@@ -108,11 +109,11 @@ public class User {
         this.role = role;
     }
 
-    public LocalDateTime getCreated_at() {
-        return created_at;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(LocalDateTime created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }
