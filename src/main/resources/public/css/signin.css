@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&display=swap');
+
+body{
+    margin: 0;
+    font-family: "Kdam Thmor Pro", sans-serif ;
+    background-color: #1f1f1f;
+    color: white;
+}
+
+
+.topbar {
+    background-color: #00752D;
+    display: flex;
+    justify-content: center;
+    gap: 120px;
+    padding: 0;
+    font-size: 11px;
+    height: 20px;
+    align-items: center;
+}
+
+.menubar {
+    background-color: #098B3B;
+    display: flex;
+    align-items: center;
+    padding: 0 50px 0 0;
+    height: 55px;
+}
+
+.logoBox {
+    background-color: #00752D;
+    width: 120px;
+    height: 75px;
+    margin-top: -20px;
+    margin-right: 5px;
+    padding-left: 8px;
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.logoBox h1 {
+    margin: 0;
+    font-size: 52px;
+    line-height: 50px;
+}
+
+.logoBox p {
+    margin: 8px 0 0 0;
+    font-size: 14px;
+    line-height: 14px;
+}
+
+.logoLink {
+    color: white;
+    text-decoration: none;
+}
+
+.menuLinks {
+    display: flex;
+    gap: 0;
+    align-items: center;
+}
+
+.menuLinks a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    border-right: 1px solid #00752D;
+    width: 190px;
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginBox {
+    margin-left: auto;
+}
+
+.loginBox a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.background {
+    background-image: url("../images/blurredbackground.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    height: calc(100vh - 75px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signinContainer {
+    width: 600px;
+    height: 800px;
+    background-color: #1c1c1c;
+    border: 1px solid #767676;
+    padding: 40px;
+    margin: 0;
+}
+
+.logoBoxLoginBox {
+    background-color: #00752D;
+
+    width: 240px;
+    height: 120px;
+
+    border: 2px solid #d9d9d9;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin: 0 auto 40px auto;
+}
+
+.loginLogoBox h1 {
+    font-size: 64px;
+    margin: 0;
+    line-height: 60px;
+}
+
+.loginLogoBox p {
+    font-size: 20px;
+    margin: 0;
+}
