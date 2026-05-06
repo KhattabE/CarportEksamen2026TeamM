@@ -1,11 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Signup</title>
 </head>
+
 <body>
 
+<div class="logo">
+    <h1>Fog</h1>
+    <h2>Custom Carport</h2>
+</div>
+
+<div class="topbar">
+
+    <p>Klik & collect*</p>
+    <p>30 dages returret</p>
+    <p>30-45 dages levering</p>
+    <p>Kontakt os</p>
+
+    <a href="https://www.johannesfog.dk/have-fritid/carporte/enkelt-carporte">
+        Enkelte carporte
+    </a>
+
+    <a href="https://www.johannesfog.dk/have-fritid/carporte/dobbelt-carporte">
+        Dobbelt carporte
+    </a>
+
+    <a href="#">
+        Skræddersyet carporte
+    </a>
+
+    <a href="#">
+        Tilbehør
+    </a>
+
+</div>
+
+<div class="logo">
+    <h1>Fog</h1>
+    <h2>Custom Carport</h2>
+</div>
+
+<form method="post" action="/signup">
+
+    <div id="fornavn">
+        <input type="text" name="firstName" placeholder="Fornavn" required>
+    </div>
+
+    <div id="efternavn">
+        <input type="text" name="lastName" placeholder="Efternavn" required>
+    </div>
+
+    <div id="mail">
+        <input type="email" name="email" placeholder="Mail" required>
+    </div>
+
+    <div id="kodeord">
+        <input type="password" name="password" placeholder="Password" required>
+    </div>
+
+    <div id="nummer">
+        <input type="text" name="phoneNumber" placeholder="Telefonnummer" required>
+    </div>
+
+    <div id="adresse">
+        <input type="text" name="address" placeholder="Adresse" required>
+    </div>
+
+    <div id="postnummer">
+        <input type="text" name="postalCode" placeholder="Postnummer" required>
+    </div>
+
+    <div id="by">
+        <input type="text" name="city" placeholder="By" required>
+    </div>
+
+    <div id="signupButton">
+        <button type="submit">Opret en konto</button>
+    </div>
+
+    <div class="create-user">
+
+        <p>Har du allerede en konto?</p>
+
+        <a href="/signin">
+            Log på her
+        </a>
+
+    </div>
+
+</form>
 
 </body>
+
 </html>
