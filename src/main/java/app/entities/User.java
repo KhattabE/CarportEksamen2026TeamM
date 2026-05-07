@@ -29,6 +29,16 @@ public class User {
         this.createdAt = createdAt;
     }
 
+    //Used for the getUserByEmail method in UserMapper
+    public User(int userId, String firstName, String lastName, String email, String passwordHash, String role){
+        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.passwordHash = passwordHash;
+        this.role = role;
+    }
+
     public int getUserId() {
         return userId;
     }
