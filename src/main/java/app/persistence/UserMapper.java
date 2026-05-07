@@ -17,6 +17,29 @@ public class UserMapper {
     // creates a new user in the database
     public void createUser(User user) {
         String sql = """
+        INSERT INTO users (first_name, last_name, email, password_hash, role) VALUES (?,?,?,?,?)
+        """;
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+
+            preparedStatement.setString(1, user.getFirstName());
+            preparedStatement.setString(2, user.getLastName());
+            preparedStatement.setString(3, user.getEmail());
+            preparedStatement.setString(4, user.getPasswordHash());
+            preparedStatement.setString(5, user.getRole());
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e){
+            System.out.println("An error has has happend" + sql );
+        }
+    }
+
+    // creates a new user in the database - updated this but it is not final yet
+    public void createUser2(User user) {
+        String sql = """
         INSERT INTO users 
         (first_name, last_name, email, password_hash, phone, address, postal_code, city, role) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -145,7 +168,4 @@ public class UserMapper {
 
         return null;
     }
-
-
-
 }

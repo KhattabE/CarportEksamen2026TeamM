@@ -1,9 +1,9 @@
 package app.controllers;
 
-import io.javalin.http.Context;
 import app.entities.User;
 import app.persistence.ConnectionPool;
 import app.persistence.UserMapper;
+import io.javalin.http.Context;
 
 public class UserController {
 
@@ -66,7 +66,7 @@ public class UserController {
                 null
         );
 
-        userMapper.createUser(user);
+        userMapper.createUser2(user);
 
         ctx.redirect("/signin");
     }
