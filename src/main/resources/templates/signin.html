@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../public/css/signin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <title>Signin</title>
 </head>
 
@@ -59,36 +60,45 @@
 
         <form method="post" action="/signin">
 
+            <p class="welcomeText">Velkommen tilbage</p>
+
+            <p class="loginText">Log på med din e-mail</p>
+
+            <p class="overTitles">E-mail</p>
+
             <div id="signinMail">
-                <input type="email" name="email" placeholder="Mail" required>
+                <i class="fa-regular fa-envelope"></i>
+                <input type="email" name="email" placeholder="Indtast din e-mail" required>
             </div>
 
+            <p class="overTitles">Password</p>
+
             <div id="signinPassword">
-                <input type="password" name="password" placeholder="Password" required>
+                <i class="fa-regular fa-user"></i>
+                <input type="password" name="password" placeholder="Indtast din adgangskode" required>
             </div>
 
             <p th:if="${error}" th:text="${error}" class="errorMessage"></p>
 
-            <a href="/forgot-password" id="forgotPassword">
-                Forgot password
-            </a>
 
-            <label>
-                <input type="checkbox" name="rememberMe">
-                Husk mig
-            </label>
+            <div class="rememberForgotBox">
+
+                <label class="rememberMe">
+                    <input type="checkbox" name="rememberMe">Husk mig</label>
+
+                <a href="/forgot-password" id="forgotPassword">Glemt adgangskode?</a>
+
+            </div>
 
             <div id="signinButton">
-                <button type="submit">Login</button>
+                <button type="submit">Log på</button>
             </div>
 
             <div class="create-user">
 
-                <p>Har du ikke en konto?</p>
+                <p class="noAccount">Har du ikke en konto?</p>
 
-                <a href="/signup">
-                    Opret en bruger lige her
-                </a>
+                <a href="signup.html">Opret en bruger lige her</a>
 
             </div>
 
