@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="../public/css/signin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <title>Signin</title>
 </head>
 
 <body>
-
-<div class="logo">
-    <h1>Fog</h1>
-    <h2>Custom Carport</h2>
-</div>
 
 <div class="topbar">
 
@@ -19,54 +17,97 @@
     <p>30-45 dages levering</p>
     <p>Kontakt os</p>
 
-    <a href="https://www.johannesfog.dk/have-fritid/carporte/enkelt-carporte">Enkelte carporte</a>
-    <a href="https://www.johannesfog.dk/have-fritid/carporte/dobbelt-carporte">Dobbelt carporte</a>
-    <a href="#">Skræddersyet carporte</a>
-    <a href="#">Tilbehør</a>
-
 </div>
 
-<div class="logo">
-    <h1>Fog</h1>
-    <h2>Custom Carport</h2>
-</div>
+<div class="menubar">
 
-<form method="post" action="/signin">
-
-    <div id="signinMail">
-        <input type="email" name="email" placeholder="Mail" required>
-    </div>
-
-    <div id="signinPassword">
-        <input type="password" name="password" placeholder="Password" required>
-    </div>
-
-    <p th:if="${error}" th:text="${error}" class="errorMessage"></p>
-
-    <a href="/forgot-password" id="forgotPassword">
-        Forgot password
-    </a>
-
-    <label>
-        <input type="checkbox" name="rememberMe">
-        Husk mig
-    </label>
-
-    <div id="signinButton">
-        <button type="submit">Login</button>
-    </div>
-
-    <div class="create-user">
-
-        <p>Har du ikke en konto?</p>
-
-        <a href="/signup">
-            Opret en bruger lige her
+    <div class="logoBox">
+        <a href="/" class="logoLink">
+            <h1>Fog</h1>
+            <p>Custom Carport</p>
         </a>
+    </div>
+
+
+    <div class="menuLinks">
+
+        <a href="https://www.johannesfog.dk/have-fritid/carporte/enkelt-carporte">Enkelte carporte</a>
+
+        <a href="https://www.johannesfog.dk/have-fritid/carporte/dobbelt-carporte">Dobbelt carporte</a>
+
+        <a href="#">Skræddersyet carporte</a>
+
+        <a href="#">Tilbehør</a>
 
     </div>
 
-</form>
+    <div class="loginBox">
+        <a href="/signin">Login</a>
+    </div>
+
+</div>
+
+<div class="background">
+
+    <div class="signinContainer">
+
+        <div class="logoBoxLoginBox">
+
+            <h1>Fog</h1>
+            <p>Custom Carport</p>
+
+        </div>
+
+        <form method="post" action="/signin">
+
+            <p class="welcomeText">Velkommen tilbage</p>
+
+            <p class="loginText">Log på med din e-mail</p>
+
+            <p class="overTitles">E-mail</p>
+
+            <div id="signinMail">
+                <i class="fa-regular fa-envelope"></i>
+                <input type="email" name="email" placeholder="Indtast din e-mail" required>
+            </div>
+
+            <p class="overTitles">Password</p>
+
+            <div id="signinPassword">
+                <i class="fa-regular fa-user"></i>
+                <input type="password" name="password" placeholder="Indtast din adgangskode" required>
+            </div>
+
+            <p th:if="${error}" th:text="${error}" class="errorMessage"></p>
+
+
+            <div class="rememberForgotBox">
+
+                <label class="rememberMe">
+                    <input type="checkbox" name="rememberMe">Husk mig</label>
+
+                <a href="/forgot-password" id="forgotPassword">Glemt adgangskode?</a>
+
+            </div>
+
+            <div id="signinButton">
+                <button type="submit">Log på</button>
+            </div>
+
+            <div class="create-user">
+
+                <p class="noAccount">Har du ikke en konto?</p>
+
+                <a href="signup.html">Opret en bruger lige her</a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
 
 </body>
+
 </html>
