@@ -17,23 +17,29 @@ public class UserMapper {
     // creates a new user in the database
     public void createUser(User user) {
         String sql = """
-            INSERT INTO users (first_name, last_name, email, password_hash, role) VALUES (?,?,?,?,?)
-            """;
+        INSERT INTO users 
+        (first_name, last_name, email, password_hash, phone, address, postal_code, city, role) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """;
 
         try (
                 Connection connection = connectionPool.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.getEmail());
             preparedStatement.setString(4, user.getPasswordHash());
-            preparedStatement.setString(6, user.getRole());
+            preparedStatement.setString(5, user.getPhone());
+            preparedStatement.setString(6, user.getAddress());
+            preparedStatement.setString(7, user.getPostalCode());
+            preparedStatement.setString(8, user.getCity());
+            preparedStatement.setString(9, user.getRole());
 
             preparedStatement.executeUpdate();
 
-        } catch (SQLException e){
-            System.out.println("An error has has happend" + sql );
+        } catch (SQLException e) {
+            System.out.println("An error has happened: " + sql);
         }
     }
 
