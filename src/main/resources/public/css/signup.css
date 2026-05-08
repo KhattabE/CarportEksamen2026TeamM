@@ -96,7 +96,6 @@ select {
     background-image: url("../images/blurredbackground.png");
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
     height: calc(100vh - 75px);
 
     display: flex;
@@ -104,191 +103,261 @@ select {
     align-items: center;
 }
 
-.signinContainer {
+.signupContainer {
     width: 95%;
     max-width: 650px;
     background-color: #1c1c1c;
     border: 1px solid #767676;
-    padding: 25px 25px;
+    padding: 20px 20px;
     box-sizing: border-box;
 
     transform: scale(0.85);
     transform-origin: center;
 }
 
+.signupTop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 45px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
 .logoBoxLoginBox {
     background-color: #00752D;
-    width: 60%;
-    max-width: 260px;
-    height: 120px;
-    border: 1.5px solid #d9d9d9;
+    width: 200px;
+    height: 100px;
+    border: 2px solid #d9d9d9;
+    flex-shrink: 0;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 0 auto 40px auto;
 }
-
 
 .logoBoxLoginBox h1 {
     margin: 0;
-    font-size: 52px;
-    line-height: 60px;
+    font-size: 45px;
+    line-height: 1;
 }
 
 .logoBoxLoginBox p {
-    font-size: 24px;
     margin: 0;
+    font-size: 15px;
 }
 
-.welcomeText{
-    font-size: 38px;
-    text-align: center;
-    margin-top: -30px;
-
+.createUserInfoTop {
+    max-width: 350px;
 }
 
-.loginText {
+.createUserInfoTop h1 {
+    margin: 0 0 5px 0;
+    font-size: 30px;
+    color: white;
+}
+
+.createUserInfoTop p {
+    margin: 0;
     font-size: 17px;
-    text-align: center;
-    margin-top: -45px;
-    opacity: 0.6;
+    color: #a0a0a0;
+    line-height: 1.4;
 }
 
-.overTitles {
-    color: white;
-    font-size: 18px;
-    margin-bottom: -2px;
-    margin-top: 25px;
-    text-align: left;
-}
-
-#signinMail input {
+#signupFirstName input {
     width: 100%;
-    height: 55px;
-
+    height: 41px;
     background-color: #2B2A2A;
     border: 2px solid #828282;
-
     color: white;
     font-size: 18px;
+    padding-left: 55px;
+    box-sizing: border-box;
+    outline: none;
+    margin-bottom: 10px;
+}
 
-    padding-left: 20px;
+#signupLastName input{
+    width: 100%;
+    height: 41px;
+    background-color: #2B2A2A;
+    border: 2px solid #828282;
+    color: white;
+    font-size: 18px;
+    padding-left: 55px;
+    box-sizing: border-box;
+    outline: none;
+    margin-bottom: 10px;
+}
+
+#signupPassword input{
+    width: 100%;
+    height: 41px;
+    background-color: #2B2A2A;
+    border: 2px solid #828282;
+    color: white;
+    font-size: 18px;
+    padding-left: 55px;
+    box-sizing: border-box;
+    outline: none;
+    margin-bottom: 10px;
+}
+
+#signupPhone input {
+    width: 100%;
+    height: 41px;
+    background-color: #2B2A2A;
+    border: 2px solid #828282;
+    color: white;
+    font-size: 18px;
+    padding-left: 55px;
     box-sizing: border-box;
     outline: none;
 }
 
-#signinPassword {
-    position: relative;
-}
-
-
-#signinPassword input{
+#signupAddress input {
     width: 100%;
-    height: 55px;
-
+    height: 41px;
     background-color: #2B2A2A;
     border: 2px solid #828282;
-
     color: white;
     font-size: 18px;
-
-    padding-left: 20px;
+    padding-left: 55px;
     box-sizing: border-box;
     outline: none;
 }
 
-.rememberForgotBox {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 18px;
-}
-
-.rememberMe {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 16px;
-}
-
-.rememberMe input {
-    width: 18px;
-    height: 18px;
-    accent-color: #00752D;
-}
-
-#forgotPassword {
-    color: #00752D;
-    text-decoration: none;
-    font-size: 16px;
-    opacity: 0.9;
-}
-
-#signinButton button {
+#signupPostalCode input {
     width: 100%;
-    height: 55px;
+    height: 41px;
+    background-color: #2B2A2A;
+    border: 2px solid #828282;
+    color: white;
+    font-size: 18px;
+    padding-left: 55px;
+    box-sizing: border-box;
+    outline: none;
+}
 
+#signupCity input {
+    width: 100%;
+    height: 41px;
+    background-color: #2B2A2A;
+    border: 2px solid #828282;
+    color: white;
+    font-size: 18px;
+    padding-left: 55px;
+    box-sizing: border-box;
+    outline: none;
+}
+
+#signupMail input {
+    width: 100%;
+    height: 41px;
+    background-color: #2B2A2A;
+    border: 2px solid #828282;
+    color: white;
+    font-size: 18px;
+    padding-left: 55px;
+    box-sizing: border-box;
+    outline: none;
+    margin-bottom: 10px;
+
+}
+
+#signupButton button {
+    width: 100%;
+    height: 40px;
     background-color: #00752D;
     border: 2px solid #767676;
     color: white;
-
-    font-size: 28px;
+    font-size: 18px;
     cursor: pointer;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 .createUser {
-    margin-top: 45px;
-    text-align: center;
     border-top: 2px solid #8d8d8d;
-    padding-top: 25px;
+    margin-top: 20px;
+    text-align: center;
 }
 
-.noAccount {
-    font-size: 22px;
-    margin-bottom: 25px;
-}
+
 
 .createUser p {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    font-size: 21px;
+    font-size: 18px;
+    margin-bottom: 20px;
 }
 
 .createUser a {
     display: flex;
     justify-content: center;
     align-items: center;
-
     width: 100%;
-    height: 58px;
+    height: 40px;
 
     background-color: #00752D;
     border: 2px solid #767676;
     color: white;
     text-decoration: none;
-    font-size: 23px;
+    font-size: 20px;
 }
 
-#signinMail {
+.doubleColumnRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+#signupPhone,
+#signupAddress,
+#signupPostalCode,
+#signupCity {
+    width: 100%;
+    display: block;
+}
+
+.overTitles {
+    color: white;
+    font-size: 18px;
+    margin: 0 0 2px 0;
+}
+
+#signupFirstName,
+#signupLastName,
+#signupMail,
+#signupPassword,
+#signupPhone,
+#signupAddress,
+#signupPostalCode,
+#signupCity {
     position: relative;
 }
 
-#signinMail input,
-#signinPassword input {
-    padding-left: 70px;
-}
-
-#signinMail i,
-#signinPassword i {
+#signupFirstName i,
+#signupLastName i,
+#signupMail i,
+#signupPassword i
+{
     position: absolute;
-    left: 22px;
-    top: 50%;
-
+    left: 20px;
+    top: 40%;
     transform: translateY(-50%);
-    font-size: 24px;
+    z-index: 2;
 }
+
+#signupPhone i,
+#signupAddress i,
+#signupPostalCode i,
+#signupCity i {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+
+}
+
