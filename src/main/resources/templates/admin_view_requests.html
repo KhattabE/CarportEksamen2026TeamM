@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin forespørgsler</title>
+
+    <link rel="stylesheet" href="../public/css/admin_view_requests.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+<div class="topbar">
+    <p>Klik & collect*</p>
+    <p>30 dages returret</p>
+    <p>30-45 dages levering</p>
+    <p>Kontakt os</p>
+</div>
+
+<div class="menubar">
+
+    <div class="logoBox">
+        <a href="/" class="logoLink">
+            <h1>Fog</h1>
+            <p>Custom Carport</p>
+        </a>
+    </div>
+
+    <div class="menuLinks">
+        <a href="https://www.johannesfog.dk/have-fritid/carporte/enkelt-carporte">Enkelte carporte</a>
+        <a href="https://www.johannesfog.dk/have-fritid/carporte/dobbelt-carporte">Dobbelt carporte</a>
+        <a href="#">Skræddersyet carporte</a>
+        <a href="#">Tilbehør</a>
+    </div>
+
+    <div class="adminIconBox">
+
+        <a href="#">
+            <i class="fa-regular fa-user"></i>
+            <span>Profil</span>
+        </a>
+
+        <a href="#">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span>Kurv</span>
+        </a>
+
+        <a href="#">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Exit</span>
+        </a>
+
+    </div>
+
+</div>
+
+<div class="background">
+
+    <div class="adminContainer">
+
+        <div class="sidebar">
+
+            <p class="adminText">ADMIN</p>
+
+            <a href="#">
+                <i class="fa-solid fa-table-cells-large"></i>
+                Dashboard
+            </a>
+
+            <a href="#" class="activeSidebarLink">
+                <i class="fa-regular fa-clipboard"></i>
+                Forespørgsler
+            </a>
+
+            <a href="#">
+                <i class="fa-solid fa-cart-shopping"></i>
+                Ordrer
+            </a>
+
+            <a href="#">
+                <i class="fa-solid fa-cube"></i>
+                Produkter<br> & priser
+            </a>
+
+        </div>
+
+        <main class="requestsContent">
+
+            <section class="requestsInner">
+
+                <div class="requestsHeader">
+                    <div>
+                        <h1>Forespørgsler</h1>
+                        <p>Viser alle kundeforespørgsler på skræddersyede carporte</p>
+                    </div>
+
+                    <div class="requestStats">
+                        <span>Antal</span>
+                        <p class="countNumber">5</p>
+                    </div>
+                </div>
+
+                <div class="requestsPanel">
+
+                    <div class="panelTop">
+                        <h2>Alle forespørgsler</h2>
+
+                        <div class="panelActions">
+                            <input type="text" placeholder="Søg forespørgsel...">
+                            <button type="button">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                Søg
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="tableWrapper">
+
+                        <table class="requestsTable">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Kunde</th>
+                                <th>Email</th>
+                                <th>Telefon</th>
+                                <th>Carport</th>
+                                <th>Mål</th>
+                                <th>Status</th>
+                                <th>Dato</th>
+                                <th>Handling</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+                            <tr>
+                                <td>1</td>
+                                <td>Lars Petersen</td>
+                                <td>larstheman28@gmail.com</td>
+                                <td>80 27 91 82</td>
+                                <td>Enkelt carport</td>
+                                <td>300 x 600 cm</td>
+                                <td>
+                                    <span class="statusBadge statusNew">NY</span>
+                                </td>
+                                <td>09-05-2026</td>
+                                <td>
+                                    <a class="viewButton" href="#">Åbn</a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>2</td>
+                                <td>Jens Madsen</td>
+                                <td>jens887@gmail.com</td>
+                                <td>21 67 42 08</td>
+                                <td>Dobbelt carport</td>
+                                <td>600 x 780 cm</td>
+                                <td>
+                                    <span class="statusBadge statusPending">BEHANDLES</span>
+                                </td>
+                                <td>08-05-2026</td>
+                                <td>
+                                    <a class="viewButton" href="#">Åbn</a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>3</td>
+                                <td>Nikolai Henrik</td>
+                                <td>niko_42@hotmail.com</td>
+                                <td>93 21 89 04</td>
+                                <td>Carport med skur</td>
+                                <td>360 x 720 cm</td>
+                                <td>
+                                    <span class="statusBadge statusDone">AFSLUTTET</span>
+                                </td>
+                                <td>07-05-2026</td>
+                                <td>
+                                    <a class="viewButton" href="#">Åbn</a>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</div>
+
+</body>
+</html>
