@@ -3,15 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
-
+    <link rel="stylesheet" href="../public/css/buildyourcarport.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <title>Signup</title>
-</head>
-
-<head>
-    <meta charset="UTF-8">
     <title>Build Your Carport</title>
 </head>
+
 <body>
 
 <div class="topbar">
@@ -36,7 +32,6 @@
         <a href="#">Tilbehør</a>
     </div>
 </div>
-
 
 <div class="background">
 
@@ -128,46 +123,45 @@
         </div>
 
         <div class="previewImage">
-            <img id="carportPreviewImage" src="../images/fog2.png" alt="Carport preview">
+            <img id="carportPreviewImage" src="../public/images/fog4.png" alt="Carport preview">
+        <div class="summarySection">
+            <h3>OPSUMMERING</h3>
+
+            <div class="summaryRow">
+                <span>Type</span>
+                <span id="summaryType"></span>
+            </div>
+
+            <div class="summaryRow">
+                <span>Mål (L * B * H)</span>
+                <span id="summaryMeasurements"></span>
+            </div>
+
+            <div class="summaryRow">
+                <span>Materiale</span>
+                <span id="summaryMaterial"></span>
+            </div>
+
+            <div class="summaryRow">
+                <span>Tagtype</span>
+                <span id="summaryRoofType"></span>
+            </div>
+
+            <div class="summaryRow">
+                <span>Skur</span>
+                <span id="summaryShed"></span>
+            </div>
         </div>
-    </div>
 
-    <div class="summarySection">
-        <h3>OPSUMMERING</h3>
-
-        <div class="summaryRow">
-            <span>Type</span>
-            <span id="summaryType"></span>
+        <div class="priceSection">
+            <p>Estimeret pris</p>
+            <span id="summaryPrice"></span>
         </div>
 
-        <div class="summaryRow">
-            <span>Mål (L * B * H)</span>
-            <span id="summaryMeasurements"></span>
+        <div id="sendRequest">
+            <button type="submit">Send forespørgsel</button>
         </div>
 
-        <div class="summaryRow">
-            <span>Materiale</span>
-            <span id="summaryMaterial"></span>
-        </div>
-
-        <div class="summaryRow">
-            <span>Tagtype</span>
-            <span id="summaryRoofType"></span>
-        </div>
-
-        <div class="summaryRow">
-            <span>Skur</span>
-            <span id="summaryShed"></span>
-        </div>
-    </div>
-
-    <div class="priceSection">
-        <p>Estimeret pris</p>
-        <span id="summaryPrice"></span>
-    </div>
-
-    <div id="sendRequest">
-        <button type="submit">Send forespørgsel</button>
     </div>
 
 </div>
