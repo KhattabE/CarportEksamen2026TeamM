@@ -1,9 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&display=swap');
 
-body{
+body {
     margin: 0;
-    font-family: "Kdam Thmor Pro", sans-serif ;
-    background-color: #1f1f1f;
+    font-family: "Kdam Thmor Pro", sans-serif;
+    background-image: linear-gradient(
+            rgba(0, 0, 0, 0.55),
+            rgba(0, 0, 0, 0.55)
+    ), url("../images/Forside.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
     color: white;
 }
 
@@ -82,4 +89,195 @@ body{
     color: white;
     text-decoration: none;
     font-size: 14px;
+}
+
+.profilePage {
+    min-height: calc(100vh - 75px);
+    padding: 18px 30px;
+}
+
+.profilePage h1 {
+    margin: 0;
+    font-size: 24px;
+    color: white;
+}
+
+.profilePage > p {
+    margin: 2px 0 14px 0;
+    font-size: 11px;
+    color: #cfcfcf;
+}
+
+.profileContent {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.profileBox {
+    background-color: #1E1E1E;
+    border: 1px solid #555555;
+    border-radius: 4px;
+    width: 33%;
+    height: 540px;
+    padding: 14px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.profileBox h2 {
+    margin: 0 0 12px 0;
+    font-size: 21px;
+    color: white;
+    border-bottom: 1px solid #555555;
+    padding-bottom: 9px;
+}
+
+.userInfo h3 {
+    margin: 25px 0 28px 0;
+    font-size: 22px;
+    color: white;
+}
+
+.userInfo p {
+    margin: 18px 0;
+    font-size: 13px;
+    color: #d0d0d0;
+}
+
+.profileBox > button {
+    width: 100%;
+    height: 36px;
+    margin-top: 45px;
+    background-color: transparent;
+    border: 1px solid #00752D;
+    color: white;
+    font-family: "Kdam Thmor Pro", sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.offerBox {
+    border-bottom: 1px solid #555555;
+    padding: 12px 0;
+    margin-bottom: 8px;
+    min-height: 185px;
+}
+
+.offerBox img {
+    width: 190px;
+    height: 95px;
+    object-fit: cover;
+    float: left;
+    margin-right: 18px;
+}
+
+.offerText h3 {
+    margin: 0;
+    font-size: 12px;
+    color: white;
+}
+
+.offerText p {
+    margin: 2px 0;
+    font-size: 10px;
+    color: #cfcfcf;
+}
+
+.orderBox {
+    border-bottom: 1px solid #555555;
+    padding: 12px 0;
+    margin-bottom: 8px;
+    min-height: 185px;
+}
+
+.orderBox img {
+    width: 190px;
+    height: 95px;
+    object-fit: cover;
+    float: left;
+    margin-right: 18px;
+}
+
+.orderText h3 {
+    margin: 0;
+    font-size: 12px;
+    color: white;
+}
+
+.orderText p {
+    margin: 2px 0;
+    font-size: 10px;
+    color: #cfcfcf;
+}
+
+.infoRow {
+    clear: both;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+}
+
+.infoRow div {
+    width: 33%;
+}
+
+.infoRow p {
+    margin: 0 0 3px 0;
+    font-size: 11px;
+    color: #cfcfcf;
+}
+
+.infoRow span {
+    font-size: 12px;
+}
+
+.greenText {
+    color: #00752D;
+}
+
+.whiteText {
+    color: #cfcfcf;
+}
+
+.redText {
+    color: #ff3333;
+}
+
+.yellowText {
+    color: #d6d642;
+}
+
+.offerButtons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.offerBox button {
+    width: 150px;
+    height: 28px;
+    background-color: transparent;
+    border: 1px solid #00752D;
+    color: #00752D;
+    font-family: "Kdam Thmor Pro", sans-serif;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.offerBox .rejectButton {
+    border: 1px solid #ff3333;
+    color: #ff3333;
+}
+
+.orderBox button {
+    width: 100%;
+    height: 28px;
+    margin-top: 10px;
+    background-color: transparent;
+    border: 1px solid #999999;
+    color: white;
+    font-family: "Kdam Thmor Pro", sans-serif;
+    font-size: 10px;
+    cursor: pointer;
 }
