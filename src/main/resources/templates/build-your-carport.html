@@ -60,131 +60,153 @@
         <p>Tilpas mål, materiale og tilbehør efter dit behov</p>
     </div>
 
-    <div class="configureContainer">
+    <form method="post" action="/build-your-carport" id="carportRequestForm">
+        <div class="configureContainer">
 
-        <div class="configureTitle">
-            <h2>KONFIGURER DIN CARPORT</h2>
-        </div>
-
-        <div class="typeRow">
-            <p>Type</p>
-            <button type="button">Enkelt carport</button>
-            <button type="button">Dobbelt carport</button>
-        </div>
-
-        <div class="measureRow">
-            <p>Mål (cm)</p>
-
-            <div class="measureBox">
-                <label>Længde</label>
-                <input type="text" name="length" placeholder="500">
+            <div class="configureTitle">
+                <h2>KONFIGURER DIN CARPORT</h2>
             </div>
 
-            <div class="measureBox">
-                <label>Bredde</label>
-                <input type="text" name="width" placeholder="300">
+            <div class="typeRow">
+                <p>Type</p>
+                <label>
+                    <input type="radio" name="carport_type" value="Enkelt carport" checked>
+                    Enkelt carport
+                </label>
+                <label>
+                    <input type="radio" name="carport_type" value="Dobbelt carport">
+                    Dobbelt carport
+                </label>
             </div>
 
-            <div class="measureBox">
-                <label>Højde</label>
-                <input type="text" name="height" placeholder="230">
-            </div>
-        </div>
+            <div class="measureRow">
+                <p>Mål (cm)</p>
 
-        <div class="shedRow">
-            <p>Tilbehør<br>(skur)</p>
-            <button type="button">Nej</button>
-            <button type="button">Ja</button>
-        </div>
+                <div class="measureBox">
+                    <label for="length_cm">Længde</label>
+                    <input id="length_cm" type="number" name="length_cm" placeholder="500" min="1" required>
+                </div>
 
-        <div class="shedMeasureRow">
-            <div></div>
+                <div class="measureBox">
+                    <label for="width_cm">Bredde</label>
+                    <input id="width_cm" type="number" name="width_cm" placeholder="300" min="1" required>
+                </div>
 
-            <div class="measureBox">
-                <label>Længde</label>
-                <input type="text" name="shedLength" placeholder="200">
-            </div>
-
-            <div class="measureBox">
-                <label>Bredde</label>
-                <input type="text" name="shedWidth" placeholder="300">
+                <div class="measureBox">
+                    <label for="height_cm">Højde</label>
+                    <input id="height_cm" type="number" name="height_cm" placeholder="230" min="1" required>
+                </div>
             </div>
 
-            <div class="measureBox">
-                <label>Højde</label>
-                <input type="text" name="shedHeight" placeholder="230">
-            </div>
-        </div>
-
-        <div class="selectMaterialRow">
-            <p>Materiale</p>
-            <select name="material">
-                <option>Trykimprægneret træ</option>
-            </select>
-        </div>
-
-        <div class="selectRooofRow">
-            <p>Tagtype</p>
-            <select name="roofType">
-                <option>Fladt tag</option>
-            </select>
-        </div>
-
-        <div id="updatePreview">
-            <button type="submit">Opdater preview</button>
-        </div>
-
-    </div>
-
-    <div class="yourPreviewCarportContainer">
-
-        <div class="configureTitle">
-            <h2>DIN CARPORT</h2>
-        </div>
-
-        <div class="previewImage">
-            <img id="carportPreviewImage" src="../public/images/fog4.png" alt="Carport preview">
-        <div class="summarySection">
-            <h3>OPSUMMERING</h3>
-
-            <div class="summaryRow">
-                <span>Type</span>
-                <span id="summaryType"></span>
+            <div class="shedRow">
+                <p>Tilbehør<br>(skur)</p>
+                <label>
+                    <input type="radio" name="has_shed" value="false" checked>
+                    Nej
+                </label>
+                <label>
+                    <input type="radio" name="has_shed" value="true">
+                    Ja
+                </label>
             </div>
 
-            <div class="summaryRow">
-                <span>Mål (L * B * H)</span>
-                <span id="summaryMeasurements"></span>
+            <div class="shedMeasureRow">
+                <div></div>
+
+                <div class="measureBox">
+                    <label for="shed_length_cm">Længde</label>
+                    <input id="shed_length_cm" type="number" name="shed_length_cm" placeholder="200" min="0">
+                </div>
+
+                <div class="measureBox">
+                    <label for="shed_width_cm">Bredde</label>
+                    <input id="shed_width_cm" type="number" name="shed_width_cm" placeholder="300" min="0">
+                </div>
+
+                <div class="measureBox">
+                    <label for="shed_height_cm">Højde</label>
+                    <input id="shed_height_cm" type="number" name="shed_height_cm" placeholder="230" min="0">
+                </div>
             </div>
 
-            <div class="summaryRow">
-                <span>Materiale</span>
-                <span id="summaryMaterial"></span>
+            <div class="selectMaterialRow">
+                <p>Materiale</p>
+                <select name="material" id="material">
+                    <option value="Trykimprægneret træ">Trykimprægneret træ</option>
+                </select>
             </div>
 
-            <div class="summaryRow">
-                <span>Tagtype</span>
-                <span id="summaryRoofType"></span>
+            <div class="selectRooofRow">
+                <p>Tagtype</p>
+                <select name="roof_type" id="roof_type">
+                    <option value="Fladt tag">Fladt tag</option>
+                    <option value="Rejsning">Tag med rejsning</option>
+                </select>
             </div>
 
-            <div class="summaryRow">
-                <span>Skur</span>
-                <span id="summaryShed"></span>
+            <div class="commentRow">
+                <p>Kommentar</p>
+                <textarea name="customer_comment" id="customer_comment" placeholder="Skriv eventuelle ønsker eller bemærkninger"></textarea>
             </div>
+
+            <div id="updatePreview">
+                <button type="button" onclick="updatePreview()">Opdater preview</button>
+            </div>
+
         </div>
 
-        <div class="priceSection">
-            <p>Estimeret pris</p>
-            <span id="summaryPrice"></span>
-        </div>
+        <div class="yourPreviewCarportContainer">
 
-        <div id="sendRequest">
-            <button type="submit">Send forespørgsel</button>
-        </div>
+            <div class="configureTitle">
+                <h2>DIN CARPORT</h2>
+            </div>
 
-    </div>
+            <div class="previewImage">
+                <img id="carportPreviewImage" src="../public/images/fog4.png" alt="Carport preview">
+            </div>
+
+            <div class="summarySection">
+                <h3>OPSUMMERING</h3>
+
+                <div class="summaryRow">
+                    <span>Type</span>
+                    <span id="summaryType">Enkelt carport</span>
+                </div>
+
+                <div class="summaryRow">
+                    <span>Mål (L * B * H)</span>
+                    <span id="summaryMeasurements">-</span>
+                </div>
+
+                <div class="summaryRow">
+                    <span>Materiale</span>
+                    <span id="summaryMaterial">Trykimprægneret træ</span>
+                </div>
+
+                <div class="summaryRow">
+                    <span>Tagtype</span>
+                    <span id="summaryRoofType">Fladt tag</span>
+                </div>
+
+                <div class="summaryRow">
+                    <span>Skur</span>
+                    <span id="summaryShed">Nej</span>
+                </div>
+            </div>
+
+            <div class="priceSection">
+                <p>Estimeret pris</p>
+                <span id="summaryPrice">-</span>
+            </div>
+
+            <div id="sendRequest">
+                <button type="submit">Send forespørgsel</button>
+            </div>
+
+        </div>
+    </form>
 
 </div>
-
+<script src="../public/js/BuildYourCarport.js"></script>
 </body>
 </html>

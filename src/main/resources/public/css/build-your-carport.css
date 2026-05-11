@@ -147,6 +147,8 @@ select {
 
 .configureContainer,
 .yourPreviewCarportContainer {
+    display: flex;
+    flex-direction: column;
     background-color: #1c1c1c;
     border: 1px solid #767676;
     box-sizing: border-box;
@@ -280,6 +282,7 @@ select {
 }
 
 .previewImage {
+    flex: 0 0 auto;
     padding: 18px 35px;
     border-bottom: 1px solid #767676;
 }
@@ -292,6 +295,7 @@ select {
 }
 
 .summarySection {
+    flex: 1;
     background-color: #1c1c1c;
     padding: 18px 35px 15px 35px;
     border-left: none;
@@ -305,16 +309,17 @@ select {
 }
 
 .summaryRow {
-    width: 58%;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #767676;
     padding: 3px 0;
-    font-size: 12px;
+    font-size: 1.4em;
 }
 
 .priceSection {
     background-color: #1c1c1c;
+    margin-top: auto;
     border-top: 1px solid #767676;
     border-left: none;
     border-right: none;
@@ -336,6 +341,7 @@ select {
 }
 
 #sendRequest {
+    flex: 0 0 auto;
     background-color: #1c1c1c;
     padding: 0 35px 22px 35px;
     border: none;
@@ -346,4 +352,80 @@ select {
     height: 38px;
     background-color: #00752D;
     border: 2px solid #767676;
+}
+
+#carportRequestForm {
+    grid-column: 1 / 3;
+    display: grid;
+    grid-template-columns: 650px 720px;
+    gap: 40px;
+    width: 100%;
+    margin-top: 0;
+    align-items: stretch;
+}
+
+.typeRow label,
+.shedRow label {
+    background-color: #2B2A2A;
+    border: 1.5px solid #767676;
+    color: white;
+    height: 34px;
+    font-size: 15px;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.typeRow label:hover,
+.shedRow label:hover {
+    border-color: #00752D;
+}
+
+.typeRow input[type="radio"],
+.shedRow input[type="radio"] {
+    display: none;
+}
+
+.typeRow label:has(input[type="radio"]:checked),
+.shedRow label:has(input[type="radio"]:checked) {
+    border-color: #00752D;
+    background-color: #242424;
+}
+
+.commentRow {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 25px;
+    align-items: start;
+    padding: 20px 15px;
+    border-bottom: 1px solid #767676;
+}
+
+.commentRow p {
+    margin: 0;
+    font-size: 15px;
+}
+
+.commentRow textarea {
+    width: 100%;
+    height: 70px;
+    background-color: #2B2A2A;
+    border: 1.5px solid #767676;
+    color: white;
+    font-size: 15px;
+    padding: 8px 10px;
+    box-sizing: border-box;
+    outline: none;
+    resize: none;
+}
+
+.commentRow textarea::placeholder {
+    color: white;
+    opacity: 0.8;
+}
+
+.commentRow textarea:focus {
+    border-color: #00752D;
 }
