@@ -23,4 +23,10 @@ public class MainController {
     public static void adminViewOrders(Context ctx) {
         ctx.render("admin_view_orders.html");
     }
+
+    public static void profileQuoteDetails(Context ctx) {
+        ctx.render("profile-qoute-details.html");
+    }
+
+
 }

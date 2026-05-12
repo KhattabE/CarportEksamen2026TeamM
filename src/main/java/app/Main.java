@@ -40,6 +40,7 @@ public class Main {
             config.routes.post("/signin", UserController::handleSignIn);
 
             config.routes.get("/profile", UserController::profile);
+            config.routes.get("/profile/quote-details", MainController::profileQuoteDetails);
             config.routes.get("/logout", UserController::logout);
 
             config.routes.get("/build-your-carport", CarportRequestController::buildYourCarport);
