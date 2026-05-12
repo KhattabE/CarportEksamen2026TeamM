@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.Main;
 import app.entities.User;
 import app.persistence.ConnectionPool;
 import app.persistence.UserMapper;
@@ -15,11 +16,22 @@ public class UserController {
         ctx.render("signup.html");
     }
 
-    public static void handleSignIn(Context ctx, ConnectionPool connectionPool) {
+    public static void profile(Context ctx) {
+        ctx.render("profile.html");
+    }
+
+    public static void logout(Context ctx) {
+        ctx.req().getSession().invalidate();
+        ctx.redirect("/");
+    }
+
+    public static void handleSignIn(Context ctx) {
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
 
+        ConnectionPool connectionPool = Main.getConnectionPool();
         UserMapper userMapper = new UserMapper(connectionPool);
+
         User user = userMapper.validateLogin(email, password);
 
         if (user == null) {
@@ -32,7 +44,7 @@ public class UserController {
         ctx.redirect("/");
     }
 
-    public static void handleSignUp(Context ctx, ConnectionPool connectionPool) {
+    public static void handleSignUp(Context ctx) {
         String firstName = ctx.formParam("firstName");
         String lastName = ctx.formParam("lastName");
         String email = ctx.formParam("email");
@@ -42,6 +54,7 @@ public class UserController {
         String postalCode = ctx.formParam("postalCode");
         String city = ctx.formParam("city");
 
+        ConnectionPool connectionPool = Main.getConnectionPool();
         UserMapper userMapper = new UserMapper(connectionPool);
 
         User existingUser = userMapper.getUserByEmail(email);
@@ -52,19 +65,7 @@ public class UserController {
             return;
         }
 
-        User user = new User(
-                0,
-                firstName,
-                lastName,
-                email,
-                password,
-                phoneNumber,
-                address,
-                postalCode,
-                city,
-                "customer",
-                null
-        );
+        User user = new User(0, firstName, lastName, email, password, phoneNumber, address, postalCode, city, "customer", null);
 
         userMapper.createUser2(user);
 
