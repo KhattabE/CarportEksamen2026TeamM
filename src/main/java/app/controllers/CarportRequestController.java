@@ -15,12 +15,6 @@ public class CarportRequestController {
     public static void buildYourCarport(Context ctx) {
         User currentUser = ctx.sessionAttribute("currentUser");
 
-        if (currentUser == null) {
-            ctx.sessionAttribute("message", "You must be logged in to request a carport.");
-            ctx.redirect("/login");
-            return;
-        }
-
         Map<String, Object> model = new HashMap<>();
         model.put("currentUser", currentUser);
         model.put("message", ctx.consumeSessionAttribute("message"));
@@ -33,7 +27,7 @@ public class CarportRequestController {
 
         if (currentUser == null) {
             ctx.sessionAttribute("message", "You must be logged in to request a carport.");
-            ctx.redirect("/login");
+            ctx.redirect("/signin");
             return;
         }
 

@@ -6,6 +6,7 @@ import app.controllers.*;
 import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
+import org.eclipse.jetty.util.Index;
 
 public class Main {
 
@@ -32,6 +33,7 @@ public class Main {
             config.fileRenderer(new JavalinThymeleaf(ThymeleafConfig.templateEngine()));
 
             config.routes.get("/", MainController::index);
+            config.routes.get("/build-your-carport", CarportRequestController::buildYourCarport);
 
             config.routes.get("/signup", UserController::signUp);
             config.routes.post("/signup", UserController::handleSignUp);
@@ -42,8 +44,6 @@ public class Main {
             config.routes.get("/profile", UserController::profile);
             config.routes.get("/profile/quote-details", MainController::profileQuoteDetails);
             config.routes.get("/logout", UserController::logout);
-
-            config.routes.get("/build-your-carport", CarportRequestController::buildYourCarport);
 
             config.routes.get("/admin", MainController::adminDashboard);
             config.routes.get("/admin/requests", MainController::adminViewRequests);
