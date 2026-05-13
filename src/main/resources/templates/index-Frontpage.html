@@ -19,7 +19,7 @@
 
     <div class="logoBox">
         <h1>
-            <a href="#" class="logoLink">Fog</a>
+            <a href="/" class="logoLink">Fog</a>
         </h1>
         <p>Custom Carport</p>
     </div>
@@ -39,7 +39,13 @@
     <div class="loginBox">
 
         <div class="adminIconBox" th:if="${session.currentUser != null}">
-            <a href="/profile">
+
+            <a href="/admin" th:if="${session.currentUser.role == 'admin'}">
+                <i class="fa-solid fa-table-cells-large"></i>
+                <span>Admin</span>
+            </a>
+
+            <a href="/profile" th:if="${session.currentUser.role != 'admin'}">
                 <i class="fa-regular fa-user"></i>
                 <span>Profil</span>
             </a>
@@ -48,6 +54,7 @@
                 <i class="fa-solid fa-right-from-bracket"></i>
                 <span>Log ud</span>
             </a>
+
         </div>
 
         <div class="adminIconBox" th:if="${session.currentUser == null}">
