@@ -34,6 +34,7 @@ public class Main {
 
             config.routes.get("/", MainController::index);
             config.routes.get("/build-your-carport", CarportRequestController::buildYourCarport);
+            config.routes.post("/build-your-carport", CarportRequestController::createCarportRequest);
 
             config.routes.get("/signup", UserController::signUp);
             config.routes.post("/signup", UserController::handleSignUp);
