@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="da">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Min profil</title>
-    <link rel="stylesheet" href="../public/css/profile.css">
+    <link rel="stylesheet" th:href="@{/css/profile.css}">
 </head>
 <body>
 
@@ -18,7 +18,7 @@
 
     <div class="logoBox">
         <h1>
-            <a href="/" class="logoLink">Fog</a>
+            <a th:href="@{/}" class="logoLink">Fog</a>
         </h1>
         <p>Custom Carport</p>
     </div>
@@ -31,7 +31,7 @@
     </div>
 
     <div class="loginBox">
-        <a href="/signin">Log in</a>
+        <a th:href="@{/logout}">Log ud</a>
     </div>
 
 </div>
@@ -47,11 +47,11 @@
             <h2>Mine oplysninger</h2>
 
             <div class="userInfo">
-                <h3>Amaan Gangapreet</h3>
-                <p>E-mail: Singh@gmail.com</p>
-                <p>Telefon: 50 22 74 47</p>
-                <p>Adresse: Gyngemose parkvej 2e, 6 th</p>
-                <p>Medlem siden: 14/1/1993</p>
+                <h3 th:text="${user.firstName + ' ' + user.lastName}"></h3>
+                <p th:text="'E-mail: ' + ${user.email}"></p>
+                <p th:text="'Telefon: ' + ${user.phone}"></p>
+                <p th:text="'Adresse: ' + ${user.address + ', ' + user.postalCode + ' ' + user.city}"></p>
+                <p th:text="'Medlem siden: ' + ${#temporals.format(user.createdAt, 'dd-MM-yyyy')}"></p>
                 <p>Adgangskode: ************</p>
             </div>
 
@@ -62,7 +62,7 @@
             <h2>Mine tilbud</h2>
 
             <div class="offerBox">
-                <img src="../public/images/fog5.png" alt="Carport tilbud">
+                <img th:src="@{/images/fog5.png}" alt="Carport tilbud">
 
                 <div class="offerText">
                     <h3>Tilbud #023</h3>
@@ -89,13 +89,15 @@
                 </div>
 
                 <div class="offerButtons">
-                    <button type="button">Accepter og betal</button>
+                    <a th:href="@{/profile/quote-details}">
+                        <button type="button">Accepter og betal</button>
+                    </a>
                     <button type="button" class="rejectButton">Afvis</button>
                 </div>
             </div>
 
             <div class="offerBox">
-                <img src="../public/images/fog5.png" alt="Carport tilbud">
+                <img th:src="@{/images/fog5.png}" alt="Carport tilbud">
 
                 <div class="offerText">
                     <h3>Tilbud #024</h3>
@@ -127,7 +129,7 @@
             <h2>Mine ordrer</h2>
 
             <div class="orderBox">
-                <img src="../public/images/fog5.png" alt="Carport ordre">
+                <img th:src="@{/images/fog5.png}" alt="Carport ordre">
 
                 <div class="orderText">
                     <h3>Ordre #023</h3>
@@ -157,7 +159,7 @@
             </div>
 
             <div class="orderBox">
-                <img src="../public/images/fog5.png" alt="Carport ordre">
+                <img th:src="@{/images/fog5.png}" alt="Carport ordre">
 
                 <div class="orderText">
                     <h3>Ordre #024</h3>
