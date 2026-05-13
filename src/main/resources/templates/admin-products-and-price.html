@@ -3,9 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Admin forespørgsler</title>
+    <title>Produkter og priser</title>
 
-    <link rel="stylesheet" href="/css/admin-view-requests.css">
+    <link rel="stylesheet" href="/css/admin-products-and-price.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
@@ -14,7 +14,7 @@
 <div class="topbar">
     <p>Klik & collect*</p>
     <p>30 dages returret</p>
-    <p>30 - 45 dages levering</p>
+    <p>Levering</p>
     <p>Kontakt os</p>
 </div>
 
@@ -28,7 +28,6 @@
     </div>
 
     <div class="menuLinks">
-
         <a href="https://www.johannesfog.dk/have-fritid/carporte/enkelt-carporte">Enkelte carporte</a>
 
         <a href="https://www.johannesfog.dk/have-fritid/carporte/dobbelt-carporte">Dobbelt carporte</a>
@@ -36,22 +35,16 @@
         <a href="/build-your-carport">Skræddersyet carporte</a>
 
         <a href="https://www.johannesfog.dk/byggematerialer/tag/tilbehoer-til-tage">Tilbehør</a>
-
     </div>
 
     <div class="adminIconBox">
 
-        <a href="#">
-            <i class="fa-regular fa-user"></i>
-            <span>Profil</span>
+        <a href="/admin">
+            <i class="fa-solid fa-table-cells-large"></i>
+            <span>Admin</span>
         </a>
 
-        <a href="#">
-            <i class="fa-solid fa-cart-shopping"></i>
-            <span>Kurv</span>
-        </a>
-
-        <a href="#">
+        <a href="/logout">
             <i class="fa-solid fa-right-from-bracket"></i>
             <span>Exit</span>
         </a>
@@ -68,48 +61,49 @@
 
             <p class="adminText">ADMIN</p>
 
-            <a href="#">
+            <a href="/admin" th:classappend="${currentPage == 'dashboard'} ? 'activeSidebarLink'">
                 <i class="fa-solid fa-table-cells-large"></i>
                 Dashboard
             </a>
 
-            <a href="#" class="activeSidebarLink">
+            <a href="/admin/requests" th:classappend="${currentPage == 'requests'} ? 'activeSidebarLink'">
                 <i class="fa-regular fa-clipboard"></i>
                 Forespørgsler
             </a>
 
-            <a href="#">
+            <a href="/admin/orders" th:classappend="${currentPage == 'orders'} ? 'activeSidebarLink'">
                 <i class="fa-solid fa-cart-shopping"></i>
                 Ordrer
             </a>
 
-            <a href="#">
+            <a href="/admin/products-price" th:classappend="${currentPage == 'products'} ? 'activeSidebarLink'">
                 <i class="fa-solid fa-cube"></i>
                 Produkter<br> & priser
             </a>
 
         </div>
 
-        <main class="requestsContent">
+        <main class="productsContent">
 
-            <section class="requestsInner">
+            <section class="productsInner">
 
-                <div class="requestsHeader">
-                    <h1>Forespørgsler</h1>
-                    <p>Se og håndter alle kundeforespørgsler</p>
+                <div class="productsHeader">
+                    <h1>Produkter og priser</h1>
+                    <p>Administrer materialer, produkter og priser</p>
                 </div>
 
-                <div class="requestsPanel">
+                <div class="productsPanel">
 
                     <div class="tableWrapper">
 
-                        <table class="requestsTable">
+                        <table class="productsTable">
                             <thead>
                             <tr>
-                                <th>Navn</th>
-                                <th>Carport</th>
-                                <th>Status</th>
-                                <th>Dato</th>
+                                <th>Produkt</th>
+                                <th>Kategori</th>
+                                <th>Beskrivelse</th>
+                                <th>Pris (DKK)</th>
+                                <th>Enhed</th>
                                 <th>Handling</th>
                             </tr>
                             </thead>
@@ -117,38 +111,34 @@
                             <tbody>
 
                             <tr>
-                                <td>Lars Petersen</td>
-                                <td>Enkelt carport</td>
                                 <td>
-                                    <span class="statusText statusNew">NY</span>
+                                    <div class="productInfo">
+                                        <img src="#" alt="Trykimprægneret stolpe">
+                                        <span>Trykimprægneret stolpe</span>
+                                    </div>
                                 </td>
-                                <td>09-05-2026</td>
+                                <td>Materiale</td>
+                                <td>Trykimprægneret stolpe<br>90 x 90 mm</td>
+                                <td>229,00</td>
+                                <td>Stk</td>
                                 <td>
-                                    <a class="viewButton" href="#">Se detaljer</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>Jens Madsen</td>
-                                <td>Dobbelt carport</td>
-                                <td>
-                                    <span class="statusText statusPending">BEHANDLES</span>
-                                </td>
-                                <td>08-05-2026</td>
-                                <td>
-                                    <a class="viewButton" href="#">Se detaljer</a>
+                                    <a class="editButton" href="#">Rediger</a>
                                 </td>
                             </tr>
 
                             <tr>
-                                <td>Nikolai Henrik</td>
-                                <td>Carport med skur</td>
                                 <td>
-                                    <span class="statusText statusDone">AFSLUTTET</span>
+                                    <div class="productInfo">
+                                        <img src="#" alt="Ståltype sort">
+                                        <span>Ståltype sort</span>
+                                    </div>
                                 </td>
-                                <td>07-05-2026</td>
+                                <td>Tagtype</td>
+                                <td>Trapezplade i stål<br>Sort inkl skruer</td>
+                                <td>669,00</td>
+                                <td>M^2</td>
                                 <td>
-                                    <a class="viewButton" href="#">Se detaljer</a>
+                                    <a class="editButton" href="#">Rediger</a>
                                 </td>
                             </tr>
 

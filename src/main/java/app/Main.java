@@ -54,6 +54,7 @@ public class Main {
             config.routes.get("/admin/requests", MainController::adminViewRequests);
             config.routes.get("/admin/request-details", MainController::adminRequestDetails);
             config.routes.get("/admin/orders", MainController::adminViewOrders);
+            config.routes.get("/admin/products-price", MainController::adminProductsAndPrice);
 
         }).start(7070);
     }

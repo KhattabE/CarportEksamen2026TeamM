@@ -28,10 +28,15 @@
     </div>
 
     <div class="menuLinks">
+
         <a href="https://www.johannesfog.dk/have-fritid/carporte/enkelt-carporte">Enkelte carporte</a>
+
         <a href="https://www.johannesfog.dk/have-fritid/carporte/dobbelt-carporte">Dobbelt carporte</a>
+
         <a href="/build-your-carport">Skræddersyet carporte</a>
+
         <a href="https://www.johannesfog.dk/byggematerialer/tag/tilbehoer-til-tage">Tilbehør</a>
+
     </div>
 
     <div class="adminIconBox">
@@ -73,7 +78,7 @@
                 Ordrer
             </a>
 
-            <a href="#" th:classappend="${currentPage == 'products'} ? 'activeSidebarLink'">
+            <a href="/admin/products-price" th:classappend="${currentPage == 'products'} ? 'activeSidebarLink'">
                 <i class="fa-solid fa-cube"></i>
                 Produkter<br> & priser
             </a>
@@ -132,7 +137,7 @@
                             prissætninger
                         </p>
 
-                        <a href="#">Administrer ➜</a>
+                        <a href="/admin/products-price">Administrer ➜</a>
 
                     </div>
 

@@ -32,6 +32,11 @@ public class MainController {
         ctx.render("admin_view_orders.html");
     }
 
+    public static void adminProductsAndPrice(Context ctx) {
+        ctx.render("admin-products-and-price.html");
+    }
+
+
     public static void profileQuoteDetails(Context ctx) {
 
         User user = ctx.sessionAttribute("currentUser");
