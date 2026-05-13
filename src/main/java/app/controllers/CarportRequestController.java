@@ -36,7 +36,7 @@ public class CarportRequestController {
             int lengthCm = Integer.parseInt(ctx.formParam("length_cm"));
             int heightCm = Integer.parseInt(ctx.formParam("height_cm"));
 
-            boolean hasShed = ctx.formParam("has_shed") != null;
+            boolean hasShed = "true".equals(ctx.formParam("has_shed"));
 
             int shedWidthCm = 0;
             int shedLengthCm = 0;
