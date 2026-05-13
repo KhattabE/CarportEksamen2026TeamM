@@ -17,6 +17,14 @@ public class UserController {
     }
 
     public static void profile(Context ctx) {
+        User user = ctx.sessionAttribute("currentUser");
+
+        if (user == null) {
+            ctx.redirect("/signin");
+            return;
+        }
+
+        ctx.attribute("user", user);
         ctx.render("profile.html");
     }
 
@@ -41,7 +49,7 @@ public class UserController {
         }
 
         ctx.sessionAttribute("currentUser", user);
-        ctx.redirect("/");
+        ctx.redirect("/profile");
     }
 
     public static void handleSignUp(Context ctx) {
@@ -65,7 +73,19 @@ public class UserController {
             return;
         }
 
-        User user = new User(0, firstName, lastName, email, password, phoneNumber, address, postalCode, city, "customer", null);
+        User user = new User(
+                0,
+                firstName,
+                lastName,
+                email,
+                password,
+                phoneNumber,
+                address,
+                postalCode,
+                city,
+                "customer",
+                null
+        );
 
         userMapper.createUser2(user);
 
