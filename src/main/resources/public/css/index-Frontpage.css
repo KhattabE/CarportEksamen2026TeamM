@@ -84,6 +84,26 @@ body{
     font-size: 14px;
 }
 
+.adminIconBox {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+}
+
+.adminIconBox a {
+    color: white;
+    text-decoration: none;
+    font-size: 11px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.adminIconBox i {
+    font-size: 22px;
+    margin-bottom: 2px;
+}
+
 .frontPageImage {
     width: 100%;
     height: 500px;
