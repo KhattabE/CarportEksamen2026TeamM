@@ -2,11 +2,12 @@ package app;
 
 import app.config.SessionConfig;
 import app.config.ThymeleafConfig;
-import app.controllers.*;
+import app.controllers.CarportRequestController;
+import app.controllers.MainController;
+import app.controllers.UserController;
 import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
-import org.eclipse.jetty.util.Index;
 
 public class Main {
 
@@ -24,17 +25,16 @@ public class Main {
     public static void main(String[] args) {
 
         Javalin app = Javalin.create(config -> {
+
             config.staticFiles.add("/public");
 
-            config.jetty.modifyServletContextHandler(
-                    handler -> handler.setSessionHandler(SessionConfig.sessionConfig())
+            config.jetty.modifyServletContextHandler(handler ->
+                    handler.setSessionHandler(SessionConfig.sessionConfig())
             );
 
             config.fileRenderer(new JavalinThymeleaf(ThymeleafConfig.templateEngine()));
 
             config.routes.get("/", MainController::index);
-            config.routes.get("/build-your-carport", CarportRequestController::buildYourCarport);
-            config.routes.post("/build-your-carport", CarportRequestController::createCarportRequest);
 
             config.routes.get("/signup", UserController::signUp);
             config.routes.post("/signup", UserController::handleSignUp);
@@ -42,9 +42,13 @@ public class Main {
             config.routes.get("/signin", UserController::signIn);
             config.routes.post("/signin", UserController::handleSignIn);
 
+            config.routes.get("/logout", UserController::logout);
+
             config.routes.get("/profile", UserController::profile);
             config.routes.get("/profile/quote-details", MainController::profileQuoteDetails);
-            config.routes.get("/logout", UserController::logout);
+
+            config.routes.get("/build-your-carport", CarportRequestController::buildYourCarport);
+            config.routes.post("/build-your-carport", CarportRequestController::createCarportRequest);
 
             config.routes.get("/admin", MainController::adminDashboard);
             config.routes.get("/admin/requests", MainController::adminViewRequests);

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="da">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -30,18 +30,18 @@
     <div class="menuLinks">
         <a href="https://www.johannesfog.dk/have-fritid/carporte/enkelt-carporte">Enkelte carporte</a>
         <a href="https://www.johannesfog.dk/have-fritid/carporte/dobbelt-carporte">Dobbelt carporte</a>
-        <a href="#">Skræddersyet carporte</a>
-        <a href="#">Tilbehør</a>
+        <a href="/build-your-carport">Skræddersyet carporte</a>
+        <a href="https://www.johannesfog.dk/byggematerialer/tag/tilbehoer-til-tage">Tilbehør</a>
     </div>
 
     <div class="adminIconBox">
 
-        <a href="#">
+        <a href="/admin">
             <i class="fa-solid fa-table-cells-large"></i>
             <span>Admin</span>
         </a>
 
-        <a href="#">
+        <a href="/logout">
             <i class="fa-solid fa-right-from-bracket"></i>
             <span>Exit</span>
         </a>
@@ -58,22 +58,22 @@
 
             <p class="adminText">ADMIN</p>
 
-            <a href="#" class="activeSidebarLink">
+            <a href="/admin" th:classappend="${currentPage == 'dashboard'} ? 'activeSidebarLink'">
                 <i class="fa-solid fa-table-cells-large"></i>
                 Dashboard
             </a>
 
-            <a href="#">
+            <a href="/admin/requests" th:classappend="${currentPage == 'requests'} ? 'activeSidebarLink'">
                 <i class="fa-regular fa-clipboard"></i>
                 Forespørgsler
             </a>
 
-            <a href="#">
+            <a href="/admin/orders" th:classappend="${currentPage == 'orders'} ? 'activeSidebarLink'">
                 <i class="fa-solid fa-cart-shopping"></i>
                 Ordrer
             </a>
 
-            <a href="#">
+            <a href="#" th:classappend="${currentPage == 'products'} ? 'activeSidebarLink'">
                 <i class="fa-solid fa-cube"></i>
                 Produkter<br> & priser
             </a>
@@ -102,7 +102,7 @@
                             byg selv carporte
                         </p>
 
-                        <a href="#">Se forespørgsler ➜</a>
+                        <a href="/admin/requests">Se forespørgsler ➜</a>
 
                     </div>
 
@@ -117,7 +117,7 @@
                             status
                         </p>
 
-                        <a href="#">Se ordrer ➜</a>
+                        <a href="/admin/orders">Se ordrer ➜</a>
 
                     </div>
 
