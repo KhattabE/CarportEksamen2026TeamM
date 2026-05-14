@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="da">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -76,7 +76,7 @@
                 Ordrer
             </a>
 
-            <a href="/admin/products-price" th:classappend="${currentPage == 'products'} ? 'activeSidebarLink'">
+            <a href="/admin/products-price" class="activeSidebarLink">
                 <i class="fa-solid fa-cube"></i>
                 Produkter<br> & priser
             </a>
@@ -104,42 +104,41 @@
                                 <th>Beskrivelse</th>
                                 <th>Pris (DKK)</th>
                                 <th>Enhed</th>
+                                <th>Status</th>
                                 <th>Handling</th>
                             </tr>
                             </thead>
 
                             <tbody>
 
-                            <tr>
+                            <tr th:each="material : ${materials}">
                                 <td>
                                     <div class="productInfo">
-                                        <img src="#" alt="Trykimprægneret stolpe">
-                                        <span>Trykimprægneret stolpe</span>
+                                        <img src="/images/fog5.png" alt="Materiale">
+                                        <span th:text="${material.name}">Materiale navn</span>
                                     </div>
                                 </td>
-                                <td>Materiale</td>
-                                <td>Trykimprægneret stolpe<br>90 x 90 mm</td>
-                                <td>229,00</td>
-                                <td>Stk</td>
+
+                                <td th:text="${material.category}">Kategori</td>
+
+                                <td th:text="${material.description}">Beskrivelse</td>
+
+                                <td th:text="${material.pricePerUnit + ' DKK'}">0.00 DKK</td>
+
+                                <td th:text="${material.unit}">stk</td>
+
+                                <td>
+                                    <span th:if="${material.active}">Aktiv</span>
+                                    <span th:if="${!material.active}">Inaktiv</span>
+                                </td>
+
                                 <td>
                                     <a class="editButton" href="#">Rediger</a>
                                 </td>
                             </tr>
 
-                            <tr>
-                                <td>
-                                    <div class="productInfo">
-                                        <img src="#" alt="Ståltype sort">
-                                        <span>Ståltype sort</span>
-                                    </div>
-                                </td>
-                                <td>Tagtype</td>
-                                <td>Trapezplade i stål<br>Sort inkl skruer</td>
-                                <td>669,00</td>
-                                <td>M^2</td>
-                                <td>
-                                    <a class="editButton" href="#">Rediger</a>
-                                </td>
+                            <tr th:if="${materials == null || materials.isEmpty()}">
+                                <td colspan="7">Ingen materialer fundet</td>
                             </tr>
 
                             </tbody>
