@@ -1,7 +1,8 @@
 package app.persistence;
 
 import app.entities.Quote;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Date;
@@ -224,4 +225,61 @@ public class QuotesMapper {
             throw new RuntimeException("Could not reject quote", sqle);
         }
     }
+
+    // Gets all quotes that belong to one customer.
+// Used on the profile page to show the customer's offers.
+    public List<Quote> getQuotesByUserId(int userId) {
+        List<Quote> quotes = new ArrayList<>();
+
+        String sql = """
+            SELECT q.*
+            FROM quotes q
+            JOIN carport_requests cr ON q.request_id = cr.request_id
+            WHERE cr.user_id = ?
+            ORDER BY q.created_at DESC;
+            """;
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)
+        ) {
+            preparedStatement.setInt(1, userId);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                int quoteId = rs.getInt("quote_id");
+                int requestId = rs.getInt("request_id");
+                int sellerId = rs.getInt("seller_id");
+                BigDecimal totalPrice = rs.getBigDecimal("total_price");
+                String status = rs.getString("status");
+                String sellerComment = rs.getString("seller_comment");
+
+                Date validUntilDate = rs.getDate("valid_until");
+                LocalDate validUntil = validUntilDate != null ? validUntilDate.toLocalDate() : null;
+
+                Timestamp createdTimestamp = rs.getTimestamp("created_at");
+                LocalDateTime createdAt = createdTimestamp != null ? createdTimestamp.toLocalDateTime() : null;
+
+                Timestamp sentTimestamp = rs.getTimestamp("sent_at");
+                Timestamp acceptedTimestamp = rs.getTimestamp("accepted_at");
+                Timestamp rejectedTimestamp = rs.getTimestamp("rejected_at");
+
+                LocalDateTime sentAt = sentTimestamp != null ? sentTimestamp.toLocalDateTime() : null;
+                LocalDateTime acceptedAt = acceptedTimestamp != null ? acceptedTimestamp.toLocalDateTime() : null;
+                LocalDateTime rejectedAt = rejectedTimestamp != null ? rejectedTimestamp.toLocalDateTime() : null;
+
+                Quote quote = new Quote(quoteId, requestId, sellerId, totalPrice, status, sellerComment, validUntil, createdAt, sentAt, acceptedAt, rejectedAt);
+
+                quotes.add(quote);
+            }
+
+        } catch (SQLException sqle) {
+            throw new RuntimeException("Could not get quotes by user id", sqle);
+        }
+
+        return quotes;
+    }
+
+
 }

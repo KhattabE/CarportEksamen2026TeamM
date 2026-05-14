@@ -8,6 +8,8 @@ import app.controllers.UserController;
 import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
+import app.controllers.QuoteController;
+
 
 public class Main {
 
@@ -46,6 +48,7 @@ public class Main {
 
             config.routes.get("/profile", UserController::profile);
             config.routes.get("/profile/quote-details", MainController::profileQuoteDetails);
+            config.routes.post("/quote/reject", QuoteController::rejectQuote);
 
             config.routes.get("/build-your-carport", CarportRequestController::buildYourCarport);
             config.routes.post("/build-your-carport", CarportRequestController::createCarportRequest);
