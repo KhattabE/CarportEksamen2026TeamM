@@ -43,7 +43,7 @@ public class UserController {
         User user = userMapper.validateLogin(email, password);
 
         if (user == null) {
-            ctx.attribute("error", "Forkert email eller adgangskode");
+            ctx.attribute("error", "Wrong mail or password!");
             ctx.render("signin.html");
             return;
         }
