@@ -4,8 +4,8 @@ import app.entities.Carport;
 import app.entities.CarportRequest;
 import app.entities.User;
 import app.persistence.CarportRequestMapper;
-import app.persistence.ConnectionPool;
 import io.javalin.http.Context;
+import app.Main;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -75,7 +75,7 @@ public class CarportRequestController {
                     null
             );
 
-            CarportRequestMapper carportRequestMapper = new CarportRequestMapper(ConnectionPool.getInstance());
+            CarportRequestMapper carportRequestMapper = new CarportRequestMapper(Main.getConnectionPool());
 
             carportRequestMapper.createCarportRequest(carportRequest);
 
