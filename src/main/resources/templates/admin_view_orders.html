@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="da">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -14,7 +14,7 @@
 <div class="topbar">
     <p>Klik & collect*</p>
     <p>30 dages returret</p>
-    <p>Levering</p>
+    <p>30 - 45 dages levering</p>
     <p>Kontakt os</p>
 </div>
 
@@ -41,17 +41,12 @@
 
     <div class="adminIconBox">
 
-        <a href="#">
-            <i class="fa-regular fa-user"></i>
-            <span>Profil</span>
+        <a href="/admin">
+            <i class="fa-solid fa-table-cells-large"></i>
+            <span>Admin</span>
         </a>
 
-        <a href="#">
-            <i class="fa-solid fa-cart-shopping"></i>
-            <span>Kurv</span>
-        </a>
-
-        <a href="#">
+        <a href="/logout">
             <i class="fa-solid fa-right-from-bracket"></i>
             <span>Exit</span>
         </a>
@@ -68,22 +63,22 @@
 
             <p class="adminText">ADMIN</p>
 
-            <a href="#">
+            <a href="/admin" th:classappend="${currentPage == 'dashboard'} ? 'activeSidebarLink'">
                 <i class="fa-solid fa-table-cells-large"></i>
                 Dashboard
             </a>
 
-            <a href="#">
+            <a href="/admin/requests" th:classappend="${currentPage == 'requests'} ? 'activeSidebarLink'">
                 <i class="fa-regular fa-clipboard"></i>
                 Forespørgsler
             </a>
 
-            <a href="#" class="activeSidebarLink">
+            <a href="/admin/orders" th:classappend="${currentPage == 'orders'} ? 'activeSidebarLink'">
                 <i class="fa-solid fa-cart-shopping"></i>
                 Ordrer
             </a>
 
-            <a href="#">
+            <a href="/admin/products-price" th:classappend="${currentPage == 'products'} ? 'activeSidebarLink'">
                 <i class="fa-solid fa-cube"></i>
                 Produkter<br> & priser
             </a>
@@ -143,7 +138,7 @@
                                     <span class="paidNo">Nej</span>
                                 </td>
                                 <td>
-                                    <a class="viewButton" href="#">Se detaljer</a>
+                                    <a class="viewButton" href="/admin/request-details">Se detaljer</a>
                                 </td>
                             </tr>
 

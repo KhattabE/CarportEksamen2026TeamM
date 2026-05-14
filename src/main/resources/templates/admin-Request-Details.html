@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="da">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <title>Admin request details</title>
 
-    <link rel="stylesheet" href="../public/css/admin-request-details.css">
+    <link rel="stylesheet" href="/css/admin-request-details.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
@@ -41,17 +41,12 @@
 
     <div class="adminIconBox">
 
-        <a href="#">
-            <i class="fa-regular fa-user"></i>
-            <span>Profil</span>
+        <a href="/admin">
+            <i class="fa-solid fa-table-cells-large"></i>
+            <span>Admin</span>
         </a>
 
-        <a href="#">
-            <i class="fa-solid fa-cart-shopping"></i>
-            <span>Kurv</span>
-        </a>
-
-        <a href="#">
+        <a href="/logout">
             <i class="fa-solid fa-right-from-bracket"></i>
             <span>Exit</span>
         </a>
@@ -68,22 +63,22 @@
 
             <p class="adminText">ADMIN</p>
 
-            <a href="#">
+            <a href="/admin" th:classappend="${currentPage == 'dashboard'} ? 'activeSidebarLink'">
                 <i class="fa-solid fa-table-cells-large"></i>
                 Dashboard
             </a>
 
-            <a href="#" class="activeSidebarLink">
+            <a href="/admin/requests" th:classappend="${currentPage == 'requests'} ? 'activeSidebarLink'">
                 <i class="fa-regular fa-clipboard"></i>
                 Forespørgsler
             </a>
 
-            <a href="#">
+            <a href="/admin/orders" th:classappend="${currentPage == 'orders'} ? 'activeSidebarLink'">
                 <i class="fa-solid fa-cart-shopping"></i>
                 Ordrer
             </a>
 
-            <a href="#">
+            <a href="/admin/products-price" th:classappend="${currentPage == 'products'} ? 'activeSidebarLink'">
                 <i class="fa-solid fa-cube"></i>
                 Produkter<br> & priser
             </a>
@@ -94,7 +89,7 @@
 
             <div class="requestInner">
 
-                <a href="#" class="backLink">← Tilbage til forespørgsler</a>
+                <a href="/admin/requests" class="backLink">← Tilbage til forespørgsler</a>
 
                 <div class="requestHeader">
 
