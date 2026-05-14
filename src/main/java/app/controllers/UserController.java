@@ -5,6 +5,9 @@ import app.entities.User;
 import app.persistence.ConnectionPool;
 import app.persistence.UserMapper;
 import io.javalin.http.Context;
+import app.entities.Quote;
+import app.persistence.QuotesMapper;
+import java.util.List;
 
 public class UserController {
 
@@ -24,7 +27,12 @@ public class UserController {
             return;
         }
 
+        QuotesMapper quotesMapper = new QuotesMapper(Main.getConnectionPool());
+        List<Quote> quotes = quotesMapper.getQuotesByUserId(user.getUserId());
+
         ctx.attribute("user", user);
+        ctx.attribute("quotes", quotes);
+
         ctx.render("profile.html");
     }
 
@@ -73,19 +81,7 @@ public class UserController {
             return;
         }
 
-        User user = new User(
-                0,
-                firstName,
-                lastName,
-                email,
-                password,
-                phoneNumber,
-                address,
-                postalCode,
-                city,
-                "customer",
-                null
-        );
+        User user = new User(0, firstName, lastName, email, password, phoneNumber, address, postalCode, city, "customer", null);
 
         userMapper.createUser2(user);
 
