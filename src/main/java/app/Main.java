@@ -58,6 +58,7 @@ public class Main {
             config.routes.get("/admin/request-details", MainController::adminRequestDetails);
             config.routes.get("/admin/orders", MainController::adminViewOrders);
             config.routes.get("/admin/products-price", MainController::adminProductsAndPrice);
+            config.routes.post("/admin/send-quote", QuoteController::createQuoteFromRequest);
 
         }).start(7070);
     }

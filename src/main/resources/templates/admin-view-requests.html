@@ -111,40 +111,53 @@
 
                             <tbody>
 
-                            <tr>
-                                <td>Lars Petersen</td>
-                                <td>Enkelt carport</td>
-                                <td>
-                                    <span class="statusText statusNew">NY</span>
+                            <!-- Loops through real carport requests from the database -->
+                            <tr th:each="request : ${requests}">
+
+                                <td th:text="'Kunde #' + ${request.userId}">
+                                    Kunde #1
                                 </td>
-                                <td>09-05-2026</td>
-                                <td>
-                                    <a class="viewButton" href="/admin/request-details">Se detaljer</a>
+
+                                <td th:text="${request.carport.hasShed ? 'Carport med skur' : 'Carport uden skur'}">
+                                    Carport
                                 </td>
+
+                                <td>
+                                    <span class="statusText statusNew"
+                                          th:if="${request.status == 'PENDING'}"
+                                          th:text="'NY'">
+                                        NY
+                                    </span>
+
+                                    <span class="statusText statusPending"
+                                          th:if="${request.status == 'QUOTE_SENT'}"
+                                          th:text="'TILBUD SENDT'">
+                                        TILBUD SENDT
+                                    </span>
+
+                                    <span class="statusText statusDone"
+                                          th:if="${request.status != 'PENDING' and request.status != 'QUOTE_SENT'}"
+                                          th:text="${request.status}">
+                                        STATUS
+                                    </span>
+                                </td>
+
+                                <td th:text="${request.createdAt != null ? #temporals.format(request.createdAt, 'dd-MM-yyyy') : '-'}">
+                                    09-05-2026
+                                </td>
+
+                                <td>
+                                    <a class="viewButton"
+                                       th:href="@{/admin/request-details(requestId=${request.requestId})}">
+                                        Se detaljer
+                                    </a>
+                                </td>
+
                             </tr>
 
-                            <tr>
-                                <td>Jens Madsen</td>
-                                <td>Dobbelt carport</td>
-                                <td>
-                                    <span class="statusText statusPending">BEHANDLES</span>
-                                </td>
-                                <td>08-05-2026</td>
-                                <td>
-                                    <a class="viewButton" href="/admin/request-details">Se detaljer</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>Nikolai Henrik</td>
-                                <td>Carport med skur</td>
-                                <td>
-                                    <span class="statusText statusDone">AFSLUTTET</span>
-                                </td>
-                                <td>07-05-2026</td>
-                                <td>
-                                    <a class="viewButton" href="/admin/request-details">Se detaljer</a>
-                                </td>
+                            <!-- Shows this if there are no requests in the database -->
+                            <tr th:if="${requests == null || requests.isEmpty()}">
+                                <td colspan="5">Ingen forespørgsler fundet</td>
                             </tr>
 
                             </tbody>
