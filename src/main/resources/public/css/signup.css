@@ -89,7 +89,15 @@ select {
 .loginBox a {
     color: white;
     text-decoration: none;
-    font-size: 20px;
+    font-size: 11px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loginBox i {
+    font-size: 22px;
+    margin-bottom: 2px;
 }
 
 .background {

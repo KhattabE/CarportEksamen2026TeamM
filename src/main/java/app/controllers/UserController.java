@@ -57,7 +57,7 @@ public class UserController {
         }
 
         ctx.sessionAttribute("currentUser", user);
-        ctx.redirect("/profile");
+        ctx.redirect("/");
     }
 
     public static void handleSignUp(Context ctx) {
