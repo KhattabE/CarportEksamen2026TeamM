@@ -37,24 +37,28 @@
 
     </div>
 
-    <div class="adminIconBox">
 
-        <a href="#">
+    <div class="adminIconBox" th:if="${session.currentUser != null}">
+
+        <a href="/admin" th:if="${session.currentUser.role == 'admin'}">
+            <i class="fa-solid fa-table-cells-large"></i>
+            <span>Admin</span>
+        </a>
+
+        <a href="/profile" th:if="${session.currentUser.role != 'admin'}">
             <i class="fa-regular fa-user"></i>
             <span>Profil</span>
         </a>
 
-        <a href="#">
-            <i class="fa-solid fa-cart-shopping"></i>
-            <span>Kurv</span>
-        </a>
-
-        <a href="#">
+        <a href="/logout">
             <i class="fa-solid fa-right-from-bracket"></i>
-            <span>Exit</span>
+            <span>Log ud</span>
         </a>
 
     </div>
+
+</div>
+
 
 </div>
 
@@ -151,7 +155,8 @@
 
             <div class="commentRow">
                 <p>Kommentar</p>
-                <textarea name="customer_comment" id="customer_comment" placeholder="Skriv eventuelle ønsker eller bemærkninger"></textarea>
+                <textarea name="customer_comment" id="customer_comment"
+                          placeholder="Skriv eventuelle ønsker eller bemærkninger"></textarea>
             </div>
 
             <div id="updatePreview">
