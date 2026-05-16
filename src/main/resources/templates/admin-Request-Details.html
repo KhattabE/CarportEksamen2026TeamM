@@ -99,8 +99,23 @@
                     </div>
 
                     <div class="requestButtons">
+
                         <button type="button" class="rejectButton">Afvis forespørgsel</button>
-                        <button type="button" class="sendButton">Send tilbud</button>
+
+                        <form method="post"
+                              th:action="@{/admin/send-quote}"
+                              th:if="${carportRequest.status != 'QUOTE_SENT'}">
+
+                            <input type="hidden" name="requestId" th:value="${carportRequest.requestId}">
+                            <button type="submit" class="sendButton">Send tilbud</button>
+                        </form>
+
+                        <button type="button"
+                                class="sendButton"
+                                th:if="${carportRequest.status == 'QUOTE_SENT'}">
+                            Tilbud sendt
+                        </button>
+
                     </div>
 
                 </div>
@@ -116,27 +131,31 @@
 
                         <div class="detailRow">
                             <p>Navn</p>
-                            <span>Musa Khan</span>
+                            <span th:text="${user.firstName + ' ' + user.lastName}">Kunde navn</span>
                         </div>
 
                         <div class="detailRow">
                             <p>Email</p>
-                            <span>Musa@gmail.com</span>
+                            <span th:text="${user.email}">kunde@email.dk</span>
                         </div>
 
                         <div class="detailRow">
                             <p>Telefon</p>
-                            <span>42 74 78 47</span>
+                            <span th:text="${user.phone}">12345678</span>
                         </div>
 
                         <div class="detailRow">
                             <p>Adresse</p>
-                            <span>Dyssetien 4, 2730 Herlev</span>
+                            <span th:text="${user.address + ', ' + user.postalCode + ' ' + user.city}">
+                                Adresse
+                            </span>
                         </div>
 
                         <div class="detailRow">
                             <p>Dato for forespørgsel</p>
-                            <span>11 september 2001, 14:46</span>
+                            <span th:text="${carportRequest.createdAt != null ? #temporals.format(carportRequest.createdAt, 'dd-MM-yyyy HH:mm') : '-'}">
+                                Dato
+                            </span>
                         </div>
 
                     </div>
@@ -150,32 +169,36 @@
 
                         <div class="detailRow">
                             <p>Carport type</p>
-                            <span>Enkelt carport</span>
+                            <span th:text="${carportRequest.carport.hasShed ? 'Carport med skur' : 'Carport uden skur'}">
+                                Carport
+                            </span>
                         </div>
 
                         <div class="detailRow">
                             <p>Længde</p>
-                            <span>230</span>
+                            <span th:text="${carportRequest.carport.lengthCm + ' cm'}">0 cm</span>
                         </div>
 
                         <div class="detailRow">
                             <p>Højde</p>
-                            <span>500</span>
+                            <span th:text="${carportRequest.carport.heightCm + ' cm'}">0 cm</span>
                         </div>
 
                         <div class="detailRow">
                             <p>Bredde</p>
-                            <span>240</span>
+                            <span th:text="${carportRequest.carport.widthCm + ' cm'}">0 cm</span>
                         </div>
 
                         <div class="detailRow">
                             <p>Skur</p>
-                            <span>Ja</span>
+                            <span th:text="${carportRequest.carport.hasShed ? 'Ja' : 'Nej'}">Nej</span>
                         </div>
 
                         <div class="detailRow">
                             <p>Skur mål</p>
-                            <span>230 x 200 x 100</span>
+                            <span th:text="${carportRequest.carport.shedWidthCm + ' x ' + carportRequest.carport.shedLengthCm + ' cm'}">
+                                0 x 0 cm
+                            </span>
                         </div>
 
                         <div class="detailRow">
@@ -185,7 +208,7 @@
 
                         <div class="detailRow">
                             <p>Tagtype</p>
-                            <span>Fladt tag</span>
+                            <span th:text="${carportRequest.carport.roofType}">Fladt tag</span>
                         </div>
 
                     </div>
@@ -198,40 +221,25 @@
                         </div>
 
                         <p class="priceLabel">Estimeret pris inkl moms</p>
-                        <p class="price">39.395 DKK</p>
+                        <p class="price" th:text="${calculationResult.totalPrice + ' DKK'}">0 DKK</p>
 
                         <div class="line"></div>
 
                         <h3>Materiale</h3>
 
-                        <div class="materialRow">
-                            <p>12</p>
-                            <span>Stolper</span>
+                        <div th:each="line : ${calculationResult.materialLines}" class="materialRow">
+                            <p th:text="${line.quantity}">1</p>
+                            <span th:text="${line.usageDescription}">Materiale</span>
                         </div>
 
-                        <div class="materialRow">
-                            <p>12</p>
-                            <span>Skruer</span>
-                        </div>
-
-                        <div class="materialRow">
-                            <p>4</p>
-                            <span>Beslag</span>
-                        </div>
-
-                        <div class="materialRow">
-                            <p>17</p>
-                            <span>Slanger</span>
-                        </div>
-
-                        <div class="materialRow">
-                            <p>21</p>
-                            <span>Søm</span>
+                        <div th:if="${calculationResult.materialLines == null || calculationResult.materialLines.isEmpty()}" class="materialRow">
+                            <p>0</p>
+                            <span>Ingen materialer beregnet</span>
                         </div>
 
                         <div class="statusRow">
                             <p>Status</p>
-                            <span>AFVENTER BEHANDLING</span>
+                            <span th:text="${carportRequest.status}">STATUS</span>
                         </div>
 
                     </div>
@@ -240,7 +248,9 @@
 
                 <div class="commentBox">
                     <h3>Kunde kommentar</h3>
-                    <p>Kan man gøre plads til en motorcykel ved siden af?</p>
+                    <p th:text="${carportRequest.customerComment != null && !carportRequest.customerComment.isBlank() ? carportRequest.customerComment : 'Ingen kommentar'}">
+                        Ingen kommentar
+                    </p>
                 </div>
 
             </div>
