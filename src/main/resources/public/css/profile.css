@@ -91,6 +91,26 @@ body {
     font-size: 14px;
 }
 
+.adminIconBox {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+}
+
+.adminIconBox a {
+    color: white;
+    text-decoration: none;
+    font-size: 11px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.adminIconBox i {
+    font-size: 22px;
+    margin-bottom: 2px;
+}
+
 .profilePage {
     min-height: calc(100vh - 75px);
     padding: 18px 30px;
