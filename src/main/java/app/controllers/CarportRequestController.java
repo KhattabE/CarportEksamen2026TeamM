@@ -2,12 +2,17 @@ package app.controllers;
 
 import app.entities.Carport;
 import app.entities.CarportRequest;
+import app.entities.Material;
 import app.entities.User;
 import app.persistence.CarportRequestMapper;
+import app.persistence.MaterialMapper;
+import app.services.CarportCalculationResult;
+import app.services.CarportCalculator;
 import io.javalin.http.Context;
 import app.Main;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CarportRequestController {
@@ -87,4 +92,46 @@ public class CarportRequestController {
             ctx.redirect("/build-your-carport");
         }
     }
+
+    public static void calculatePreviewPrice(Context ctx) {
+        try {
+            int widthCm = Integer.parseInt(ctx.formParam("width_cm"));
+            int lengthCm = Integer.parseInt(ctx.formParam("length_cm"));
+            int heightCm = Integer.parseInt(ctx.formParam("height_cm"));
+
+            boolean hasShed = "true".equals(ctx.formParam("has_shed"));
+
+            int shedWidthCm = 0;
+            int shedLengthCm = 0;
+
+            if (hasShed) {
+                String shedWidth = ctx.formParam("shed_width_cm");
+                String shedLength = ctx.formParam("shed_length_cm");
+
+                if (shedWidth != null && !shedWidth.isBlank()) {
+                    shedWidthCm = Integer.parseInt(shedWidth);
+                }
+
+                if (shedLength != null && !shedLength.isBlank()) {
+                    shedLengthCm = Integer.parseInt(shedLength);
+                }
+            }
+
+            String roofType = ctx.formParam("roof_type");
+
+            Carport carport = new Carport(widthCm, lengthCm, heightCm, hasShed, shedWidthCm, shedLengthCm, roofType);
+
+            MaterialMapper materialMapper = new MaterialMapper(Main.getConnectionPool());
+            List<Material> materials = materialMapper.getActiveMaterials();
+
+            CarportCalculator calculator = new CarportCalculator();
+            CarportCalculationResult result = calculator.calculate(carport, materials);
+
+            ctx.result(result.getTotalPrice().toString());
+
+        } catch (Exception e) {
+            ctx.status(400).result("error");
+        }
+    }
+
 }

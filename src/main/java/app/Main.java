@@ -52,6 +52,7 @@ public class Main {
 
             config.routes.get("/build-your-carport", CarportRequestController::buildYourCarport);
             config.routes.post("/build-your-carport", CarportRequestController::createCarportRequest);
+            config.routes.post("/calculate-preview-price", CarportRequestController::calculatePreviewPrice);
 
             config.routes.get("/admin", MainController::adminDashboard);
             config.routes.get("/admin/requests", MainController::adminViewRequests);
