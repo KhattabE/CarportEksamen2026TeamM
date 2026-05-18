@@ -49,6 +49,7 @@ public class Main {
             config.routes.get("/profile/quote-details", MainController::profileQuoteDetails);
 
             config.routes.post("/quote/reject", QuoteController::rejectQuote);
+            config.routes.post("/quote/accept", QuoteController::acceptQuote);
 
             config.routes.get("/build-your-carport", CarportRequestController::buildYourCarport);
             config.routes.post("/build-your-carport", CarportRequestController::createCarportRequest);

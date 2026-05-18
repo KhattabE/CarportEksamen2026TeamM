@@ -1,8 +1,7 @@
 package app.persistence;
 
 import app.entities.Quote;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Date;
@@ -13,6 +12,8 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class QuotesMapper {
 
@@ -23,11 +24,12 @@ public class QuotesMapper {
     }
 
 
-    // Creates a new quote in the database.
+    // Creates a new quote in the database
     public Quote createQuote(Quote quote) {
         String sql = """
-                INSERT INTO quotes (request_id, seller_id, total_price, status, seller_comment, valid_until)
-                VALUES (?, ?, ?, ?, ?, ?);
+                INSERT INTO quotes
+                (request_id, seller_id, total_price, status, seller_comment, valid_until, sent_at)
+                VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP);
                 """;
 
         try (
@@ -58,10 +60,11 @@ public class QuotesMapper {
     }
 
 
-    // Gets one quote by quote_id.
+    // Gets one quote by quote_id
     public Quote getQuoteById(int quoteId) {
         String sql = """
-                SELECT * FROM quotes
+                SELECT *
+                FROM quotes
                 WHERE quote_id = ?;
                 """;
 
@@ -80,8 +83,11 @@ public class QuotesMapper {
                 String status = rs.getString("status");
                 String sellerComment = rs.getString("seller_comment");
 
-                LocalDate validUntil = rs.getDate("valid_until").toLocalDate();
-                LocalDateTime createdAt = rs.getTimestamp("created_at").toLocalDateTime();
+                Date validUntilDate = rs.getDate("valid_until");
+                LocalDate validUntil = validUntilDate != null ? validUntilDate.toLocalDate() : null;
+
+                Timestamp createdTimestamp = rs.getTimestamp("created_at");
+                LocalDateTime createdAt = createdTimestamp != null ? createdTimestamp.toLocalDateTime() : null;
 
                 Timestamp sentTimestamp = rs.getTimestamp("sent_at");
                 Timestamp acceptedTimestamp = rs.getTimestamp("accepted_at");
@@ -91,7 +97,19 @@ public class QuotesMapper {
                 LocalDateTime acceptedAt = acceptedTimestamp != null ? acceptedTimestamp.toLocalDateTime() : null;
                 LocalDateTime rejectedAt = rejectedTimestamp != null ? rejectedTimestamp.toLocalDateTime() : null;
 
-                return new Quote(quoteId, requestId, sellerId, totalPrice, status, sellerComment, validUntil, createdAt, sentAt, acceptedAt, rejectedAt);
+                return new Quote(
+                        quoteId,
+                        requestId,
+                        sellerId,
+                        totalPrice,
+                        status,
+                        sellerComment,
+                        validUntil,
+                        createdAt,
+                        sentAt,
+                        acceptedAt,
+                        rejectedAt
+                );
             }
 
         } catch (SQLException sqle) {
@@ -102,10 +120,11 @@ public class QuotesMapper {
     }
 
 
-    // Gets the quote connected to a specific carport request.
+    // Gets the quote connected to a specific carport request
     public Quote getQuoteByRequestId(int requestId) {
         String sql = """
-                SELECT * FROM quotes
+                SELECT *
+                FROM quotes
                 WHERE request_id = ?;
                 """;
 
@@ -124,8 +143,11 @@ public class QuotesMapper {
                 String status = rs.getString("status");
                 String sellerComment = rs.getString("seller_comment");
 
-                LocalDate validUntil = rs.getDate("valid_until").toLocalDate();
-                LocalDateTime createdAt = rs.getTimestamp("created_at").toLocalDateTime();
+                Date validUntilDate = rs.getDate("valid_until");
+                LocalDate validUntil = validUntilDate != null ? validUntilDate.toLocalDate() : null;
+
+                Timestamp createdTimestamp = rs.getTimestamp("created_at");
+                LocalDateTime createdAt = createdTimestamp != null ? createdTimestamp.toLocalDateTime() : null;
 
                 Timestamp sentTimestamp = rs.getTimestamp("sent_at");
                 Timestamp acceptedTimestamp = rs.getTimestamp("accepted_at");
@@ -135,7 +157,19 @@ public class QuotesMapper {
                 LocalDateTime acceptedAt = acceptedTimestamp != null ? acceptedTimestamp.toLocalDateTime() : null;
                 LocalDateTime rejectedAt = rejectedTimestamp != null ? rejectedTimestamp.toLocalDateTime() : null;
 
-                return new Quote(quoteId, requestId, sellerId, totalPrice, status, sellerComment, validUntil, createdAt, sentAt, acceptedAt, rejectedAt);
+                return new Quote(
+                        quoteId,
+                        requestId,
+                        sellerId,
+                        totalPrice,
+                        status,
+                        sellerComment,
+                        validUntil,
+                        createdAt,
+                        sentAt,
+                        acceptedAt,
+                        rejectedAt
+                );
             }
 
         } catch (SQLException sqle) {
@@ -146,7 +180,7 @@ public class QuotesMapper {
     }
 
 
-    // Marks a quote as sent.
+    // Marks a quote as sent
     public void sendQuote(int quoteId) {
         String sql = """
                 UPDATE quotes
@@ -173,7 +207,7 @@ public class QuotesMapper {
     }
 
 
-    // Marks a quote as accepted.
+    // Marks a quote as accepted
     public void acceptQuote(int quoteId) {
         String sql = """
                 UPDATE quotes
@@ -200,7 +234,7 @@ public class QuotesMapper {
     }
 
 
-    // Marks a quote as rejected.
+    // Marks a quote as rejected
     public void rejectQuote(int quoteId) {
         String sql = """
                 UPDATE quotes
@@ -226,18 +260,20 @@ public class QuotesMapper {
         }
     }
 
-    // Gets all quotes that belong to one customer.
-// Used on the profile page to show the customer's offers.
+
+    // Gets all quotes that belong to one customer
+    // ACCEPTED quotes are not shown under "Mine tilbud" anymore
     public List<Quote> getQuotesByUserId(int userId) {
         List<Quote> quotes = new ArrayList<>();
 
         String sql = """
-            SELECT q.*
-            FROM quotes q
-            JOIN carport_requests cr ON q.request_id = cr.request_id
-            WHERE cr.user_id = ?
-            ORDER BY q.created_at DESC;
-            """;
+                SELECT q.*
+                FROM quotes q
+                JOIN carport_requests cr ON q.request_id = cr.request_id
+                WHERE cr.user_id = ?
+                AND q.status <> 'ACCEPTED'
+                ORDER BY q.created_at DESC;
+                """;
 
         try (
                 Connection connection = connectionPool.getConnection();
@@ -269,7 +305,19 @@ public class QuotesMapper {
                 LocalDateTime acceptedAt = acceptedTimestamp != null ? acceptedTimestamp.toLocalDateTime() : null;
                 LocalDateTime rejectedAt = rejectedTimestamp != null ? rejectedTimestamp.toLocalDateTime() : null;
 
-                Quote quote = new Quote(quoteId, requestId, sellerId, totalPrice, status, sellerComment, validUntil, createdAt, sentAt, acceptedAt, rejectedAt);
+                Quote quote = new Quote(
+                        quoteId,
+                        requestId,
+                        sellerId,
+                        totalPrice,
+                        status,
+                        sellerComment,
+                        validUntil,
+                        createdAt,
+                        sentAt,
+                        acceptedAt,
+                        rejectedAt
+                );
 
                 quotes.add(quote);
             }
@@ -280,6 +328,4 @@ public class QuotesMapper {
 
         return quotes;
     }
-
-
 }

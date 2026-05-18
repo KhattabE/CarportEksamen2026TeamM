@@ -3,11 +3,13 @@ package app.controllers;
 import app.Main;
 import app.entities.CarportRequest;
 import app.entities.Material;
+import app.entities.Order;
 import app.entities.Quote;
 import app.entities.QuoteMaterialLine;
 import app.entities.User;
 import app.persistence.CarportRequestMapper;
 import app.persistence.MaterialMapper;
+import app.persistence.OrderMapper;
 import app.persistence.QuoteMaterialLineMapper;
 import app.persistence.QuotesMapper;
 import app.services.CarportCalculationResult;
@@ -32,6 +34,49 @@ public class QuoteController {
 
         QuotesMapper quotesMapper = new QuotesMapper(Main.getConnectionPool());
         quotesMapper.rejectQuote(quoteId);
+
+        ctx.redirect("/profile");
+    }
+
+    // Accepts a quote, creates an order, and sends the customer back to profile
+    public static void acceptQuote(Context ctx) {
+        User currentUser = ctx.sessionAttribute("currentUser");
+
+        if (currentUser == null) {
+            ctx.redirect("/signin");
+            return;
+        }
+
+        String quoteIdString = ctx.formParam("quoteId");
+
+        if (quoteIdString == null || quoteIdString.isBlank()) {
+            ctx.redirect("/profile");
+            return;
+        }
+
+        int quoteId = Integer.parseInt(quoteIdString);
+
+        QuotesMapper quotesMapper = new QuotesMapper(Main.getConnectionPool());
+        OrderMapper orderMapper = new OrderMapper(Main.getConnectionPool());
+
+        Quote quote = quotesMapper.getQuoteById(quoteId);
+
+        if (quote == null) {
+            ctx.redirect("/profile");
+            return;
+        }
+
+        // Marks the quote as accepted
+        quotesMapper.acceptQuote(quoteId);
+
+        // Creates a paid order, or updates an existing unpaid order
+        Order existingOrder = orderMapper.getOrderByQuoteId(quoteId);
+
+        if (existingOrder == null) {
+            orderMapper.createOrder(quoteId);
+        } else if (!"PAID".equals(existingOrder.getPaymentStatus())) {
+            orderMapper.markOrderAsPaid(existingOrder.getOrderId());
+        }
 
         ctx.redirect("/profile");
     }
@@ -71,14 +116,7 @@ public class QuoteController {
         CarportCalculator calculator = new CarportCalculator();
         CarportCalculationResult result = calculator.calculate(carportRequest.getCarport(), materials);
 
-        Quote quote = new Quote(
-                requestId,
-                currentUser.getUserId(),
-                result.getTotalPrice(),
-                "SENT",
-                "Automatisk genereret tilbud",
-                LocalDate.now().plusDays(14)
-        );
+        Quote quote = new Quote(requestId, currentUser.getUserId(), result.getTotalPrice(), "SENT", "Automatisk genereret tilbud", LocalDate.now().plusDays(14));
 
         Quote createdQuote = quotesMapper.createQuote(quote);
 

@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Min profil</title>
-        <link rel="stylesheet" th:href="@{/css/profile.css}">
+    <link rel="stylesheet" th:href="@{/css/profile.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
 </head>
 <body>
 
@@ -37,29 +36,28 @@
 
     </div>
 
-
     <div class="loginBox">
 
         <div class="adminIconBox" th:if="${session.currentUser != null}">
 
-        <a href="/admin" th:if="${session.currentUser.role == 'admin'}">
-            <i class="fa-solid fa-table-cells-large"></i>
-            <span>Admin</span>
-        </a>
+            <a href="/admin" th:if="${session.currentUser.role == 'admin'}">
+                <i class="fa-solid fa-table-cells-large"></i>
+                <span>Admin</span>
+            </a>
 
-        <a href="/profile" th:if="${session.currentUser.role != 'admin'}">
-            <i class="fa-regular fa-user"></i>
-            <span>Profil</span>
-        </a>
+            <a href="/profile" th:if="${session.currentUser.role != 'admin'}">
+                <i class="fa-regular fa-user"></i>
+                <span>Profil</span>
+            </a>
 
             <a th:href="@{/logout}">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 <span>Log ud</span>
             </a>
 
-    </div>
+        </div>
 
-</div>
+    </div>
 
 </div>
 
@@ -94,9 +92,9 @@
 
                 <div class="offerText">
                     <h3 th:text="'Tilbud #' + ${quote.quoteId}">Tilbud #023</h3>
-                    <p>Marineret carport</p>
-                    <p>600 x 500 x 230</p>
-                    <p>Skur - Ja</p>
+                    <p>Custom carport</p>
+                    <p>Se detaljer for mål</p>
+                    <p>Tilbud fra sælger</p>
                 </div>
 
                 <div class="infoRow">
@@ -109,8 +107,8 @@
                         <p>Oprettet</p>
                         <span class="whiteText"
                               th:text="${quote.createdAt != null ? #temporals.format(quote.createdAt, 'dd-MM-yyyy') : '-'}">
-                    20-01-2029
-                </span>
+                            20-01-2029
+                        </span>
                     </div>
 
                     <div>
@@ -118,7 +116,9 @@
 
                         <span class="redText" th:if="${quote.status == 'REJECTED'}">Afvist</span>
                         <span class="greenText" th:if="${quote.status == 'ACCEPTED'}">Accepteret</span>
-                        <span class="yellowText" th:if="${quote.status != 'REJECTED' and quote.status != 'ACCEPTED'}">Afventer svar</span>
+                        <span class="yellowText" th:if="${quote.status != 'REJECTED' and quote.status != 'ACCEPTED'}">
+                            Afventer svar
+                        </span>
                     </div>
                 </div>
 
@@ -149,65 +149,65 @@
         <div class="profileBox">
             <h2>Mine ordrer</h2>
 
-            <div class="orderBox">
+            <!-- Loops through real orders from the database -->
+            <div class="orderBox" th:each="order : ${orders}">
                 <img th:src="@{/images/fog5.png}" alt="Carport ordre">
 
                 <div class="orderText">
-                    <h3>Ordre #023</h3>
-                    <p>Marineret carport</p>
-                    <p>600 x 500 x 230</p>
-                    <p>Skur - Ja</p>
+                    <h3 th:text="'Ordre #' + ${order.orderId}">Ordre #001</h3>
+
+                    <p th:text="${order.hasShed ? 'Carport med skur' : 'Carport uden skur'}">
+                        Carport med skur
+                    </p>
+
+                    <p th:text="${order.lengthCm + ' x ' + order.widthCm + ' x ' + order.heightCm + ' cm'}">
+                        600 x 500 x 230 cm
+                    </p>
+
+                    <p th:text="${order.hasShed ? 'Skur - Ja' : 'Skur - Nej'}">
+                        Skur - Ja
+                    </p>
                 </div>
 
                 <div class="infoRow">
                     <div>
                         <p>Pris</p>
-                        <span class="greenText">39.395 DKK</span>
+                        <span class="greenText" th:text="${order.totalPrice + ' DKK'}">
+                            39.395 DKK
+                        </span>
                     </div>
 
                     <div>
                         <p>Betalt</p>
-                        <span class="whiteText">07-05-2026</span>
+                        <span class="whiteText"
+                              th:text="${order.paidAt != null ? #temporals.format(order.paidAt, 'dd-MM-yyyy') : '-'}">
+                            07-05-2026
+                        </span>
                     </div>
 
                     <div>
                         <p>Status</p>
-                        <span class="greenText">Betalt</span>
+
+                        <span class="greenText"
+                              th:if="${order.paymentStatus == 'PAID'}">
+                            Betalt
+                        </span>
+
+                        <span class="yellowText"
+                              th:if="${order.paymentStatus != 'PAID'}"
+                              th:text="${order.paymentStatus}">
+                            Afventer
+                        </span>
                     </div>
                 </div>
 
                 <button type="button">Download stykliste</button>
             </div>
 
-            <div class="orderBox">
-                <img th:src="@{/images/fog5.png}" alt="Carport ordre">
-
-                <div class="orderText">
-                    <h3>Ordre #024</h3>
-                    <p>Marineret carport</p>
-                    <p>600 x 500 x 230</p>
-                    <p>Skur - Ja</p>
-                </div>
-
-                <div class="infoRow">
-                    <div>
-                        <p>Pris</p>
-                        <span class="greenText">14.395 DKK</span>
-                    </div>
-
-                    <div>
-                        <p>Betalt</p>
-                        <span class="whiteText">07-05-2026</span>
-                    </div>
-
-                    <div>
-                        <p>Status</p>
-                        <span class="greenText">Betalt</span>
-                    </div>
-                </div>
-
-                <button type="button">Download stykliste</button>
-            </div>
+            <!-- Shows this if the customer has no orders -->
+            <p th:if="${orders == null || orders.isEmpty()}">
+                Du har ingen ordrer endnu.
+            </p>
         </div>
 
     </div>

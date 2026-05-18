@@ -1,12 +1,15 @@
 package app.controllers;
 
 import app.Main;
+import app.entities.ProfileOrder;
+import app.entities.Quote;
 import app.entities.User;
 import app.persistence.ConnectionPool;
+import app.persistence.OrderMapper;
+import app.persistence.QuotesMapper;
 import app.persistence.UserMapper;
 import io.javalin.http.Context;
-import app.entities.Quote;
-import app.persistence.QuotesMapper;
+
 import java.util.List;
 
 public class UserController {
@@ -27,11 +30,17 @@ public class UserController {
             return;
         }
 
+        // Gets the customer's active quotes for "Mine tilbud"
         QuotesMapper quotesMapper = new QuotesMapper(Main.getConnectionPool());
         List<Quote> quotes = quotesMapper.getQuotesByUserId(user.getUserId());
 
+        // Gets the customer's real orders for "Mine ordrer"
+        OrderMapper orderMapper = new OrderMapper(Main.getConnectionPool());
+        List<ProfileOrder> orders = orderMapper.getProfileOrdersByUserId(user.getUserId());
+
         ctx.attribute("user", user);
         ctx.attribute("quotes", quotes);
+        ctx.attribute("orders", orders);
 
         ctx.render("profile.html");
     }

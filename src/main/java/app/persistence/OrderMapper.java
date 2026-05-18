@@ -1,7 +1,9 @@
 package app.persistence;
 
 import app.entities.Order;
+import app.entities.ProfileOrder;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrderMapper {
 
@@ -19,13 +23,10 @@ public class OrderMapper {
     }
 
 
-    // Creates a new order from an accepted quote.
-    // This should be used after the customer accepts a quote.
-    // The order starts as WAITING_FOR_PAYMENT and UNPAID.
+    // Creates a paid order from an accepted quote.
+    // This is used when the customer clicks "Accepter og betal".
     public Order createOrder(int quoteId) {
-        String sql = """
-                INSERT INTO orders (quote_id, order_status, payment_status, created_at) VALUES (?, 'WAITING_FOR_PAYMENT', 'UNPAID', CURRENT_TIMESTAMP);
-                """;
+        String sql = "INSERT INTO orders (quote_id, order_status, payment_status, created_at, paid_at) VALUES (?, 'IN_PROGRESS', 'PAID', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
 
         try (
                 Connection connection = connectionPool.getConnection();
@@ -50,12 +51,9 @@ public class OrderMapper {
     }
 
 
-    // Gets one order by order_id (useful when you need to show one specific order)
+    // Gets one order by order_id.
     public Order getOrderById(int orderId) {
-        String sql = """
-                SELECT * FROM orders
-                WHERE order_id = ?;
-                """;
+        String sql = "SELECT * FROM orders WHERE order_id = ?;";
 
         try (
                 Connection connection = connectionPool.getConnection();
@@ -70,9 +68,10 @@ public class OrderMapper {
                 String orderStatus = rs.getString("order_status");
                 String paymentStatus = rs.getString("payment_status");
 
-                LocalDateTime createdAt = rs.getTimestamp("created_at").toLocalDateTime();
-
+                Timestamp createdTimestamp = rs.getTimestamp("created_at");
                 Timestamp paidTimestamp = rs.getTimestamp("paid_at");
+
+                LocalDateTime createdAt = createdTimestamp != null ? createdTimestamp.toLocalDateTime() : null;
                 LocalDateTime paidAt = paidTimestamp != null ? paidTimestamp.toLocalDateTime() : null;
 
                 return new Order(orderId, quoteId, orderStatus, paymentStatus, createdAt, paidAt);
@@ -88,10 +87,7 @@ public class OrderMapper {
 
     // Gets the order connected to a specific quote.
     public Order getOrderByQuoteId(int quoteId) {
-        String sql = """
-                SELECT * FROM orders
-                WHERE quote_id = ?;
-                """;
+        String sql = "SELECT * FROM orders WHERE quote_id = ?;";
 
         try (
                 Connection connection = connectionPool.getConnection();
@@ -106,9 +102,10 @@ public class OrderMapper {
                 String orderStatus = rs.getString("order_status");
                 String paymentStatus = rs.getString("payment_status");
 
-                LocalDateTime createdAt = rs.getTimestamp("created_at").toLocalDateTime();
-
+                Timestamp createdTimestamp = rs.getTimestamp("created_at");
                 Timestamp paidTimestamp = rs.getTimestamp("paid_at");
+
+                LocalDateTime createdAt = createdTimestamp != null ? createdTimestamp.toLocalDateTime() : null;
                 LocalDateTime paidAt = paidTimestamp != null ? paidTimestamp.toLocalDateTime() : null;
 
                 return new Order(orderId, quoteId, orderStatus, paymentStatus, createdAt, paidAt);
@@ -122,15 +119,9 @@ public class OrderMapper {
     }
 
 
-    // Marks an order as paid.
+    // Marks an existing order as paid.
     public void markOrderAsPaid(int orderId) {
-        String sql = """
-                UPDATE orders
-                SET payment_status = 'PAID',
-                    order_status = 'IN_PROGRESS',
-                    paid_at = CURRENT_TIMESTAMP
-                WHERE order_id = ?;
-                """;
+        String sql = "UPDATE orders SET payment_status = 'PAID', order_status = 'IN_PROGRESS', paid_at = CURRENT_TIMESTAMP WHERE order_id = ?;";
 
         try (
                 Connection connection = connectionPool.getConnection();
@@ -152,11 +143,7 @@ public class OrderMapper {
 
     // Updates the order status.
     public void updateOrderStatus(int orderId, String orderStatus) {
-        String sql = """
-                UPDATE orders
-                SET order_status = ?
-                WHERE order_id = ?;
-                """;
+        String sql = "UPDATE orders SET order_status = ? WHERE order_id = ?;";
 
         try (
                 Connection connection = connectionPool.getConnection();
@@ -174,5 +161,91 @@ public class OrderMapper {
         } catch (SQLException sqle) {
             throw new RuntimeException("Could not update order status", sqle);
         }
+    }
+
+
+    // Gets all orders that belong to one customer.
+    public List<Order> getOrdersByUserId(int userId) {
+        List<Order> orders = new ArrayList<>();
+
+        String sql = "SELECT o.* FROM orders o JOIN quotes q ON o.quote_id = q.quote_id JOIN carport_requests cr ON q.request_id = cr.request_id WHERE cr.user_id = ? ORDER BY o.created_at DESC;";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)
+        ) {
+            preparedStatement.setInt(1, userId);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                int orderId = rs.getInt("order_id");
+                int quoteId = rs.getInt("quote_id");
+                String orderStatus = rs.getString("order_status");
+                String paymentStatus = rs.getString("payment_status");
+
+                Timestamp createdTimestamp = rs.getTimestamp("created_at");
+                Timestamp paidTimestamp = rs.getTimestamp("paid_at");
+
+                LocalDateTime createdAt = createdTimestamp != null ? createdTimestamp.toLocalDateTime() : null;
+                LocalDateTime paidAt = paidTimestamp != null ? paidTimestamp.toLocalDateTime() : null;
+
+                Order order = new Order(orderId, quoteId, orderStatus, paymentStatus, createdAt, paidAt);
+
+                orders.add(order);
+            }
+
+        } catch (SQLException sqle) {
+            throw new RuntimeException("Could not get orders by user id", sqle);
+        }
+
+        return orders;
+    }
+
+
+    // Gets all profile orders for one customer.
+    // This is used on profile.html under "Mine ordrer".
+    public List<ProfileOrder> getProfileOrdersByUserId(int userId) {
+        List<ProfileOrder> profileOrders = new ArrayList<>();
+
+        String sql = "SELECT o.order_id, o.quote_id, o.order_status, o.payment_status, o.created_at, o.paid_at, q.total_price, cr.width_cm, cr.length_cm, cr.height_cm, cr.has_shed FROM orders o JOIN quotes q ON o.quote_id = q.quote_id JOIN carport_requests cr ON q.request_id = cr.request_id WHERE cr.user_id = ? ORDER BY o.created_at DESC;";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)
+        ) {
+            preparedStatement.setInt(1, userId);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                int orderId = rs.getInt("order_id");
+                int quoteId = rs.getInt("quote_id");
+                String orderStatus = rs.getString("order_status");
+                String paymentStatus = rs.getString("payment_status");
+
+                Timestamp createdTimestamp = rs.getTimestamp("created_at");
+                Timestamp paidTimestamp = rs.getTimestamp("paid_at");
+
+                BigDecimal totalPrice = rs.getBigDecimal("total_price");
+
+                int widthCm = rs.getInt("width_cm");
+                int lengthCm = rs.getInt("length_cm");
+                int heightCm = rs.getInt("height_cm");
+                boolean hasShed = rs.getBoolean("has_shed");
+
+                LocalDateTime createdAt = createdTimestamp != null ? createdTimestamp.toLocalDateTime() : null;
+                LocalDateTime paidAt = paidTimestamp != null ? paidTimestamp.toLocalDateTime() : null;
+
+                ProfileOrder profileOrder = new ProfileOrder(orderId, quoteId, totalPrice, orderStatus, paymentStatus, createdAt, paidAt, widthCm, lengthCm, heightCm, hasShed);
+
+                profileOrders.add(profileOrder);
+            }
+
+        } catch (SQLException sqle) {
+            throw new RuntimeException("Could not get profile orders by user id", sqle);
+        }
+
+        return profileOrders;
     }
 }
