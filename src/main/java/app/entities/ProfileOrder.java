@@ -17,6 +17,7 @@ public class ProfileOrder {
     private int lengthCm;
     private int heightCm;
     private boolean hasShed;
+    private String previewImage;
 
     public ProfileOrder(int orderId, int quoteId, BigDecimal totalPrice, String orderStatus, String paymentStatus, LocalDateTime createdAt, LocalDateTime paidAt, int widthCm, int lengthCm, int heightCm, boolean hasShed) {
         this.orderId = orderId;
@@ -74,5 +75,13 @@ public class ProfileOrder {
 
     public boolean isHasShed() {
         return hasShed;
+    }
+
+    public String getPreviewImage() {
+        return previewImage;
+    }
+
+    public void setPreviewImage(String previewImage) {
+        this.previewImage = previewImage;
     }
 }
