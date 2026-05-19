@@ -1,6 +1,7 @@
 package app.persistence;
 
 import app.entities.User;
+import at.favre.lib.crypto.bcrypt.BCrypt;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +15,7 @@ public class UserMapper {
         this.connectionPool = connectionPool;
     }
 
-    public void createUser2(User user) {
+    public void createUser(User user) {
         String sql = """
         INSERT INTO users 
         (first_name, last_name, email, password_hash, phone, address, postal_code, city, role) 
@@ -69,46 +70,6 @@ public class UserMapper {
                         rs.getString("role"),
                         rs.getTimestamp("created_at") != null ? rs.getTimestamp("created_at").toLocalDateTime() : null
                 );
-            }
-
-        } catch (SQLException e) {
-            System.out.println("An error has happened: " + sql);
-        }
-
-        return null;
-    }
-
-    public User validateLogin(String email, String password) {
-        String sql = """
-        SELECT * FROM users WHERE email = ?
-        """;
-
-        try (
-                Connection connection = connectionPool.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
-            preparedStatement.setString(1, email);
-
-            ResultSet rs = preparedStatement.executeQuery();
-
-            if (rs.next()) {
-                String passwordHash = rs.getString("password_hash");
-
-                if (passwordHash.equals(password)) {
-                    return new User(
-                            rs.getInt("user_id"),
-                            rs.getString("first_name"),
-                            rs.getString("last_name"),
-                            rs.getString("email"),
-                            rs.getString("password_hash"),
-                            rs.getString("phone"),
-                            rs.getString("address"),
-                            rs.getString("postal_code"),
-                            rs.getString("city"),
-                            rs.getString("role"),
-                            rs.getTimestamp("created_at") != null ? rs.getTimestamp("created_at").toLocalDateTime() : null
-                    );
-                }
             }
 
         } catch (SQLException e) {
