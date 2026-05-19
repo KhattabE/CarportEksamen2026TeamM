@@ -31,11 +31,9 @@ public class UserController {
             return;
         }
 
-        // Gets the customer's active quotes for "Mine tilbud"
         QuotesMapper quotesMapper = new QuotesMapper(Main.getConnectionPool());
         List<Quote> quotes = quotesMapper.getQuotesByUserId(user.getUserId());
 
-        // Gets the customer's real orders for "Mine ordrer"
         OrderMapper orderMapper = new OrderMapper(Main.getConnectionPool());
         List<ProfileOrder> orders = orderMapper.getProfileOrdersByUserId(user.getUserId());
 
@@ -52,7 +50,7 @@ public class UserController {
     }
 
     public static void handleSignIn(Context ctx) {
-        String email = ctx.formParam("email");
+        String email = ctx.formParam("email").trim().toLowerCase();
         String password = ctx.formParam("password");
 
         ConnectionPool connectionPool = Main.getConnectionPool();
@@ -68,7 +66,7 @@ public class UserController {
 
         BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), user.getPasswordHash());
 
-        if(!result.verified){
+        if (!result.verified) {
             ctx.attribute("error", "Wrong mail or password!");
             ctx.render("signin.html");
             return;
@@ -81,7 +79,7 @@ public class UserController {
     public static void handleSignUp(Context ctx) {
         String firstName = ctx.formParam("firstName");
         String lastName = ctx.formParam("lastName");
-        String email = ctx.formParam("email");
+        String email = ctx.formParam("email").trim().toLowerCase();
         String password = ctx.formParam("password");
         String phoneNumber = ctx.formParam("phoneNumber");
         String address = ctx.formParam("address");
@@ -101,7 +99,19 @@ public class UserController {
             return;
         }
 
-        User user = new User(0, firstName, lastName, email, hashPassword, phoneNumber, address, postalCode, city, "customer", null);
+        User user = new User(
+                0,
+                firstName,
+                lastName,
+                email,
+                hashPassword,
+                phoneNumber,
+                address,
+                postalCode,
+                city,
+                "customer",
+                null
+        );
 
         userMapper.createUser(user);
 

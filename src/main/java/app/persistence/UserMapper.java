@@ -1,7 +1,6 @@
 package app.persistence;
 
 import app.entities.User;
-import at.favre.lib.crypto.bcrypt.BCrypt;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,7 +27,7 @@ public class UserMapper {
 
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
-            preparedStatement.setString(3, user.getEmail());
+            preparedStatement.setString(3, user.getEmail().trim().toLowerCase());
             preparedStatement.setString(4, user.getPasswordHash());
             preparedStatement.setString(5, user.getPhone());
             preparedStatement.setString(6, user.getAddress());
@@ -45,14 +44,15 @@ public class UserMapper {
 
     public User getUserByEmail(String email) {
         String sql = """
-        SELECT * FROM users WHERE email = ?
+        SELECT * FROM users 
+        WHERE LOWER(email) = LOWER(?)
         """;
 
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setString(1, email);
+            preparedStatement.setString(1, email.trim());
 
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -81,7 +81,8 @@ public class UserMapper {
 
     public User getUserById(int userId) {
         String sql = """
-        SELECT * FROM users WHERE user_id = ?
+        SELECT * FROM users 
+        WHERE user_id = ?
         """;
 
         try (
