@@ -366,6 +366,12 @@ select {
     top: 50%;
     transform: translateY(-50%);
     z-index: 2;
-
 }
 
+input[placeholder="E-mail findes allerede"]::placeholder {
+    color: #ff6b6b;
+}
+
+input[placeholder="Nummeret findes allerede"]::placeholder {
+    color: #ff6b6b;
+}

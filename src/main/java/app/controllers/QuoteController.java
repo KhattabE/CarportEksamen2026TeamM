@@ -130,7 +130,7 @@ public class QuoteController {
         boolean hasShed = carport.isHasShed();
 
         int width = carport.getWidthCm();
-        boolean isDouble = width > 300;
+        boolean isDouble = width > 300; // instead of carport type
 
         if (!isDouble && roofType.equals("Fladt tag") && !hasShed) {
             return "/images/enkeltCarportUdenSkurOgUdenRejsning.png";
