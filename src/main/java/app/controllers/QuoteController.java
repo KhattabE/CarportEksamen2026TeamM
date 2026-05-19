@@ -1,12 +1,7 @@
 package app.controllers;
 
 import app.Main;
-import app.entities.CarportRequest;
-import app.entities.Material;
-import app.entities.Order;
-import app.entities.Quote;
-import app.entities.QuoteMaterialLine;
-import app.entities.User;
+import app.entities.*;
 import app.persistence.CarportRequestMapper;
 import app.persistence.MaterialMapper;
 import app.persistence.OrderMapper;
@@ -129,4 +124,32 @@ public class QuoteController {
 
         ctx.redirect("/admin/requests");
     }
+
+    public static String getPreviewImage(Carport carport) {
+        String roofType = carport.getRoofType();
+        boolean hasShed = carport.isHasShed();
+
+        int width = carport.getWidthCm();
+        boolean isDouble = width > 300;
+
+        if (!isDouble && roofType.equals("Fladt tag") && !hasShed) {
+            return "/images/enkeltCarportUdenSkurOgUdenRejsning.png";
+        } else if (!isDouble && roofType.equals("Fladt tag") && hasShed) {
+            return "/images/enkeltCarportMedSkurOgUdenRejsning.png";
+        } else if (!isDouble && roofType.equals("Rejsning") && !hasShed) {
+            return "/images/enkeltCarportUdenSkurMedRejsning.png";
+        } else if (!isDouble && roofType.equals("Rejsning") && hasShed) {
+            return "/images/enkeltCarportMedSkurOgMedRejsning.png";
+        } else if (isDouble && roofType.equals("Fladt tag") && !hasShed) {
+            return "/images/dobbeltCarportUdenSkurOgUdenRejsning.png";
+        } else if (isDouble && roofType.equals("Fladt tag") && hasShed) {
+            return "/images/dobbeltCarportMedSkurUdenRejsning.png";
+        } else if (isDouble && roofType.equals("Rejsning") && !hasShed) {
+            return "/images/dobbeltCarportUdenSkurOgRejsning.png";
+        } else {
+            return "/images/dobbeltCarportMedSkurOgRejsning.png";
+
+        }
+    }
+
 }

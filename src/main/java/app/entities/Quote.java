@@ -16,6 +16,7 @@ public class Quote {
     private LocalDateTime sentAt;
     private LocalDateTime acceptedAt;
     private LocalDateTime rejectedAt;
+    private String previewImage;
 
     public Quote(int quoteId, int requestId, int sellerId, BigDecimal totalPrice, String status, String sellerComment, LocalDate validUntil, LocalDateTime createdAt, LocalDateTime sentAt, LocalDateTime acceptedAt, LocalDateTime rejectedAt) {
         this.quoteId = quoteId;
@@ -83,5 +84,13 @@ public class Quote {
 
     public LocalDateTime getRejectedAt() {
         return rejectedAt;
+    }
+
+    public String getPreviewImage() {
+        return previewImage;
+    }
+
+    public void setPreviewImage(String previewImage) {
+        this.previewImage = previewImage;
     }
 }

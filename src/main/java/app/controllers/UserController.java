@@ -1,13 +1,11 @@
 package app.controllers;
 
 import app.Main;
+import app.entities.CarportRequest;
 import app.entities.ProfileOrder;
 import app.entities.Quote;
 import app.entities.User;
-import app.persistence.ConnectionPool;
-import app.persistence.OrderMapper;
-import app.persistence.QuotesMapper;
-import app.persistence.UserMapper;
+import app.persistence.*;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import io.javalin.http.Context;
 
@@ -33,9 +31,24 @@ public class UserController {
 
         QuotesMapper quotesMapper = new QuotesMapper(Main.getConnectionPool());
         List<Quote> quotes = quotesMapper.getQuotesByUserId(user.getUserId());
+        CarportRequestMapper carportRequestMapper = new CarportRequestMapper(Main.getConnectionPool());
+
+        for (Quote quote : quotes) {
+            CarportRequest carportRequest = carportRequestMapper.getCarportRequestById(quote.getRequestId());
+            String previewImage = QuoteController.getPreviewImage(carportRequest.getCarport());
+            quote.setPreviewImage(previewImage);
+        }
 
         OrderMapper orderMapper = new OrderMapper(Main.getConnectionPool());
         List<ProfileOrder> orders = orderMapper.getProfileOrdersByUserId(user.getUserId());
+
+        for (ProfileOrder order : orders) {
+            Quote quote = quotesMapper.getQuoteById(order.getQuoteId());
+            CarportRequest carportRequest = carportRequestMapper.getCarportRequestById(quote.getRequestId());
+            String previewImage = QuoteController.getPreviewImage(carportRequest.getCarport());
+            order.setPreviewImage(previewImage);
+        }
+
 
         ctx.attribute("user", user);
         ctx.attribute("quotes", quotes);

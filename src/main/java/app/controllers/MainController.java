@@ -130,6 +130,8 @@ public class MainController {
 
         ctx.attribute("user", user);
         ctx.attribute("carportRequest", carportRequest);
+        String previewImage = QuoteController.getPreviewImage(carportRequest.getCarport());
+        quote.setPreviewImage(previewImage);
         ctx.attribute("quote", quote);
 
         ctx.render("profile-qoute-details.html");
