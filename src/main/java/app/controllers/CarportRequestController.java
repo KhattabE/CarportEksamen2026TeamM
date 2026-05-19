@@ -71,14 +71,7 @@ public class CarportRequestController {
 
             Carport carport = new Carport(widthCm, lengthCm, heightCm, hasShed, shedWidthCm, shedLengthCm, roofType);
 
-            CarportRequest carportRequest = new CarportRequest(
-                    0,
-                    currentUser.getUserId(),
-                    carport,
-                    "PENDING",
-                    customerComment,
-                    null
-            );
+            CarportRequest carportRequest = new CarportRequest(0, currentUser.getUserId(), carport, "PENDING", customerComment, null);
 
             CarportRequestMapper carportRequestMapper = new CarportRequestMapper(Main.getConnectionPool());
 

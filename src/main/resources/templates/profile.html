@@ -77,10 +77,7 @@
                 <p th:text="'Telefon: ' + ${user.phone}"></p>
                 <p th:text="'Adresse: ' + ${user.address + ', ' + user.postalCode + ' ' + user.city}"></p>
                 <p th:text="'Medlem siden: ' + ${#temporals.format(user.createdAt, 'dd-MM-yyyy')}"></p>
-                <p>Adgangskode: ************</p>
             </div>
-
-            <button type="button">Rediger profil</button>
         </div>
 
         <div class="profileBox">

@@ -8,6 +8,7 @@ import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
 import app.persistence.QuotesMapper;
 import app.persistence.UserMapper;
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import io.javalin.http.Context;
 
 import java.util.List;
@@ -57,9 +58,17 @@ public class UserController {
         ConnectionPool connectionPool = Main.getConnectionPool();
         UserMapper userMapper = new UserMapper(connectionPool);
 
-        User user = userMapper.validateLogin(email, password);
+        User user = userMapper.getUserByEmail(email);
 
         if (user == null) {
+            ctx.attribute("error", "Wrong mail or password!");
+            ctx.render("signin.html");
+            return;
+        }
+
+        BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), user.getPasswordHash());
+
+        if(!result.verified){
             ctx.attribute("error", "Wrong mail or password!");
             ctx.render("signin.html");
             return;
@@ -79,6 +88,8 @@ public class UserController {
         String postalCode = ctx.formParam("postalCode");
         String city = ctx.formParam("city");
 
+        String hashPassword = BCrypt.withDefaults().hashToString(12, password.toCharArray());
+
         ConnectionPool connectionPool = Main.getConnectionPool();
         UserMapper userMapper = new UserMapper(connectionPool);
 
@@ -90,9 +101,9 @@ public class UserController {
             return;
         }
 
-        User user = new User(0, firstName, lastName, email, password, phoneNumber, address, postalCode, city, "customer", null);
+        User user = new User(0, firstName, lastName, email, hashPassword, phoneNumber, address, postalCode, city, "customer", null);
 
-        userMapper.createUser2(user);
+        userMapper.createUser(user);
 
         ctx.redirect("/signin");
     }
