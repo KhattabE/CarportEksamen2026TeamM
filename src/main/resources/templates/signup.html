@@ -79,13 +79,14 @@
             <p class="overTitles">E-mail</p>
             <div id="signupMail">
                 <i class="fa-regular fa-envelope"></i>
-                <input type="email" name="email" placeholder="Indtast din mail" required>
+                <input type="email" name="email" th:placeholder="${emailError} ?: 'Indtast din mail'" required>
             </div>
 
             <p class="overTitles">Adgangskode</p>
             <div id="signupPassword">
                 <i class="fa-solid fa-lock"></i>
                 <input type="password" name="password" placeholder="Indtast din adgangskode" required>
+
             </div>
 
             <div class="doubleColumnRow">
@@ -94,7 +95,7 @@
                     <p class="overTitles">Telefonnummer</p>
                     <div id="signupPhone">
                         <i class="fa-solid fa-phone"></i>
-                        <input type="text" name="phoneNumber" placeholder="Indtast dit telefonnummer" required>
+                        <input type="text" name="phoneNumber" th:placeholder="${phoneError} ?: 'Indtast dit telefonnummer'" required>
                     </div>
                 </div>
 
@@ -127,8 +128,6 @@
                 </div>
 
             </div>
-
-            <p th:if="${error}" th:text="${error}" class="errorMessage"></p>
 
             <div id="signupButton">
                 <button type="submit">Opret en konto</button>

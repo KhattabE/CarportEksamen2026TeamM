@@ -91,6 +91,7 @@
 
                 <a href="/admin/requests" class="backLink">← Tilbage til forespørgsler</a>
 
+
                 <div class="requestHeader">
 
                     <div>
@@ -99,20 +100,17 @@
                     </div>
 
                     <div class="requestButtons">
+                        <form method="post" th:action="@{/admin/reject-request}">
+                            <input type="hidden" name="requestId" th:value="${carportRequest.requestId}">
+                            <button type="submit" class="rejectButton">Afvis forespørgsel</button>
+                        </form>
 
-                        <button type="button" class="rejectButton">Afvis forespørgsel</button>
-
-                        <form method="post"
-                              th:action="@{/admin/send-quote}"
-                              th:if="${carportRequest.status != 'QUOTE_SENT'}">
-
+                        <form method="post" th:action="@{/admin/send-quote}" th:if="${carportRequest.status != 'QUOTE_SENT'}">
                             <input type="hidden" name="requestId" th:value="${carportRequest.requestId}">
                             <button type="submit" class="sendButton">Send tilbud</button>
                         </form>
 
-                        <button type="button"
-                                class="sendButton"
-                                th:if="${carportRequest.status == 'QUOTE_SENT'}">
+                        <button type="button" class="sendButton" th:if="${carportRequest.status == 'QUOTE_SENT'}">
                             Tilbud sendt
                         </button>
 

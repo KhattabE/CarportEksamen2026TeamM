@@ -292,3 +292,7 @@ select {
     background-color: #00752D;
     color: white;
 }
+
+.statusDone {
+    color: #ff4d4d;
+}

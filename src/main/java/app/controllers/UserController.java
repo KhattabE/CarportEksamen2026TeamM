@@ -105,7 +105,7 @@ public class UserController {
         User existingUserByEmail = userMapper.getUserByEmail(email);
 
         if (existingUserByEmail != null) {
-            ctx.attribute("error", "Der findes allerede en bruger med denne e-mail");
+            ctx.attribute("emailError", "E-mail findes allerede");
             ctx.render("signup.html");
             return;
         }
@@ -113,7 +113,7 @@ public class UserController {
         User existingUserByPhone = userMapper.getUserByPhone(phoneNumber);
 
         if (existingUserByPhone != null) {
-            ctx.attribute("error", "Der findes allerede en bruger med dette telefonnummer");
+            ctx.attribute("phoneError", "Nummeret findes allerede");
             ctx.render("signup.html");
             return;
         }

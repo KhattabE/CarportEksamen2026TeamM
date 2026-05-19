@@ -136,9 +136,8 @@
                                     </span>
 
                                     <span class="statusText statusDone"
-                                          th:if="${request.status != 'PENDING' and request.status != 'QUOTE_SENT'}"
+                                          th:if="${request.status == 'AFVIST'}"
                                           th:text="${request.status}">
-                                        STATUS
                                     </span>
                                 </td>
 
@@ -148,6 +147,7 @@
 
                                 <td>
                                     <a class="viewButton"
+                                       th:if="${request.status != 'AFVIST'}"
                                        th:href="@{/admin/request-details(requestId=${request.requestId})}">
                                         Se detaljer
                                     </a>
