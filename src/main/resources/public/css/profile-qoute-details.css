@@ -5,7 +5,6 @@ body {
     font-family: "Kdam Thmor Pro", sans-serif;
     background-color: #1f1f1f;
     color: white;
-
     background-image: linear-gradient(
             rgba(0, 0, 0, 0.70),
             rgba(0, 0, 0, 0.70)
@@ -115,8 +114,6 @@ select {
     margin-bottom: 2px;
 }
 
-
-
 .quoteContent {
     width: 100%;
     display: flex;
@@ -160,6 +157,7 @@ select {
     display: flex;
     gap: 12px;
     margin-top: 5px;
+    align-items: center;
 }
 
 .quoteButtons button {
@@ -167,6 +165,11 @@ select {
     height: 50px;
     font-size: 14px;
     cursor: pointer;
+}
+
+.quoteButtons p {
+    margin: 0;
+    font-size: 15px;
 }
 
 .rejectButton {
@@ -287,8 +290,16 @@ select {
     font-size: 13px;
 }
 
-.overviewRow:first-of-type span {
-    color: #d6d642;
+.greenText {
+    color: #00752D !important;
+}
+
+.redText {
+    color: #ff3333 !important;
+}
+
+.yellowText {
+    color: #d6d642 !important;
 }
 
 .styklisteInfo {

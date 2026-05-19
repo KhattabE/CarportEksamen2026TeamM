@@ -1,7 +1,6 @@
 package app.persistence;
 
 import app.entities.User;
-import at.favre.lib.crypto.bcrypt.BCrypt;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,7 +27,7 @@ public class UserMapper {
 
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
-            preparedStatement.setString(3, user.getEmail());
+            preparedStatement.setString(3, user.getEmail().trim().toLowerCase());
             preparedStatement.setString(4, user.getPasswordHash());
             preparedStatement.setString(5, user.getPhone());
             preparedStatement.setString(6, user.getAddress());
@@ -45,31 +44,45 @@ public class UserMapper {
 
     public User getUserByEmail(String email) {
         String sql = """
-        SELECT * FROM users WHERE email = ?
+        SELECT * FROM users 
+        WHERE LOWER(email) = LOWER(?)
         """;
 
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setString(1, email);
+            preparedStatement.setString(1, email.trim());
 
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
-                return new User(
-                        rs.getInt("user_id"),
-                        rs.getString("first_name"),
-                        rs.getString("last_name"),
-                        rs.getString("email"),
-                        rs.getString("password_hash"),
-                        rs.getString("phone"),
-                        rs.getString("address"),
-                        rs.getString("postal_code"),
-                        rs.getString("city"),
-                        rs.getString("role"),
-                        rs.getTimestamp("created_at") != null ? rs.getTimestamp("created_at").toLocalDateTime() : null
-                );
+                return createUserFromResultSet(rs);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("An error has happened: " + sql);
+        }
+
+        return null;
+    }
+
+    public User getUserByPhone(String phone) {
+        String sql = """
+        SELECT * FROM users 
+        WHERE phone = ?
+        """;
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, phone.trim());
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                return createUserFromResultSet(rs);
             }
 
         } catch (SQLException e) {
@@ -81,7 +94,8 @@ public class UserMapper {
 
     public User getUserById(int userId) {
         String sql = """
-        SELECT * FROM users WHERE user_id = ?
+        SELECT * FROM users 
+        WHERE user_id = ?
         """;
 
         try (
@@ -93,19 +107,7 @@ public class UserMapper {
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
-                return new User(
-                        rs.getInt("user_id"),
-                        rs.getString("first_name"),
-                        rs.getString("last_name"),
-                        rs.getString("email"),
-                        rs.getString("password_hash"),
-                        rs.getString("phone"),
-                        rs.getString("address"),
-                        rs.getString("postal_code"),
-                        rs.getString("city"),
-                        rs.getString("role"),
-                        rs.getTimestamp("created_at") != null ? rs.getTimestamp("created_at").toLocalDateTime() : null
-                );
+                return createUserFromResultSet(rs);
             }
 
         } catch (SQLException e) {
@@ -113,5 +115,21 @@ public class UserMapper {
         }
 
         return null;
+    }
+
+    private User createUserFromResultSet(ResultSet rs) throws SQLException {
+        return new User(
+                rs.getInt("user_id"),
+                rs.getString("first_name"),
+                rs.getString("last_name"),
+                rs.getString("email"),
+                rs.getString("password_hash"),
+                rs.getString("phone"),
+                rs.getString("address"),
+                rs.getString("postal_code"),
+                rs.getString("city"),
+                rs.getString("role"),
+                rs.getTimestamp("created_at") != null ? rs.getTimestamp("created_at").toLocalDateTime() : null
+        );
     }
 }

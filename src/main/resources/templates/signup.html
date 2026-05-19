@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -127,6 +127,8 @@
                 </div>
 
             </div>
+
+            <p th:if="${error}" th:text="${error}" class="errorMessage"></p>
 
             <div id="signupButton">
                 <button type="submit">Opret en konto</button>

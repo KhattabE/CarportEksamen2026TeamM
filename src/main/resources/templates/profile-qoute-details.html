@@ -46,14 +46,9 @@
       <span>Profil</span>
     </a>
 
-    <a href="#">
-      <i class="fa-solid fa-cart-shopping"></i>
-      <span>Kurv</span>
-    </a>
-
-    <a th:href="@{/signin}">
+    <a th:href="@{/logout}">
       <i class="fa-solid fa-right-from-bracket"></i>
-      <span>Exit</span>
+      <span>Log ud</span>
     </a>
 
   </div>
@@ -75,7 +70,7 @@
           <p>Se og håndter det specifikke tilbud udarbejdet og opdateret af sælger</p>
         </div>
 
-        <div class="quoteButtons">
+        <div class="quoteButtons" th:if="${quote.status != 'REJECTED' && quote.status != 'ACCEPTED'}">
 
           <form method="post" th:action="@{/quote/reject}">
             <input type="hidden" name="quoteId" th:value="${quote.quoteId}">
@@ -87,6 +82,14 @@
             <button type="submit" class="acceptButton">Accepter og betal</button>
           </form>
 
+        </div>
+
+        <div class="quoteButtons" th:if="${quote.status == 'REJECTED'}">
+          <p class="redText">Dette tilbud er afvist</p>
+        </div>
+
+        <div class="quoteButtons" th:if="${quote.status == 'ACCEPTED'}">
+          <p class="greenText">Dette tilbud er accepteret</p>
         </div>
 
       </div>
@@ -119,7 +122,7 @@
 
           <div class="detailRow">
             <p>Dato for forespørgsel</p>
-            <span th:text="${carportRequest.createdAt}"></span>
+            <span th:text="${carportRequest.createdAt != null ? #temporals.format(carportRequest.createdAt, 'dd-MM-yyyy') : '-'}"></span>
           </div>
 
         </div>
@@ -233,7 +236,10 @@
 
           <div class="overviewRow">
             <p>Status</p>
-            <span th:text="${quote.status}"></span>
+
+            <span class="redText" th:if="${quote.status == 'REJECTED'}">AFVIST</span>
+            <span class="greenText" th:if="${quote.status == 'ACCEPTED'}">ACCEPTERET</span>
+            <span class="yellowText" th:if="${quote.status != 'REJECTED' && quote.status != 'ACCEPTED'}">AFVENTER SVAR</span>
           </div>
 
           <div class="overviewRow">

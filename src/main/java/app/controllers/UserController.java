@@ -31,11 +31,9 @@ public class UserController {
             return;
         }
 
-        // Gets the customer's active quotes for "Mine tilbud"
         QuotesMapper quotesMapper = new QuotesMapper(Main.getConnectionPool());
         List<Quote> quotes = quotesMapper.getQuotesByUserId(user.getUserId());
 
-        // Gets the customer's real orders for "Mine ordrer"
         OrderMapper orderMapper = new OrderMapper(Main.getConnectionPool());
         List<ProfileOrder> orders = orderMapper.getProfileOrdersByUserId(user.getUserId());
 
@@ -52,7 +50,7 @@ public class UserController {
     }
 
     public static void handleSignIn(Context ctx) {
-        String email = ctx.formParam("email");
+        String email = ctx.formParam("email").trim().toLowerCase();
         String password = ctx.formParam("password");
 
         ConnectionPool connectionPool = Main.getConnectionPool();
@@ -61,15 +59,15 @@ public class UserController {
         User user = userMapper.getUserByEmail(email);
 
         if (user == null) {
-            ctx.attribute("error", "Wrong mail or password!");
+            ctx.attribute("error", "Forkert mail eller adgangskode");
             ctx.render("signin.html");
             return;
         }
 
         BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), user.getPasswordHash());
 
-        if(!result.verified){
-            ctx.attribute("error", "Wrong mail or password!");
+        if (!result.verified) {
+            ctx.attribute("error", "Forkert mail eller adgangskode");
             ctx.render("signin.html");
             return;
         }
@@ -81,27 +79,47 @@ public class UserController {
     public static void handleSignUp(Context ctx) {
         String firstName = ctx.formParam("firstName");
         String lastName = ctx.formParam("lastName");
-        String email = ctx.formParam("email");
+        String email = ctx.formParam("email").trim().toLowerCase();
         String password = ctx.formParam("password");
-        String phoneNumber = ctx.formParam("phoneNumber");
+        String phoneNumber = ctx.formParam("phoneNumber").trim();
         String address = ctx.formParam("address");
         String postalCode = ctx.formParam("postalCode");
         String city = ctx.formParam("city");
 
-        String hashPassword = BCrypt.withDefaults().hashToString(12, password.toCharArray());
-
         ConnectionPool connectionPool = Main.getConnectionPool();
         UserMapper userMapper = new UserMapper(connectionPool);
 
-        User existingUser = userMapper.getUserByEmail(email);
+        User existingUserByEmail = userMapper.getUserByEmail(email);
 
-        if (existingUser != null) {
+        if (existingUserByEmail != null) {
             ctx.attribute("error", "Der findes allerede en bruger med denne e-mail");
             ctx.render("signup.html");
             return;
         }
 
-        User user = new User(0, firstName, lastName, email, hashPassword, phoneNumber, address, postalCode, city, "customer", null);
+        User existingUserByPhone = userMapper.getUserByPhone(phoneNumber);
+
+        if (existingUserByPhone != null) {
+            ctx.attribute("error", "Der findes allerede en bruger med dette telefonnummer");
+            ctx.render("signup.html");
+            return;
+        }
+
+        String hashPassword = BCrypt.withDefaults().hashToString(12, password.toCharArray());
+
+        User user = new User(
+                0,
+                firstName,
+                lastName,
+                email,
+                hashPassword,
+                phoneNumber,
+                address,
+                postalCode,
+                city,
+                "customer",
+                null
+        );
 
         userMapper.createUser(user);
 
