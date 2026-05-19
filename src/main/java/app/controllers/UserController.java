@@ -59,7 +59,7 @@ public class UserController {
         User user = userMapper.getUserByEmail(email);
 
         if (user == null) {
-            ctx.attribute("error", "Wrong mail or password!");
+            ctx.attribute("error", "Forkert mail eller adgangskode");
             ctx.render("signin.html");
             return;
         }
@@ -67,7 +67,7 @@ public class UserController {
         BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), user.getPasswordHash());
 
         if (!result.verified) {
-            ctx.attribute("error", "Wrong mail or password!");
+            ctx.attribute("error", "Forkert mail eller adgangskode");
             ctx.render("signin.html");
             return;
         }
@@ -81,23 +81,31 @@ public class UserController {
         String lastName = ctx.formParam("lastName");
         String email = ctx.formParam("email").trim().toLowerCase();
         String password = ctx.formParam("password");
-        String phoneNumber = ctx.formParam("phoneNumber");
+        String phoneNumber = ctx.formParam("phoneNumber").trim();
         String address = ctx.formParam("address");
         String postalCode = ctx.formParam("postalCode");
         String city = ctx.formParam("city");
 
-        String hashPassword = BCrypt.withDefaults().hashToString(12, password.toCharArray());
-
         ConnectionPool connectionPool = Main.getConnectionPool();
         UserMapper userMapper = new UserMapper(connectionPool);
 
-        User existingUser = userMapper.getUserByEmail(email);
+        User existingUserByEmail = userMapper.getUserByEmail(email);
 
-        if (existingUser != null) {
+        if (existingUserByEmail != null) {
             ctx.attribute("error", "Der findes allerede en bruger med denne e-mail");
             ctx.render("signup.html");
             return;
         }
+
+        User existingUserByPhone = userMapper.getUserByPhone(phoneNumber);
+
+        if (existingUserByPhone != null) {
+            ctx.attribute("error", "Der findes allerede en bruger med dette telefonnummer");
+            ctx.render("signup.html");
+            return;
+        }
+
+        String hashPassword = BCrypt.withDefaults().hashToString(12, password.toCharArray());
 
         User user = new User(
                 0,

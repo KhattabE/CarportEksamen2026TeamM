@@ -57,19 +57,32 @@ public class UserMapper {
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
-                return new User(
-                        rs.getInt("user_id"),
-                        rs.getString("first_name"),
-                        rs.getString("last_name"),
-                        rs.getString("email"),
-                        rs.getString("password_hash"),
-                        rs.getString("phone"),
-                        rs.getString("address"),
-                        rs.getString("postal_code"),
-                        rs.getString("city"),
-                        rs.getString("role"),
-                        rs.getTimestamp("created_at") != null ? rs.getTimestamp("created_at").toLocalDateTime() : null
-                );
+                return createUserFromResultSet(rs);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("An error has happened: " + sql);
+        }
+
+        return null;
+    }
+
+    public User getUserByPhone(String phone) {
+        String sql = """
+        SELECT * FROM users 
+        WHERE phone = ?
+        """;
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, phone.trim());
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                return createUserFromResultSet(rs);
             }
 
         } catch (SQLException e) {
@@ -94,19 +107,7 @@ public class UserMapper {
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
-                return new User(
-                        rs.getInt("user_id"),
-                        rs.getString("first_name"),
-                        rs.getString("last_name"),
-                        rs.getString("email"),
-                        rs.getString("password_hash"),
-                        rs.getString("phone"),
-                        rs.getString("address"),
-                        rs.getString("postal_code"),
-                        rs.getString("city"),
-                        rs.getString("role"),
-                        rs.getTimestamp("created_at") != null ? rs.getTimestamp("created_at").toLocalDateTime() : null
-                );
+                return createUserFromResultSet(rs);
             }
 
         } catch (SQLException e) {
@@ -114,5 +115,21 @@ public class UserMapper {
         }
 
         return null;
+    }
+
+    private User createUserFromResultSet(ResultSet rs) throws SQLException {
+        return new User(
+                rs.getInt("user_id"),
+                rs.getString("first_name"),
+                rs.getString("last_name"),
+                rs.getString("email"),
+                rs.getString("password_hash"),
+                rs.getString("phone"),
+                rs.getString("address"),
+                rs.getString("postal_code"),
+                rs.getString("city"),
+                rs.getString("role"),
+                rs.getTimestamp("created_at") != null ? rs.getTimestamp("created_at").toLocalDateTime() : null
+        );
     }
 }
