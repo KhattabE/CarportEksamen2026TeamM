@@ -134,22 +134,48 @@ public class QuoteController {
 
         if (!isDouble && roofType.equals("Fladt tag") && !hasShed) {
             return "/images/enkeltCarportUdenSkurOgUdenRejsning.png";
+
         } else if (!isDouble && roofType.equals("Fladt tag") && hasShed) {
             return "/images/enkeltCarportMedSkurOgUdenRejsning.png";
+
         } else if (!isDouble && roofType.equals("Rejsning") && !hasShed) {
             return "/images/enkeltCarportUdenSkurMedRejsning.png";
+
         } else if (!isDouble && roofType.equals("Rejsning") && hasShed) {
             return "/images/enkeltCarportMedSkurOgMedRejsning.png";
+
         } else if (isDouble && roofType.equals("Fladt tag") && !hasShed) {
             return "/images/dobbeltCarportUdenSkurOgUdenRejsning.png";
+
         } else if (isDouble && roofType.equals("Fladt tag") && hasShed) {
             return "/images/dobbeltCarportMedSkurUdenRejsning.png";
+
         } else if (isDouble && roofType.equals("Rejsning") && !hasShed) {
             return "/images/dobbeltCarportUdenSkurOgRejsning.png";
+
         } else {
             return "/images/dobbeltCarportMedSkurOgRejsning.png";
-
         }
+    }
+
+    // Rejects an carport request by admin and redicrects the admin back to request page
+    public static void rejectRequest(Context ctx) {
+
+        String requestIdString = ctx.formParam("requestId");
+
+        if (requestIdString == null || requestIdString.isBlank()) {
+            ctx.redirect("/admin/requests");
+            return;
+        }
+
+        int requestId = Integer.parseInt(requestIdString);
+
+        CarportRequestMapper carportRequestMapper =
+                new CarportRequestMapper(Main.getConnectionPool());
+
+        carportRequestMapper.updateRequestStatus(requestId, "AFVIST");
+
+        ctx.redirect("/admin/requests");
     }
 
 }
