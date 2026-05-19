@@ -264,7 +264,6 @@ body{
     display: none;
 }
 
-/* Larger monitors, for example 2560px wide */
 @media (min-width: 2200px) {
     .topbar {
         font-size: 14px;
