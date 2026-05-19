@@ -268,24 +268,26 @@ body {
 
 .offerButtons {
     display: flex;
-    justify-content: space-between;
     margin-top: 10px;
 }
 
-.offerBox button {
+.detailsButton {
     width: 150px;
     height: 28px;
-    background-color: transparent;
-    border: 1px solid #00752D;
-    color: #00752D;
-    font-family: "Kdam Thmor Pro", sans-serif;
+    border: 1px solid #999999;
+    color: white;
+    text-decoration: none;
     font-size: 10px;
-    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Kdam Thmor Pro", sans-serif;
+    box-sizing: border-box;
 }
 
-.offerBox .rejectButton {
-    border: 1px solid #ff3333;
-    color: #ff3333;
+.detailsButton:hover {
+    border-color: #00752D;
+    color: #00752D;
 }
 
 .orderBox button {

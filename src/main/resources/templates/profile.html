@@ -101,21 +101,14 @@
                         <p>Status</p>
                         <span class="redText" th:if="${quote.status == 'REJECTED'}">Afvist</span>
                         <span class="greenText" th:if="${quote.status == 'ACCEPTED'}">Accepteret</span>
-                        <span class="yellowText" th:if="${quote.status != 'REJECTED' and quote.status != 'ACCEPTED'}">Afventer svar</span>
+                        <span class="yellowText" th:if="${quote.status != 'REJECTED' && quote.status != 'ACCEPTED'}">Afventer svar</span>
                     </div>
                 </div>
 
-                <div class="offerButtons" th:if="${quote.status != 'REJECTED' and quote.status != 'ACCEPTED'}">
-
-                    <a th:href="@{/profile/quote-details(quoteId=${quote.quoteId})}">
-                        <button type="button">Accepter og betal</button>
+                <div class="offerButtons">
+                    <a th:href="@{/profile/quote-details(quoteId=${quote.quoteId})}" class="detailsButton">
+                        Se detaljer
                     </a>
-
-                    <form method="post" th:action="@{/quote/reject}">
-                        <input type="hidden" name="quoteId" th:value="${quote.quoteId}">
-                        <button type="submit" class="rejectButton">Afvis</button>
-                    </form>
-
                 </div>
             </div>
 
