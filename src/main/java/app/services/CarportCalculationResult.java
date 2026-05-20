@@ -3,10 +3,13 @@ package app.services;
 import app.entities.QuoteMaterialLine;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CarportCalculationResult {
+
+    private static final BigDecimal MARKUP_FACTOR = new BigDecimal("1.25");
 
     private List<CalculatedMaterialLine> materialLines;
     private BigDecimal totalPrice;
@@ -16,7 +19,6 @@ public class CarportCalculationResult {
         this.totalPrice = calculateTotalPrice();
     }
 
-    // Adds all material line prices together
     private BigDecimal calculateTotalPrice() {
         BigDecimal total = BigDecimal.ZERO;
 
@@ -24,7 +26,7 @@ public class CarportCalculationResult {
             total = total.add(line.getLineTotal());
         }
 
-        return total;
+        return total.multiply(MARKUP_FACTOR).setScale(2, RoundingMode.HALF_UP);
     }
 
     public List<CalculatedMaterialLine> getMaterialLines() {
@@ -35,7 +37,6 @@ public class CarportCalculationResult {
         return totalPrice;
     }
 
-    // Converts the calculated material lines into database-ready quote material lines
     public List<QuoteMaterialLine> createQuoteMaterialLines(int quoteId) {
         List<QuoteMaterialLine> quoteMaterialLines = new ArrayList<>();
 
