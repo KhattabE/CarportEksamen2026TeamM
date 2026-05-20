@@ -361,3 +361,15 @@ select {
     color: #cfcfcf;
     font-size: 12px;
 }
+
+.editButton {
+    width: 190px;
+    height: 48px;
+
+    background-color: transparent;
+    border: 1px solid #1C1B1B;
+
+    color: #767676;
+    font-size: 16px;
+    font-family: "Kdam Thmor Pro", sans-serif;
+}

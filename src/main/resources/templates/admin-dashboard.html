@@ -73,11 +73,6 @@
                 Forespørgsler
             </a>
 
-            <a href="/admin/orders" th:classappend="${currentPage == 'orders'} ? 'activeSidebarLink'">
-                <i class="fa-solid fa-cart-shopping"></i>
-                Ordrer
-            </a>
-
             <a href="/admin/products-price" th:classappend="${currentPage == 'products'} ? 'activeSidebarLink'">
                 <i class="fa-solid fa-cube"></i>
                 Produkter<br> & priser
@@ -108,21 +103,6 @@
                         </p>
 
                         <a href="/admin/requests">Se forespørgsler ➜</a>
-
-                    </div>
-
-                    <div class="dashboardCard">
-
-                        <i class="fa-solid fa-cart-shopping"></i>
-
-                        <h2>Ordrer</h2>
-
-                        <p>
-                            Se og håndter betalte ordrer og deres
-                            status
-                        </p>
-
-                        <a href="/admin/orders">Se ordrer ➜</a>
 
                     </div>
 

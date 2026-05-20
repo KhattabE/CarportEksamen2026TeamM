@@ -75,10 +75,6 @@ public class MainController {
         ctx.render("admin-Request-Details.html");
     }
 
-    public static void adminViewOrders(Context ctx) {
-        ctx.attribute("currentPage", "orders");
-        ctx.render("admin_view_orders.html");
-    }
 
     public static void adminProductsAndPrice(Context ctx) {
         MaterialMapper materialMapper = new MaterialMapper(Main.getConnectionPool());
