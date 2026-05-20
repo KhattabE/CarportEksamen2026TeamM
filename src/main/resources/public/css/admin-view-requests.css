@@ -222,6 +222,9 @@ select {
 
     padding: 0 26px 45px 26px;
     box-sizing: border-box;
+
+    max-height: 580px;
+    overflow-y: auto;
 }
 
 /* TABLE */

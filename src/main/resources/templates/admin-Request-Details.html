@@ -73,11 +73,6 @@
                 Forespørgsler
             </a>
 
-            <a href="/admin/orders" th:classappend="${currentPage == 'orders'} ? 'activeSidebarLink'">
-                <i class="fa-solid fa-cart-shopping"></i>
-                Ordrer
-            </a>
-
             <a href="/admin/products-price" th:classappend="${currentPage == 'products'} ? 'activeSidebarLink'">
                 <i class="fa-solid fa-cube"></i>
                 Produkter<br> & priser
@@ -100,6 +95,11 @@
                     </div>
 
                     <div class="requestButtons">
+
+                        <button type="button" class="editButton">
+                            Rediger tilbud
+                        </button>
+
                         <form method="post" th:action="@{/admin/reject-request}">
                             <input type="hidden" name="requestId" th:value="${carportRequest.requestId}">
                             <button type="submit" class="rejectButton">Afvis forespørgsel</button>
@@ -222,18 +222,6 @@
                         <p class="price" th:text="${calculationResult.totalPrice + ' DKK'}">0 DKK</p>
 
                         <div class="line"></div>
-
-                        <h3>Materiale</h3>
-
-                        <div th:each="line : ${calculationResult.materialLines}" class="materialRow">
-                            <p th:text="${line.quantity}">1</p>
-                            <span th:text="${line.usageDescription}">Materiale</span>
-                        </div>
-
-                        <div th:if="${calculationResult.materialLines == null || calculationResult.materialLines.isEmpty()}" class="materialRow">
-                            <p>0</p>
-                            <span>Ingen materialer beregnet</span>
-                        </div>
 
                         <div class="statusRow">
                             <p>Status</p>
