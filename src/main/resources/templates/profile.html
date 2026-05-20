@@ -67,7 +67,7 @@
             <div class="userInfo">
                 <h3 th:text="${user.firstName + ' ' + user.lastName}"></h3>
                 <p th:text="'E-mail: ' + ${user.email}"></p>
-                <p th:text="'Telefon: ' + ${user.phone}"></p>
+                <p th:text="'Telefon: ' + ${user.formattedPhone}"></p>
                 <p th:text="'Adresse: ' + ${user.address + ', ' + user.postalCode + ' ' + user.city}"></p>
                 <p th:text="'Medlem siden: ' + ${#temporals.format(user.createdAt, 'dd-MM-yyyy')}"></p>
             </div>
