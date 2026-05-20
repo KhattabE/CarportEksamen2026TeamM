@@ -223,18 +223,6 @@
 
                         <div class="line"></div>
 
-                        <h3>Materiale</h3>
-
-                        <div th:each="line : ${calculationResult.materialLines}" class="materialRow">
-                            <p th:text="${line.quantity}">1</p>
-                            <span th:text="${line.usageDescription}">Materiale</span>
-                        </div>
-
-                        <div th:if="${calculationResult.materialLines == null || calculationResult.materialLines.isEmpty()}" class="materialRow">
-                            <p>0</p>
-                            <span>Ingen materialer beregnet</span>
-                        </div>
-
                         <div class="statusRow">
                             <p>Status</p>
                             <span th:text="${carportRequest.status}">STATUS</span>
