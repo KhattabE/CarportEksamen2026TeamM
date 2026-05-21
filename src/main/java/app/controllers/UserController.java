@@ -94,7 +94,7 @@ public class UserController {
         String lastName = ctx.formParam("lastName");
         String email = ctx.formParam("email").trim().toLowerCase();
         String password = ctx.formParam("password");
-        String phoneNumber = ctx.formParam("phoneNumber").trim();
+        String phoneNumber = ctx.formParam("phoneNumber").trim().replace(" ", "");
         String address = ctx.formParam("address");
         String postalCode = ctx.formParam("postalCode");
         String city = ctx.formParam("city");

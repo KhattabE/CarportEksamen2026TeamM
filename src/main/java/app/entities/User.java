@@ -126,4 +126,12 @@ public class User {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
+    public String getFormattedPhone(){
+        if(phone == null || phone.length() != 8){
+            return phone;
+        }
+
+        return phone.substring(0, 2) + " " + phone.substring(2, 4) + " " + phone.substring(4, 6) + " " + phone.substring(6, 8);
+    }
 }
