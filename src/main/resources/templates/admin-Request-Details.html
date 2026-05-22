@@ -96,10 +96,6 @@
 
                     <div class="requestButtons">
 
-                        <button type="button" class="editButton">
-                            Rediger tilbud
-                        </button>
-
                         <form method="post" th:action="@{/admin/reject-request}">
                             <input type="hidden" name="requestId" th:value="${carportRequest.requestId}">
                             <button type="submit" class="rejectButton">Afvis forespørgsel</button>
@@ -225,9 +221,15 @@
 
                         <div class="statusRow">
                             <p>Status</p>
-                            <span th:text="${carportRequest.status}">STATUS</span>
-                        </div>
 
+                            <span th:switch="${carportRequest.status}">
+                                <span th:case="'QUOTE_SENT'">Tilbud sendt</span>
+                                <span th:case="'PENDING'">Afventer</span>
+                                <span th:case="'REJECTED'">Afvist</span>
+                                <span th:case="'ACCEPTED'">Accepteret</span>
+                                <span th:case="*">Ukendt status</span>
+                            </span>
+                        </div>
                     </div>
 
                 </div>
