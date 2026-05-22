@@ -57,7 +57,6 @@
 <div class="profilePage">
 
     <h1>Min profil</h1>
-    <p>Her kan du administrere dine oplysninger, tilbud og bestillinger</p>
 
     <div class="profileContent">
 
@@ -125,7 +124,6 @@
                     <h3 th:text="'Ordre #' + ${order.orderId}">Ordre #001</h3>
                     <p th:text="${order.hasShed ? 'Carport med skur' : 'Carport uden skur'}">Carport med skur</p>
                     <p th:text="${order.lengthCm + ' x ' + order.widthCm + ' x ' + order.heightCm + ' cm'}">600 x 500 x 230 cm</p>
-                    <p th:text="${order.hasShed ? 'Skur - Ja' : 'Skur - Nej'}">Skur - Ja</p>
                 </div>
 
                 <div class="infoRow">
@@ -146,9 +144,9 @@
                     </div>
                 </div>
 
-                <button type="button">
+                <p class="orderNotice">
                     Tak for betaling. Stykliste og tegning er sendt til din e-mail
-                </button>
+                </p>
 
             </div>
 

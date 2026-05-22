@@ -290,16 +290,18 @@ body {
     color: #00752D;
 }
 
-.orderBox button {
-    width: 100%;
-    height: 28px;
-    margin-top: 10px;
-    background-color: transparent;
-    border: 1px solid #999999;
-    color: white;
-    font-family: "Kdam Thmor Pro", sans-serif;
+.orderNotice {
+    clear: both;
+    margin: 12px 0 0 0;
+    padding: 9px 12px;
+    background-color: rgba(0, 117, 45, 0.16);
+    border: 1px solid #00752D;
+    border-left: 4px solid #00A341;
+    color: #e8e8e8;
     font-size: 10px;
-    cursor: pointer;
+    line-height: 1.4;
+    cursor: default;
+    box-sizing: border-box;
 }
 
 .profileBox::-webkit-scrollbar {

@@ -94,21 +94,17 @@
                         <p>Se og håndter den specifikke kundes forespørgsel</p>
                     </div>
 
-                    <div class="requestButtons">
+                    <div class="requestButtons" th:if="${carportRequest.status == 'PENDING'}">
 
                         <form method="post" th:action="@{/admin/reject-request}">
                             <input type="hidden" name="requestId" th:value="${carportRequest.requestId}">
                             <button type="submit" class="rejectButton">Afvis forespørgsel</button>
                         </form>
 
-                        <form method="post" th:action="@{/admin/send-quote}" th:if="${carportRequest.status != 'QUOTE_SENT'}">
+                        <form method="post" th:action="@{/admin/send-quote}">
                             <input type="hidden" name="requestId" th:value="${carportRequest.requestId}">
                             <button type="submit" class="sendButton">Send tilbud</button>
                         </form>
-
-                        <button type="button" class="sendButton" th:if="${carportRequest.status == 'QUOTE_SENT'}">
-                            Tilbud sendt
-                        </button>
 
                     </div>
 
@@ -207,7 +203,7 @@
 
                     </div>
 
-                    <div class="detailBox">
+                    <div class="detailBox calculationBox">
 
                         <div class="boxTitle">
                             <i class="fa-regular fa-calendar"></i>
@@ -216,6 +212,48 @@
 
                         <p class="priceLabel">Estimeret pris inkl moms</p>
                         <p class="price" th:text="${calculationResult.totalPrice + ' DKK'}">0 DKK</p>
+
+                        <div class="materialsSection">
+                            <div class="materialsTitleRow">
+                                <h3>Materialer</h3>
+                                <span th:if="${calculationResult != null}"
+                                      th:text="${#lists.size(calculationResult.materialLines) + ' linjer'}">
+                                    0 linjer
+                                </span>
+                            </div>
+
+                            <div class="materialsTable"
+                                 th:if="${calculationResult != null and !#lists.isEmpty(calculationResult.materialLines)}">
+
+                                <div class="materialsTableHeader">
+                                    <span>Materiale</span>
+                                    <span>Længde</span>
+                                    <span>Antal</span>
+                                </div>
+
+                                <div class="materialsScroll">
+                                    <div class="materialLine" th:each="materialLine : ${calculationResult.materialLines}">
+                                        <span class="materialName" th:text="${materialLine.materialName}">
+                                            Materiale
+                                        </span>
+
+                                        <span class="materialLength"
+                                              th:text="${materialLine.lengthCm > 0 ? materialLine.lengthCm + ' cm' : '-'}">
+                                            -
+                                        </span>
+
+                                        <span class="materialQuantity" th:text="${materialLine.quantity + ' stk.'}">
+                                            0 stk.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p class="emptyMaterials"
+                               th:if="${calculationResult == null or #lists.isEmpty(calculationResult.materialLines)}">
+                                Ingen materialer beregnet
+                            </p>
+                        </div>
 
                         <div class="line"></div>
 

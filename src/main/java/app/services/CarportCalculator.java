@@ -38,60 +38,60 @@ public class CarportCalculator {
         Material angleBracket = findMaterialByName(materials, "vinkelbeslag");
 
         int postQuantity = calculatePostQuantity(lengthCm, carport.isHasShed());
-        materialLines.add(new CalculatedMaterialLine(post97x97.getMaterialId(), heightCm, postQuantity, post97x97.getPricePerUnit(), "Stolper til carport", true));
+        materialLines.add(new CalculatedMaterialLine(post97x97.getMaterialId(), post97x97.getName(), heightCm, postQuantity, post97x97.getPricePerUnit(), "Stolper til carport", true));
 
         int rafterQuantity = calculateRafterQuantity(lengthCm);
-        materialLines.add(new CalculatedMaterialLine(rafter45x195.getMaterialId(), widthCm, rafterQuantity, rafter45x195.getPricePerUnit(), "Spær på tværs af carporten", true));
+        materialLines.add(new CalculatedMaterialLine(rafter45x195.getMaterialId(), rafter45x195.getName(), widthCm, rafterQuantity, rafter45x195.getPricePerUnit(), "Spær på tværs af carporten", true));
 
-        materialLines.add(new CalculatedMaterialLine(rafter45x195.getMaterialId(), lengthCm, 2, rafter45x195.getPricePerUnit(), "Remme i begge sider", true));
+        materialLines.add(new CalculatedMaterialLine(rafter45x195.getMaterialId(), rafter45x195.getName(), lengthCm, 2, rafter45x195.getPricePerUnit(), "Remme i begge sider", true));
 
-        materialLines.add(new CalculatedMaterialLine(board25x200.getMaterialId(), widthCm, 2, board25x200.getPricePerUnit(), "Sternbrædder for og bag", true));
+        materialLines.add(new CalculatedMaterialLine(board25x200.getMaterialId(), board25x200.getName(), widthCm, 2, board25x200.getPricePerUnit(), "Sternbrædder for og bag", true));
 
-        materialLines.add(new CalculatedMaterialLine(board25x125.getMaterialId(), lengthCm, 2, board25x125.getPricePerUnit(), "Sternbrædder i siderne", true));
+        materialLines.add(new CalculatedMaterialLine(board25x125.getMaterialId(), board25x125.getName(), lengthCm, 2, board25x125.getPricePerUnit(), "Sternbrædder i siderne", true));
 
         int lathQuantity = calculateLathQuantity(lengthCm);
-        materialLines.add(new CalculatedMaterialLine(lath38x73.getMaterialId(), widthCm, lathQuantity, lath38x73.getPricePerUnit(), "Lægter til tagkonstruktion", true));
+        materialLines.add(new CalculatedMaterialLine(lath38x73.getMaterialId(), lath38x73.getName(), widthCm, lathQuantity, lath38x73.getPricePerUnit(), "Lægter til tagkonstruktion", true));
 
         int reglarQuantity = calculateReglarQuantity(lengthCm);
-        materialLines.add(new CalculatedMaterialLine(reglar45x95.getMaterialId(), lengthCm, reglarQuantity, reglar45x95.getPricePerUnit(), "Reglar til ekstra afstivning", true));
+        materialLines.add(new CalculatedMaterialLine(reglar45x95.getMaterialId(), reglar45x95.getName(), lengthCm, reglarQuantity, reglar45x95.getPricePerUnit(), "Reglar til ekstra afstivning", true));
 
         int roofPlateQuantity = calculateRoofPlateQuantity(lengthCm, widthCm);
-        materialLines.add(new CalculatedMaterialLine(roofPlate.getMaterialId(), 600, roofPlateQuantity, roofPlate.getPricePerUnit(), "Tagplader", false));
+        materialLines.add(new CalculatedMaterialLine(roofPlate.getMaterialId(), roofPlate.getName(), 600, roofPlateQuantity, roofPlate.getPricePerUnit(), "Tagplader", false));
 
         int plastmoScrewPackages = calculatePlastmoScrewPackages(roofPlateQuantity);
-        materialLines.add(new CalculatedMaterialLine(plastmoScrews.getMaterialId(), 0, plastmoScrewPackages, plastmoScrews.getPricePerUnit(), "Bundskruer til tagplader", false));
+        materialLines.add(new CalculatedMaterialLine(plastmoScrews.getMaterialId(), plastmoScrews.getName(), 0, plastmoScrewPackages, plastmoScrews.getPricePerUnit(), "Bundskruer til tagplader", false));
 
-        materialLines.add(new CalculatedMaterialLine(holeBand.getMaterialId(), 0, 2, holeBand.getPricePerUnit(), "Hulbånd til vindafstivning", false));
+        materialLines.add(new CalculatedMaterialLine(holeBand.getMaterialId(), holeBand.getName(), 0, 2, holeBand.getPricePerUnit(), "Hulbånd til vindafstivning", false));
 
-        materialLines.add(new CalculatedMaterialLine(rightBracket.getMaterialId(), 0, rafterQuantity, rightBracket.getPricePerUnit(), "Universalbeslag højre til spær", false));
+        materialLines.add(new CalculatedMaterialLine(rightBracket.getMaterialId(), rightBracket.getName(), 0, rafterQuantity, rightBracket.getPricePerUnit(), "Universalbeslag højre til spær", false));
 
-        materialLines.add(new CalculatedMaterialLine(leftBracket.getMaterialId(), 0, rafterQuantity, leftBracket.getPricePerUnit(), "Universalbeslag venstre til spær", false));
+        materialLines.add(new CalculatedMaterialLine(leftBracket.getMaterialId(), leftBracket.getName(), 0, rafterQuantity, leftBracket.getPricePerUnit(), "Universalbeslag venstre til spær", false));
 
-        materialLines.add(new CalculatedMaterialLine(screw45x60.getMaterialId(), 0, 1, screw45x60.getPricePerUnit(), "Skruer til træsamlinger", false));
+        materialLines.add(new CalculatedMaterialLine(screw45x60.getMaterialId(), screw45x60.getName(), 0, 1, screw45x60.getPricePerUnit(), "Skruer til træsamlinger", false));
 
         int bracketScrewPackages = calculateBracketScrewPackages(rafterQuantity);
-        materialLines.add(new CalculatedMaterialLine(bracketScrews40x50.getMaterialId(), 0, bracketScrewPackages, bracketScrews40x50.getPricePerUnit(), "Beslagskruer til universalbeslag", false));
+        materialLines.add(new CalculatedMaterialLine(bracketScrews40x50.getMaterialId(), bracketScrews40x50.getName(), 0, bracketScrewPackages, bracketScrews40x50.getPricePerUnit(), "Beslagskruer til universalbeslag", false));
 
         int boltQuantity = postQuantity * 2;
-        materialLines.add(new CalculatedMaterialLine(carriageBolt.getMaterialId(), 0, boltQuantity, carriageBolt.getPricePerUnit(), "Bræddebolte til stolper og remme", false));
+        materialLines.add(new CalculatedMaterialLine(carriageBolt.getMaterialId(), carriageBolt.getName(), 0, boltQuantity, carriageBolt.getPricePerUnit(), "Bræddebolte til stolper og remme", false));
 
         int washerQuantity = boltQuantity;
-        materialLines.add(new CalculatedMaterialLine(squareWasher.getMaterialId(), 0, washerQuantity, squareWasher.getPricePerUnit(), "Firkantskiver til bræddebolte", false));
+        materialLines.add(new CalculatedMaterialLine(squareWasher.getMaterialId(), squareWasher.getName(), 0, washerQuantity, squareWasher.getPricePerUnit(), "Firkantskiver til bræddebolte", false));
 
-        materialLines.add(new CalculatedMaterialLine(screw45x70.getMaterialId(), 0, 1, screw45x70.getPricePerUnit(), "Lange skruer til kraftigere samlinger", false));
+        materialLines.add(new CalculatedMaterialLine(screw45x70.getMaterialId(), screw45x70.getName(), 0, 1, screw45x70.getPricePerUnit(), "Lange skruer til kraftigere samlinger", false));
 
-        materialLines.add(new CalculatedMaterialLine(screw45x50.getMaterialId(), 0, 1, screw45x50.getPricePerUnit(), "Skruer til mindre samlinger", false));
+        materialLines.add(new CalculatedMaterialLine(screw45x50.getMaterialId(), screw45x50.getName(), 0, 1, screw45x50.getPricePerUnit(), "Skruer til mindre samlinger", false));
 
         if (carport.isHasShed()) {
             int shedBoardQuantity = calculateShedBoardQuantity(carport.getShedWidthCm(), carport.getShedLengthCm(), heightCm);
 
-            materialLines.add(new CalculatedMaterialLine(board19x100.getMaterialId(), 540, shedBoardQuantity, board19x100.getPricePerUnit(), "Beklædning af skur", true));
+            materialLines.add(new CalculatedMaterialLine(board19x100.getMaterialId(), board19x100.getName(), 540, shedBoardQuantity, board19x100.getPricePerUnit(), "Beklædning af skur", true));
 
-            materialLines.add(new CalculatedMaterialLine(doorHandle.getMaterialId(), 0, 1, doorHandle.getPricePerUnit(), "Stalddørsgreb til skurdør", false));
+            materialLines.add(new CalculatedMaterialLine(doorHandle.getMaterialId(), doorHandle.getName(), 0, 1, doorHandle.getPricePerUnit(), "Stalddørsgreb til skurdør", false));
 
-            materialLines.add(new CalculatedMaterialLine(hinge.getMaterialId(), 0, 2, hinge.getPricePerUnit(), "T-hængsler til skurdør", false));
+            materialLines.add(new CalculatedMaterialLine(hinge.getMaterialId(), hinge.getName(), 0, 2, hinge.getPricePerUnit(), "T-hængsler til skurdør", false));
 
-            materialLines.add(new CalculatedMaterialLine(angleBracket.getMaterialId(), 0, 8, angleBracket.getPricePerUnit(), "Vinkelbeslag til skur", false));
+            materialLines.add(new CalculatedMaterialLine(angleBracket.getMaterialId(), angleBracket.getName(), 0, 8, angleBracket.getPricePerUnit(), "Vinkelbeslag til skur", false));
         }
 
         return new CarportCalculationResult(materialLines);

@@ -6,14 +6,16 @@ import java.math.RoundingMode;
 public class CalculatedMaterialLine {
 
     private int materialId;
+    private String materialName;
     private int lengthCm;
     private int quantity;
     private BigDecimal unitPrice;
     private String usageDescription;
     private boolean pricePerMeter;
 
-    public CalculatedMaterialLine(int materialId, int lengthCm, int quantity, BigDecimal unitPrice, String usageDescription, boolean pricePerMeter) {
+    public CalculatedMaterialLine(int materialId, String materialName, int lengthCm, int quantity, BigDecimal unitPrice, String usageDescription, boolean pricePerMeter) {
         this.materialId = materialId;
+        this.materialName = materialName;
         this.lengthCm = lengthCm;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
@@ -21,8 +23,16 @@ public class CalculatedMaterialLine {
         this.pricePerMeter = pricePerMeter;
     }
 
+    public CalculatedMaterialLine(int materialId, int lengthCm, int quantity, BigDecimal unitPrice, String usageDescription, boolean pricePerMeter) {
+        this(materialId, usageDescription, lengthCm, quantity, unitPrice, usageDescription, pricePerMeter);
+    }
+
     public int getMaterialId() {
         return materialId;
+    }
+
+    public String getMaterialName() {
+        return materialName;
     }
 
     public int getLengthCm() {
