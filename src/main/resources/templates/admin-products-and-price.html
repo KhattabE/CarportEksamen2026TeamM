@@ -100,7 +100,6 @@
                                 <th>Pris (DKK)</th>
                                 <th>Enhed</th>
                                 <th>Status</th>
-                                <th>Handling</th>
                             </tr>
                             </thead>
 
@@ -126,12 +125,10 @@
                                     <span th:if="${material.active}">Aktiv</span>
                                     <span th:if="${!material.active}">Inaktiv</span>
                                 </td>
-
-                                <td></td>
                             </tr>
 
                             <tr th:if="${materials == null || materials.isEmpty()}">
-                                <td colspan="7">Ingen materialer fundet</td>
+                                <td colspan="6">Ingen materialer fundet</td>
                             </tr>
 
                             </tbody>
