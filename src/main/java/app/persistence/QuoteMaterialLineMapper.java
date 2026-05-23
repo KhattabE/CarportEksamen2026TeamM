@@ -23,8 +23,8 @@ public class QuoteMaterialLineMapper {
     public void addQuoteMaterialLines(List<QuoteMaterialLine> quoteMaterialLines) {
         String sql = """
                 INSERT INTO quote_material_lines
-                (quote_id, material_id, length_cm, quantity, unit_price, usage_description)
-                VALUES (?, ?, ?, ?, ?, ?);
+                (quote_id, material_id, length_cm, quantity, unit_price, unit, usage_description)
+                VALUES (?, ?, ?, ?, ?, ?, ?);
                 """;
 
         try (
@@ -38,7 +38,8 @@ public class QuoteMaterialLineMapper {
                 preparedStatement.setObject(3, quoteMaterialLine.getLengthCm());
                 preparedStatement.setBigDecimal(4, quoteMaterialLine.getQuantity());
                 preparedStatement.setBigDecimal(5, quoteMaterialLine.getUnitPrice());
-                preparedStatement.setString(6, quoteMaterialLine.getUsageDescription());
+                preparedStatement.setString(6, quoteMaterialLine.getUnit());
+                preparedStatement.setString(7, quoteMaterialLine.getUsageDescription());
 
                 preparedStatement.addBatch();
             }
@@ -76,9 +77,10 @@ public class QuoteMaterialLineMapper {
                 Integer lengthCm = (Integer) rs.getObject("length_cm");
                 BigDecimal quantity = rs.getBigDecimal("quantity");
                 BigDecimal unitPrice = rs.getBigDecimal("unit_price");
+                String unit = rs.getString("unit");
                 String usageDescription = rs.getString("usage_description");
 
-                QuoteMaterialLine quoteMaterialLine = new QuoteMaterialLine(quoteLineId, quoteId, materialId, lengthCm, quantity, unitPrice, usageDescription);
+                QuoteMaterialLine quoteMaterialLine = new QuoteMaterialLine(quoteLineId, quoteId, materialId, lengthCm, quantity, unitPrice, unit, usageDescription);
 
                 quoteMaterialLines.add(quoteMaterialLine);
             }

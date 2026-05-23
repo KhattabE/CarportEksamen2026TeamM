@@ -41,7 +41,7 @@ public class CarportCalculationResult {
         List<QuoteMaterialLine> quoteMaterialLines = new ArrayList<>();
 
         for (CalculatedMaterialLine line : materialLines) {
-            QuoteMaterialLine quoteMaterialLine = new QuoteMaterialLine(0, quoteId, line.getMaterialId(), line.getLengthCm(), BigDecimal.valueOf(line.getQuantity()), line.getUnitPrice(), line.getUsageDescription());
+            QuoteMaterialLine quoteMaterialLine = new QuoteMaterialLine(0, quoteId, line.getMaterialId(), line.getLengthCm(), BigDecimal.valueOf(line.getQuantity()), line.getUnitPrice(), line.getUnit(), line.getUsageDescription());
 
             quoteMaterialLines.add(quoteMaterialLine);
         }
@@ -49,3 +49,4 @@ public class CarportCalculationResult {
         return quoteMaterialLines;
     }
 }
+

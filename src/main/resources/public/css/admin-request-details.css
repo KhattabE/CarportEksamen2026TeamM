@@ -373,3 +373,155 @@ select {
     font-size: 16px;
     font-family: "Kdam Thmor Pro", sans-serif;
 }
+
+.calculationBox {
+    overflow: hidden;
+}
+
+.calculationBox .price {
+    margin-bottom: 14px;
+}
+
+.calculationBox .line {
+    margin-top: 14px;
+    margin-bottom: 0;
+}
+
+.materialsSection {
+    margin-top: 2px;
+    margin-bottom: 10px;
+}
+
+.materialsTitleRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 7px;
+}
+
+.materialsTitleRow h3 {
+    margin: 0;
+    color: #b8b8b8;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.materialsTitleRow span {
+    color: #767676;
+    font-size: 10px;
+}
+
+.materialsTable {
+    border-top: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+}
+
+.materialsTableHeader,
+.materialLine {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 64px 58px;
+    column-gap: 10px;
+    align-items: center;
+}
+
+.materialsTableHeader {
+    padding: 6px 0;
+    border-bottom: 1px solid #333333;
+    color: #b8b8b8;
+    font-size: 10px;
+}
+
+.materialsTableHeader span:nth-child(2),
+.materialsTableHeader span:nth-child(3),
+.materialLength,
+.materialQuantity {
+    text-align: right;
+}
+
+.materialsScroll {
+    max-height: 112px;
+    overflow-y: auto;
+    padding-right: 6px;
+    scrollbar-width: thin;
+    scrollbar-color: #767676 #252525;
+}
+
+.materialsScroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.materialsScroll::-webkit-scrollbar-track {
+    background: #252525;
+}
+
+.materialsScroll::-webkit-scrollbar-thumb {
+    background: #767676;
+    border-radius: 10px;
+}
+
+.materialLine {
+    min-height: 31px;
+    padding: 6px 0;
+    border-bottom: 1px solid #333333;
+    box-sizing: border-box;
+}
+
+.materialLine:last-child {
+    border-bottom: none;
+}
+
+.materialName {
+    color: white;
+    font-size: 11px;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+}
+
+.materialLength {
+    color: #b8b8b8;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.materialQuantity {
+    color: white;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.emptyMaterials {
+    margin: 0;
+    padding: 8px 0;
+    border-top: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    color: #b8b8b8;
+    font-size: 11px;
+}
+
+.requestStatusBadge {
+    width: 180px;
+    height: 42px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.sentBadge {
+    background-color: #00752D;
+    border: 1px solid #00752D;
+    color: white;
+}
+
+.rejectedBadge {
+    background-color: transparent;
+    border: 1px solid #ff3333;
+    color: #ff3333;
+}
+
+.acceptedBadge {
+    background-color: transparent;
+    border: 1px solid #00A341;
+    color: #00A341;
+}

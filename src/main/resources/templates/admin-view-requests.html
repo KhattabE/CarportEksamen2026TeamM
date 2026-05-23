@@ -106,7 +106,6 @@
 
                             <tbody>
 
-                            <!-- Loops through real carport requests from the database -->
                             <tr th:each="request : ${requests}">
 
                                 <td th:text="'Kunde #' + ${request.userId}">
@@ -150,7 +149,6 @@
 
                             </tr>
 
-                            <!-- Shows this if there are no requests in the database -->
                             <tr th:if="${requests == null || requests.isEmpty()}">
                                 <td colspan="5">Ingen forespørgsler fundet</td>
                             </tr>
