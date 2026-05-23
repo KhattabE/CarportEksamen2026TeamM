@@ -1,23 +1,25 @@
 package app.controllers;
 
 import app.Main;
-import app.entities.*;
+import app.entities.Carport;
+import app.entities.CarportRequest;
+import app.entities.Material;
+import app.entities.Order;
+import app.entities.Quote;
+import app.entities.User;
 import app.persistence.CarportRequestMapper;
 import app.persistence.MaterialMapper;
 import app.persistence.OrderMapper;
-import app.persistence.QuoteMaterialLineMapper;
 import app.persistence.QuotesMapper;
 import app.services.CarportCalculationResult;
 import app.services.CarportCalculator;
 import io.javalin.http.Context;
-
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class QuoteController {
 
-    // Rejects a quote when the customer clicks the "Afvis" button
     public static void rejectQuote(Context ctx) {
         String quoteIdString = ctx.formParam("quoteId");
 
@@ -34,7 +36,6 @@ public class QuoteController {
         ctx.redirect("/profile");
     }
 
-    // Accepts a quote, creates an order, and sends the customer back to profile
     public static void acceptQuote(Context ctx) {
         User currentUser = ctx.sessionAttribute("currentUser");
 
@@ -62,10 +63,8 @@ public class QuoteController {
             return;
         }
 
-        // Marks the quote as accepted
         quotesMapper.acceptQuote(quoteId);
 
-        // Creates a paid order, or updates an existing unpaid order
         Order existingOrder = orderMapper.getOrderByQuoteId(quoteId);
 
         if (existingOrder == null) {
@@ -77,7 +76,6 @@ public class QuoteController {
         ctx.redirect("/profile");
     }
 
-    // Creates a quote from a customer's carport request
     public static void createQuoteFromRequest(Context ctx) {
         User currentUser = ctx.sessionAttribute("currentUser");
 
@@ -98,7 +96,6 @@ public class QuoteController {
         CarportRequestMapper carportRequestMapper = new CarportRequestMapper(Main.getConnectionPool());
         MaterialMapper materialMapper = new MaterialMapper(Main.getConnectionPool());
         QuotesMapper quotesMapper = new QuotesMapper(Main.getConnectionPool());
-        QuoteMaterialLineMapper quoteMaterialLineMapper = new QuoteMaterialLineMapper(Main.getConnectionPool());
 
         CarportRequest carportRequest = carportRequestMapper.getCarportRequestById(requestId);
 
@@ -110,15 +107,22 @@ public class QuoteController {
         List<Material> materials = materialMapper.getActiveMaterials();
 
         CarportCalculator calculator = new CarportCalculator();
-        CarportCalculationResult result = calculator.calculate(carportRequest.getCarport(), materials);
 
-        Quote quote = new Quote(requestId, currentUser.getUserId(), result.getTotalPrice(), "SENT", "Automatisk genereret tilbud", LocalDate.now().plusDays(14));
+        CarportCalculationResult result = calculator.calculate(
+                carportRequest.getCarport(),
+                materials
+        );
 
-        Quote createdQuote = quotesMapper.createQuote(quote);
+        Quote quote = new Quote(
+                requestId,
+                currentUser.getUserId(),
+                result.getTotalPrice(),
+                "SENT",
+                "Automatisk genereret tilbud",
+                LocalDate.now().plusDays(14)
+        );
 
-        List<QuoteMaterialLine> quoteMaterialLines = result.createQuoteMaterialLines(createdQuote.getQuoteId());
-
-        quoteMaterialLineMapper.addQuoteMaterialLines(quoteMaterialLines);
+        quotesMapper.createQuote(quote);
 
         carportRequestMapper.updateRequestStatus(requestId, "QUOTE_SENT");
 
@@ -130,7 +134,7 @@ public class QuoteController {
         boolean hasShed = carport.isHasShed();
 
         int width = carport.getWidthCm();
-        boolean isDouble = width > 300; // instead of carport type
+        boolean isDouble = width > 300;
 
         if (!isDouble && roofType.equals("Fladt tag") && !hasShed) {
             return "/images/enkeltCarportUdenSkurOgUdenRejsning.png";
@@ -158,9 +162,7 @@ public class QuoteController {
         }
     }
 
-    // Rejects an carport request by admin and redicrects the admin back to request page
     public static void rejectRequest(Context ctx) {
-
         String requestIdString = ctx.formParam("requestId");
 
         if (requestIdString == null || requestIdString.isBlank()) {
@@ -170,12 +172,10 @@ public class QuoteController {
 
         int requestId = Integer.parseInt(requestIdString);
 
-        CarportRequestMapper carportRequestMapper =
-                new CarportRequestMapper(Main.getConnectionPool());
+        CarportRequestMapper carportRequestMapper = new CarportRequestMapper(Main.getConnectionPool());
 
         carportRequestMapper.updateRequestStatus(requestId, "AFVIST");
 
         ctx.redirect("/admin/requests");
     }
-
 }
