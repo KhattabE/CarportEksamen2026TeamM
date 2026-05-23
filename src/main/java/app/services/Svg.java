@@ -1,31 +1,104 @@
 package app.services;
 
-    public class Svg {
+public class Svg {
 
-        private static final String SVG_TEMPLATE = "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\"\n" +
-                "     x=\"%d\" y=\"%d\"\n" +
-                "     viewBox=\"%s\"  width=\"%s\" \n" +
-                "     preserveAspectRatio=\"xMinYMin\">";
+    private StringBuilder svg;
 
-        private StringBuilder svg = new StringBuilder();
+    public Svg(int width, int height, String viewBox) {
 
-        public Svg(int x, int y, String viewBox, String width, String height){
+        svg = new StringBuilder();
 
-            svg.append(String.format(SVG_TEMPLATE, x, y, viewBox, width, height));
-        }
+        svg.append("<svg ");
+        svg.append("width='").append(width).append("' ");
+        svg.append("height='").append(height).append("' ");
+        svg.append("viewBox='").append(viewBox).append("' ");
+        svg.append("xmlns='http://www.w3.org/2000/svg'>");
 
-        public void addRectangle(int x, int y, double height, double width, String style){}
-        public void addLine(int x1, int y1, int x2, int y2, String style){}
-        public void addArrow(int x1, int y1, int x2, int y2, String style){}
-        public void addText(int x, int y, int rotation, String text){}
-        public void addSvg(Svg innerSvg){}
+        svg.append("<defs>");
 
-        @Override
-        public String toString() {
-            return "Svg{" +
-                    "svg=" + svg +
-                    '}';
-        }
+        svg.append("<marker ");
+        svg.append("id='beginArrow' ");
+        svg.append("markerWidth='12' ");
+        svg.append("markerHeight='12' ");
+        svg.append("refX='0' ");
+        svg.append("refY='6' ");
+        svg.append("orient='auto'>");
+        svg.append("<path d='M 0,6 L 12,12 L 12,0' style='fill:black;' />");
+        svg.append("</marker>");
+
+        svg.append("<marker ");
+        svg.append("id='endArrow' ");
+        svg.append("markerWidth='12' ");
+        svg.append("markerHeight='12' ");
+        svg.append("refX='12' ");
+        svg.append("refY='6' ");
+        svg.append("orient='auto'>");
+        svg.append("<path d='M 0,12 L 12,6 L 0,0' style='fill:black;' />");
+        svg.append("</marker>");
+
+        svg.append("</defs>");
     }
 
+    public void addRectangle(int x, int y, int width, int height, String style) {
 
+        svg.append("<rect ");
+        svg.append("x='").append(x).append("' ");
+        svg.append("y='").append(y).append("' ");
+        svg.append("width='").append(width).append("' ");
+        svg.append("height='").append(height).append("' ");
+        svg.append("style='").append(style).append("' ");
+        svg.append("/>");
+    }
+
+    public void addLine(int x1, int y1, int x2, int y2, String style) {
+
+        svg.append("<line ");
+        svg.append("x1='").append(x1).append("' ");
+        svg.append("y1='").append(y1).append("' ");
+        svg.append("x2='").append(x2).append("' ");
+        svg.append("y2='").append(y2).append("' ");
+        svg.append("style='").append(style).append("' ");
+        svg.append("/>");
+    }
+
+    public void addArrow(int x1, int y1, int x2, int y2, String style) {
+
+        svg.append("<line ");
+        svg.append("x1='").append(x1).append("' ");
+        svg.append("y1='").append(y1).append("' ");
+        svg.append("x2='").append(x2).append("' ");
+        svg.append("y2='").append(y2).append("' ");
+        svg.append("style='").append(style).append("' ");
+        svg.append("marker-start='url(#beginArrow)' ");
+        svg.append("marker-end='url(#endArrow)' ");
+        svg.append("/>");
+    }
+
+    public void addText(int x, int y, String text) {
+
+        svg.append("<text ");
+        svg.append("x='").append(x).append("' ");
+        svg.append("y='").append(y).append("' ");
+        svg.append("text-anchor='middle' ");
+        svg.append("style='fill:black; font-size:18px;'>");
+        svg.append(text);
+        svg.append("</text>");
+    }
+
+    public void addRotatedText(int x, int y, int rotation, String text) {
+
+        svg.append("<text ");
+        svg.append("x='").append(x).append("' ");
+        svg.append("y='").append(y).append("' ");
+        svg.append("text-anchor='middle' ");
+        svg.append("transform='rotate(").append(rotation).append(" ").append(x).append(" ").append(y).append(")' ");
+        svg.append("style='fill:black; font-size:18px;'>");
+        svg.append(text);
+        svg.append("</text>");
+    }
+
+    @Override
+    public String toString() {
+        return svg.toString() + "</svg>";
+    }
+}

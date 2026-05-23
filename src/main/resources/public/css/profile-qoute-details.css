@@ -5,6 +5,7 @@ body {
     font-family: "Kdam Thmor Pro", sans-serif;
     background-color: #1f1f1f;
     color: white;
+
     background-image: linear-gradient(
             rgba(0, 0, 0, 0.70),
             rgba(0, 0, 0, 0.70)
@@ -309,10 +310,33 @@ select {
     line-height: 1.5;
 }
 
+.svgBox {
+    width: 100%;
+    margin-top: 35px;
+    background-color: #1d1d1d;
+    border: 1px solid #555555;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.svgBox h2 {
+    margin: 0 0 15px 0;
+    font-size: 17px;
+    font-weight: normal;
+}
+
+.svgBox svg {
+    background-color: white;
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
 .commentBox {
     width: 100%;
     height: 90px;
     margin-top: 35px;
+    margin-bottom: 35px;
     background-color: #1d1d1d;
     border: 1px solid #555555;
     padding: 13px 16px;

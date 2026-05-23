@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.Main;
+import app.entities.Carport;
 import app.entities.CarportRequest;
 import app.entities.Material;
 import app.entities.Quote;
@@ -75,7 +76,6 @@ public class MainController {
         ctx.render("admin-Request-Details.html");
     }
 
-
     public static void adminProductsAndPrice(Context ctx) {
         MaterialMapper materialMapper = new MaterialMapper(Main.getConnectionPool());
 
@@ -124,11 +124,17 @@ public class MainController {
 
         User user = userMapper.getUserById(carportRequest.getUserId());
 
-        ctx.attribute("user", user);
-        ctx.attribute("carportRequest", carportRequest);
         String previewImage = QuoteController.getPreviewImage(carportRequest.getCarport());
         quote.setPreviewImage(previewImage);
+
+        Carport carport = carportRequest.getCarport();
+
+        String svg = SvgController.createCarportSvg(carport);
+
+        ctx.attribute("user", user);
+        ctx.attribute("carportRequest", carportRequest);
         ctx.attribute("quote", quote);
+        ctx.attribute("svg", svg);
 
         ctx.render("profile-qoute-details.html");
     }
