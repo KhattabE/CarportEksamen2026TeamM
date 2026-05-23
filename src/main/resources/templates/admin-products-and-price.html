@@ -106,12 +106,7 @@
                             <tbody>
 
                             <tr th:each="material : ${materials}">
-                                <td>
-                                    <div class="productInfo">
-                                        <img src="/images/fog5.png" alt="Materiale">
-                                        <span th:text="${material.name}">Materiale navn</span>
-                                    </div>
-                                </td>
+                                <td th:text="${material.name}">Materiale navn</td>
 
                                 <td th:text="${material.category}">Kategori</td>
 
