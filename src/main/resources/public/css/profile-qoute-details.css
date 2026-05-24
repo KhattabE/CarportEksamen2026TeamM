@@ -125,7 +125,7 @@ select {
 }
 
 .quoteInner {
-    width: 1400px;
+    width: min(1100px, calc(100% - 60px));
 }
 
 .backLink {
@@ -186,25 +186,24 @@ select {
 }
 
 .detailBoxes {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 35px;
+    align-items: stretch;
 }
 
 .detailBox {
-    width: 350px;
-    height: 430px;
+    width: 100%;
+    min-height: 430px;
     background-color: #1d1d1d;
     border: 1px solid #555555;
     padding: 35px 22px;
     box-sizing: border-box;
 }
 
-.customerBox {
-    width: 300px;
-}
-
+.customerBox,
 .overviewBox {
-    width: 300px;
+    width: 100%;
 }
 
 .detailBox h2 {
@@ -308,6 +307,22 @@ select {
     color: white;
     font-size: 12px;
     line-height: 1.5;
+}
+
+
+@media (max-width: 1050px) {
+    .detailBoxes {
+        grid-template-columns: 1fr;
+    }
+
+    .quoteHeader {
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .quoteButtons {
+        flex-wrap: wrap;
+    }
 }
 
 .svgBox {

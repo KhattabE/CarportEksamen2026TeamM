@@ -2,282 +2,232 @@
 <html lang="da" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <title>Tilbud detaljer</title>
+    <meta charset="UTF-8">
+    <title>Tilbud detaljer</title>
 
-  <link rel="stylesheet" th:href="@{/css/profile-qoute-details.css}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/profile-qoute-details.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
 <body>
 
 <div class="topbar">
-  <p>Klik & collect*</p>
-  <p>30 dages returret</p>
-  <p>30 - 45 dages levering</p>
-  <p>Kontakt os</p>
+    <p>Klik & collect*</p>
+    <p>30 dages returret</p>
+    <p>30 - 45 dages levering</p>
+    <p>Kontakt os</p>
 </div>
 
 <div class="menubar">
 
-  <div class="logoBox">
-    <a th:href="@{/}" class="logoLink">
-      <h1>Fog</h1>
-      <p>Custom Carport</p>
-    </a>
-  </div>
+    <div class="logoBox">
+        <a th:href="@{/}" class="logoLink">
+            <h1>Fog</h1>
+            <p>Custom Carport</p>
+        </a>
+    </div>
 
-  <div class="menuLinks">
+    <div class="menuLinks">
 
-    <a href="https://www.johannesfog.dk/have-fritid/carporte/enkelt-carporte">Enkelte carporte</a>
+        <a href="https://www.johannesfog.dk/have-fritid/carporte/enkelt-carporte">Enkelte carporte</a>
 
-    <a href="https://www.johannesfog.dk/have-fritid/carporte/dobbelt-carporte">Dobbelt carporte</a>
+        <a href="https://www.johannesfog.dk/have-fritid/carporte/dobbelt-carporte">Dobbelt carporte</a>
 
-    <a href="/build-your-carport">Skræddersyet carporte</a>
+        <a href="/build-your-carport">Skræddersyet carporte</a>
 
-    <a href="https://www.johannesfog.dk/byggematerialer/tag/tilbehoer-til-tage">Tilbehør</a>
+        <a href="https://www.johannesfog.dk/byggematerialer/tag/tilbehoer-til-tage">Tilbehør</a>
 
-  </div>
+    </div>
 
-  <div class="iconBox">
+    <div class="iconBox">
 
-    <a th:href="@{/profile}">
-      <i class="fa-regular fa-user"></i>
-      <span>Profil</span>
-    </a>
+        <a th:href="@{/profile}">
+            <i class="fa-regular fa-user"></i>
+            <span>Profil</span>
+        </a>
 
-    <a th:href="@{/logout}">
-      <i class="fa-solid fa-right-from-bracket"></i>
-      <span>Log ud</span>
-    </a>
+        <a th:href="@{/logout}">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Log ud</span>
+        </a>
 
-  </div>
+    </div>
 
 </div>
 
 <div class="background">
 
-  <div class="quoteContent">
+    <div class="quoteContent">
 
-    <div class="quoteInner">
+        <div class="quoteInner">
 
-      <a th:href="@{/profile}" class="backLink">← Tilbage til profil</a>
+            <a th:href="@{/profile}" class="backLink">← Tilbage til profil</a>
 
-      <div class="quoteHeader">
+            <div class="quoteHeader">
 
-        <div>
-          <h1>Tilbud detaljer</h1>
-          <p>Se og håndter det specifikke tilbud udarbejdet og opdateret af sælger</p>
-        </div>
+                <div>
+                    <h1>Tilbud detaljer</h1>
+                    <p>Se og håndter det specifikke tilbud</p>
+                </div>
 
-        <div class="quoteButtons" th:if="${quote.status != 'REJECTED' && quote.status != 'ACCEPTED'}">
+                <div class="quoteButtons" th:if="${quote.status != 'REJECTED' && quote.status != 'ACCEPTED'}">
 
-          <form method="post" th:action="@{/quote/reject}">
-            <input type="hidden" name="quoteId" th:value="${quote.quoteId}">
-            <button type="submit" class="rejectButton">Afvis tilbuddet</button>
-          </form>
+                    <form method="post" th:action="@{/quote/reject}">
+                        <input type="hidden" name="quoteId" th:value="${quote.quoteId}">
+                        <button type="submit" class="rejectButton">Afvis tilbuddet</button>
+                    </form>
 
-          <form method="post" th:action="@{/quote/accept}">
-            <input type="hidden" name="quoteId" th:value="${quote.quoteId}">
-            <button type="submit" class="acceptButton">Accepter og betal</button>
-          </form>
+                    <form method="post" th:action="@{/quote/accept}">
+                        <input type="hidden" name="quoteId" th:value="${quote.quoteId}">
+                        <button type="submit" class="acceptButton">Accepter og betal</button>
+                    </form>
 
-        </div>
+                </div>
 
-        <div class="quoteButtons" th:if="${quote.status == 'REJECTED'}">
-          <p class="redText">Dette tilbud er afvist</p>
-        </div>
+                <div class="quoteButtons" th:if="${quote.status == 'REJECTED'}">
+                    <p class="redText">Dette tilbud er afvist</p>
+                </div>
 
-        <div class="quoteButtons" th:if="${quote.status == 'ACCEPTED'}">
-          <p class="greenText">Dette tilbud er accepteret</p>
-        </div>
+                <div class="quoteButtons" th:if="${quote.status == 'ACCEPTED'}">
+                    <p class="greenText">Dette tilbud er accepteret</p>
+                </div>
 
-      </div>
+            </div>
 
-      <div class="detailBoxes">
+            <div class="detailBoxes">
 
-        <div class="detailBox customerBox">
+                <div class="detailBox customerBox">
 
-          <h2>Kunde oplysninger</h2>
+                    <h2>Kunde oplysninger</h2>
 
-          <div class="detailRow">
-            <p>Navn</p>
-            <span th:text="${user.firstName + ' ' + user.lastName}"></span>
-          </div>
+                    <div class="detailRow">
+                        <p>Navn</p>
+                        <span th:text="${user.firstName + ' ' + user.lastName}"></span>
+                    </div>
 
-          <div class="detailRow">
-            <p>Email</p>
-            <span th:text="${user.email}"></span>
-          </div>
+                    <div class="detailRow">
+                        <p>Email</p>
+                        <span th:text="${user.email}"></span>
+                    </div>
 
-          <div class="detailRow">
-            <p>Telefon</p>
-            <span th:text="${user.phone}"></span>
-          </div>
+                    <div class="detailRow">
+                        <p>Telefon</p>
+                        <span th:text="${user.phone}"></span>
+                    </div>
 
-          <div class="detailRow">
-            <p>Adresse</p>
-            <span th:text="${user.address + ', ' + user.postalCode + ' ' + user.city}"></span>
-          </div>
+                    <div class="detailRow">
+                        <p>Adresse</p>
+                        <span th:text="${user.address + ', ' + user.postalCode + ' ' + user.city}"></span>
+                    </div>
 
-          <div class="detailRow">
-            <p>Dato for forespørgsel</p>
-            <span th:text="${carportRequest.createdAt != null ? #temporals.format(carportRequest.createdAt, 'dd-MM-yyyy') : '-'}"></span>
-          </div>
+                    <div class="detailRow">
+                        <p>Dato for forespørgsel</p>
+                        <span th:text="${carportRequest.createdAt != null ? #temporals.format(carportRequest.createdAt, 'dd-MM-yyyy') : '-'}"></span>
+                    </div>
 
-        </div>
+                </div>
 
-        <div class="detailBox">
+                <div class="detailBox">
 
-          <div class="boxTitleText">
-            <h2>Originale mål</h2>
-            <p>Dine indtastede mål til forespørgslen</p>
-          </div>
+                    <div class="boxTitleText">
+                        <h2>Carport oplysninger</h2>
+                    </div>
 
-          <div class="detailRow">
-            <p>Carport type</p>
-            <span th:text="${carportRequest.carport.hasShed ? 'Carport med skur' : 'Enkelt carport'}"></span>
-          </div>
+                    <div class="detailRow">
+                        <p>Carport type</p>
+                        <span th:text="${carportRequest.carport.hasShed ? 'Carport med skur' : 'Enkelt carport'}"></span>
+                    </div>
 
-          <div class="detailRow">
-            <p>Længde</p>
-            <span th:text="${carportRequest.carport.lengthCm}"></span>
-          </div>
+                    <div class="detailRow">
+                        <p>Længde</p>
+                        <span th:text="${carportRequest.carport.lengthCm}"></span>
+                    </div>
 
-          <div class="detailRow">
-            <p>Højde</p>
-            <span th:text="${carportRequest.carport.heightCm}"></span>
-          </div>
+                    <div class="detailRow">
+                        <p>Højde</p>
+                        <span th:text="${carportRequest.carport.heightCm}"></span>
+                    </div>
 
-          <div class="detailRow">
-            <p>Bredde</p>
-            <span th:text="${carportRequest.carport.widthCm}"></span>
-          </div>
+                    <div class="detailRow">
+                        <p>Bredde</p>
+                        <span th:text="${carportRequest.carport.widthCm}"></span>
+                    </div>
 
-          <div class="detailRow">
-            <p>Skur</p>
-            <span th:text="${carportRequest.carport.hasShed ? 'Ja' : 'Nej'}"></span>
-          </div>
+                    <div class="detailRow">
+                        <p>Skur</p>
+                        <span th:text="${carportRequest.carport.hasShed ? 'Ja' : 'Nej'}"></span>
+                    </div>
 
-          <div class="detailRow">
-            <p>Skur mål</p>
-            <span th:text="${carportRequest.carport.shedWidthCm + ' x ' + carportRequest.carport.shedLengthCm}"></span>
-          </div>
+                    <div class="detailRow">
+                        <p>Skur mål</p>
+                        <span th:text="${carportRequest.carport.shedWidthCm + ' x ' + carportRequest.carport.shedLengthCm}"></span>
+                    </div>
 
-          <div class="detailRow">
-            <p>Materiale</p>
-            <span>Trykimprægneret træ</span>
-          </div>
+                    <div class="detailRow">
+                        <p>Materiale</p>
+                        <span>Trykimprægneret træ</span>
+                    </div>
 
-          <div class="detailRow">
-            <p>Tagtype</p>
-            <span th:text="${carportRequest.carport.roofType}"></span>
-          </div>
+                    <div class="detailRow">
+                        <p>Tagtype</p>
+                        <span th:text="${carportRequest.carport.roofType}"></span>
+                    </div>
 
-        </div>
+                </div>
 
-        <div class="detailBox">
+                <div class="detailBox overviewBox">
 
-          <div class="boxTitleText">
-            <h2>Sælger justeret mål</h2>
-            <p>Det endelige tilbud fra sælger</p>
-          </div>
+                    <h2>Automatisk beregning</h2>
 
-          <div class="detailRow">
-            <p>Carport type</p>
-            <span th:text="${carportRequest.carport.hasShed ? 'Carport med skur' : 'Enkelt carport'}"></span>
-          </div>
+                    <p class="priceLabel">Estimeret pris inkl moms</p>
+                    <p class="price" th:text="${quote.totalPrice + ' DKK'}"></p>
 
-          <div class="detailRow changedRow">
-            <p>Længde</p>
-            <span th:text="${carportRequest.carport.lengthCm + 10}"></span>
-          </div>
+                    <div class="line"></div>
 
-          <div class="detailRow changedRow">
-            <p>Højde</p>
-            <span th:text="${carportRequest.carport.heightCm + 10}"></span>
-          </div>
+                    <div class="overviewRow">
+                        <p>Status</p>
 
-          <div class="detailRow changedRow">
-            <p>Bredde</p>
-            <span th:text="${carportRequest.carport.widthCm + 10}"></span>
-          </div>
+                        <span class="redText" th:if="${quote.status == 'REJECTED'}">AFVIST</span>
+                        <span class="greenText" th:if="${quote.status == 'ACCEPTED'}">ACCEPTERET</span>
+                        <span class="yellowText" th:if="${quote.status != 'REJECTED' && quote.status != 'ACCEPTED'}">AFVENTER SVAR</span>
+                    </div>
 
-          <div class="detailRow">
-            <p>Skur</p>
-            <span th:text="${carportRequest.carport.hasShed ? 'Ja' : 'Nej'}"></span>
-          </div>
+                    <div class="overviewRow">
+                        <p>Levering</p>
+                        <span>30-45 dage</span>
+                    </div>
 
-          <div class="detailRow">
-            <p>Skur mål</p>
-            <span th:text="${carportRequest.carport.shedWidthCm + 10 + ' x ' + carportRequest.carport.shedLengthCm + 20}"></span>
-          </div>
+                    <div class="overviewRow">
+                        <p>Betalingsmetode</p>
+                        <span>Kort</span>
+                    </div>
 
-          <div class="detailRow">
-            <p>Materiale</p>
-            <span>Trykimprægneret træ</span>
-          </div>
+                    <div class="overviewRow">
+                        <p>Stykliste</p>
+                        <span>Tilgængelig efter betaling</span>
+                    </div>
 
-          <div class="detailRow">
-            <p>Tagtype</p>
-            <span th:text="${carportRequest.carport.roofType}"></span>
-          </div>
+                    <p class="styklisteInfo">
+                        Detaljeret stykliste bliver først tilgængelig efter betaling og ordreprocessen er sat i gang
+                    </p>
 
-        </div>
+                </div>
 
-        <div class="detailBox overviewBox">
+            </div>
 
-          <h2>Automatisk beregning</h2>
+            <div class="svgBox">
+                <h2>Carport tegning</h2>
+                <div th:utext="${svg}"></div>
+            </div>
 
-          <p class="priceLabel">Estimeret pris inkl moms</p>
-          <p class="price" th:text="${quote.totalPrice + ' DKK'}"></p>
-
-          <div class="line"></div>
-
-          <div class="overviewRow">
-            <p>Status</p>
-
-            <span class="redText" th:if="${quote.status == 'REJECTED'}">AFVIST</span>
-            <span class="greenText" th:if="${quote.status == 'ACCEPTED'}">ACCEPTERET</span>
-            <span class="yellowText" th:if="${quote.status != 'REJECTED' && quote.status != 'ACCEPTED'}">AFVENTER SVAR</span>
-          </div>
-
-          <div class="overviewRow">
-            <p>Levering</p>
-            <span>30-45 dage</span>
-          </div>
-
-          <div class="overviewRow">
-            <p>Betalingsmetode</p>
-            <span>Kort</span>
-          </div>
-
-          <div class="overviewRow">
-            <p>Stykliste</p>
-            <span>Tilgængelig efter betaling</span>
-          </div>
-
-          <p class="styklisteInfo">
-            Detaljeret stykliste bliver først tilgængelig efter betaling og ordreprocessen er sat i gang
-          </p>
+            <div class="commentBox">
+                <h3>Din tidligere kommentar</h3>
+                <p th:text="${carportRequest.customerComment}"></p>
+            </div>
 
         </div>
-
-      </div>
-
-      <div class="svgBox">
-        <h2>Carport tegning</h2>
-        <div th:utext="${svg}"></div>
-      </div>
-
-      <div class="commentBox">
-        <h3>Din tidligere kommentar</h3>
-        <p th:text="${carportRequest.customerComment}"></p>
-      </div>
 
     </div>
-
-  </div>
 
 </div>
 
