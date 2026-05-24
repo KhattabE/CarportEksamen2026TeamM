@@ -49,7 +49,7 @@ public class GmailEmailSender {
     public static void main(String[] args) {
         GmailEmailSender sender = new GmailEmailSender();
 
-        String to = "rasullhossein250@gmail.com";  // Erstat med din modtager
+        String to = "recipient@example.com";  // Erstat med din modtager
         String subject = "Testmail fra Java";
         String body = "Hej! Dette er en simpel testmail sendt med Java og Jakarta Mail.";
 
