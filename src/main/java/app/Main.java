@@ -12,10 +12,10 @@ import io.javalin.rendering.template.JavalinThymeleaf;
 
 public class Main {
 
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "}DPU2Y-h(=T£4E`F\\e6j@i]`n:mX,5g";
-    private static final String URL = "jdbc:postgresql://134.209.233.109:5432/%s?currentSchema=public";
-    private static final String DB = "carport";
+    private static final String USER = System.getenv().getOrDefault("JDBC_USER","postgres");
+    private static final String PASSWORD = System.getenv().getOrDefault("JDBC_PASSWORD", "postgres");
+    private static final String URL = System.getenv().getOrDefault("JDBC_CONNECTION_STRING", "jdbc:postgresql://localhost:5432/%s?currentSchema=public");
+    private static final String DB = System.getenv().getOrDefault("JDBC_DB", "carport");
 
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
 
