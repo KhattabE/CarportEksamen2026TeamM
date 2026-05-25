@@ -1,4 +1,4 @@
-package util;
+package app.util;
 
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
