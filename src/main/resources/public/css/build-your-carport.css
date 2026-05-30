@@ -427,5 +427,216 @@ select {
 }
 
 .commentRow textarea:focus {
-border-color: #00752D;
+    border-color: #00752D;
+}
+
+@media screen and (max-width: 600px) {
+    body {
+        overflow-x: hidden;
+    }
+
+    .topbar {
+        gap: 8px;
+        height: 24px;
+        font-size: 8px;
+        justify-content: space-around;
+        padding: 0 6px;
+        box-sizing: border-box;
+    }
+
+    .topbar p {
+        white-space: nowrap;
+        margin: 0;
+    }
+
+    .menubar {
+        height: 50px;
+        padding: 0 8px 0 0;
+        overflow: hidden;
+    }
+
+    .logoBox {
+        width: 82px;
+        height: 60px;
+        margin-top: -10px;
+        margin-right: 6px;
+        padding-left: 5px;
+    }
+
+    .logoBox h1 {
+        font-size: 34px;
+        line-height: 34px;
+    }
+
+    .logoBox p {
+        font-size: 10px;
+        line-height: 10px;
+        margin-top: 6px;
+    }
+
+    .menuLinks {
+        display: none;
+    }
+
+    .adminIconBox {
+        gap: 12px;
+    }
+
+    .adminIconBox a {
+        font-size: 9px;
+    }
+
+    .adminIconBox i {
+        font-size: 18px;
+    }
+
+    .background {
+        height: auto;
+        min-height: calc(100vh - 74px);
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 12px 12px 22px 12px;
+        display: block;
+        box-sizing: border-box;
+    }
+
+    .buildCarportText {
+        grid-column: auto;
+        width: min(100%, 360px);
+        max-width: 360px;
+        margin: 0 auto 12px auto;
+    }
+
+    .buildCarportText h1 {
+        font-size: 22px;
+        margin: 0 0 6px 0;
+        line-height: 1.2;
+    }
+
+    .buildCarportText p {
+        font-size: 11px;
+        margin: 0;
+        line-height: 1.35;
+    }
+
+    #carportRequestForm {
+        grid-column: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        width: min(100%, 360px);
+        max-width: 360px;
+        margin: 0 auto;
+    }
+
+    .configureContainer,
+    .yourPreviewCarportContainer {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .configureTitle {
+        padding: 7px 10px;
+    }
+
+    .configureTitle h2 {
+        font-size: 15px;
+    }
+
+    .typeRow,
+    .measureRow,
+    .shedMeasureRow,
+    .shedRow,
+    .selectMaterialRow,
+    .selectRooofRow,
+    .commentRow {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        padding: 9px 10px;
+    }
+
+    .typeRow p,
+    .measureRow p,
+    .shedRow p,
+    .selectMaterialRow p,
+    .selectRooofRow p,
+    .commentRow p {
+        grid-column: 1 / -1;
+        font-size: 12px;
+    }
+
+    .selectMaterialRow select,
+    .selectRooofRow select,
+    .commentRow textarea {
+        grid-column: 1 / -1;
+    }
+
+    .measureBox label {
+        font-size: 9px;
+    }
+
+    .measureBox input,
+    select,
+    button,
+    .typeRow label,
+    .shedRow label {
+        height: 32px;
+        font-size: 12px;
+    }
+
+    .measureBox input,
+    select {
+        padding-left: 8px;
+    }
+
+    .commentRow textarea {
+        height: 62px;
+        font-size: 12px;
+    }
+
+    #updatePreview {
+        padding: 12px 10px;
+    }
+
+    .previewImage {
+        padding: 8px 12px;
+    }
+
+    .previewImage img {
+        height: 130px;
+    }
+
+    .summarySection {
+        padding: 8px 12px 6px 12px;
+    }
+
+    .summarySection h3 {
+        font-size: 12px;
+    }
+
+    .summaryRow {
+        font-size: 11px;
+        line-height: 1.35;
+    }
+
+    .priceSection {
+        padding: 8px 12px;
+    }
+
+    .priceSection p {
+        font-size: 12px;
+    }
+
+    #summaryPrice {
+        font-size: 15px;
+    }
+
+    #sendRequest {
+        padding: 0 12px 14px 12px;
+    }
+
+    #sendRequest button {
+        height: 36px;
+        font-size: 12px;
+    }
 }

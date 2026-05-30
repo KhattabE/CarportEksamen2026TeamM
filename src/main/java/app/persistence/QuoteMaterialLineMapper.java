@@ -22,10 +22,10 @@ public class QuoteMaterialLineMapper {
     // Adds multiple material lines to one quote.
     public void addQuoteMaterialLines(List<QuoteMaterialLine> quoteMaterialLines) {
         String sql = """
-                INSERT INTO quote_material_lines
-                (quote_id, material_id, length_cm, quantity, unit_price, unit, usage_description)
-                VALUES (?, ?, ?, ?, ?, ?, ?);
-                """;
+            INSERT INTO quote_material_lines
+            (quote_id, material_id, length_cm, quantity, unit_price, usage_description)
+            VALUES (?, ?, ?, ?, ?, ?);
+            """;
 
         try (
                 Connection connection = connectionPool.getConnection();
@@ -38,8 +38,7 @@ public class QuoteMaterialLineMapper {
                 preparedStatement.setObject(3, quoteMaterialLine.getLengthCm());
                 preparedStatement.setBigDecimal(4, quoteMaterialLine.getQuantity());
                 preparedStatement.setBigDecimal(5, quoteMaterialLine.getUnitPrice());
-                preparedStatement.setString(6, quoteMaterialLine.getUnit());
-                preparedStatement.setString(7, quoteMaterialLine.getUsageDescription());
+                preparedStatement.setString(6, quoteMaterialLine.getUsageDescription());
 
                 preparedStatement.addBatch();
             }
@@ -57,10 +56,19 @@ public class QuoteMaterialLineMapper {
         List<QuoteMaterialLine> quoteMaterialLines = new ArrayList<>();
 
         String sql = """
-                SELECT * FROM quote_material_lines
-                WHERE quote_id = ?
-                ORDER BY quote_line_id;
-                """;
+            SELECT qml.quote_line_id,
+                   qml.quote_id,
+                   qml.material_id,
+                   qml.length_cm,
+                   qml.quantity,
+                   qml.unit_price,
+                   qml.usage_description,
+                   m.unit
+            FROM quote_material_lines qml
+            JOIN materials m ON qml.material_id = m.material_id
+            WHERE qml.quote_id = ?
+            ORDER BY qml.quote_line_id;
+            """;
 
         try (
                 Connection connection = connectionPool.getConnection();
@@ -80,7 +88,16 @@ public class QuoteMaterialLineMapper {
                 String unit = rs.getString("unit");
                 String usageDescription = rs.getString("usage_description");
 
-                QuoteMaterialLine quoteMaterialLine = new QuoteMaterialLine(quoteLineId, quoteId, materialId, lengthCm, quantity, unitPrice, unit, usageDescription);
+                QuoteMaterialLine quoteMaterialLine = new QuoteMaterialLine(
+                        quoteLineId,
+                        quoteId,
+                        materialId,
+                        lengthCm,
+                        quantity,
+                        unitPrice,
+                        unit,
+                        usageDescription
+                );
 
                 quoteMaterialLines.add(quoteMaterialLine);
             }

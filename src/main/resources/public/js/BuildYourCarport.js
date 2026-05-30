@@ -44,10 +44,7 @@ async function updatePreview() {
     const formData = new FormData(form);
 
     try {
-        const response = await fetch("/calculate-preview-price", {
-            method: "POST",
-            body: formData
-        });
+        const response = await fetch("/calculate-preview-price", {method: "POST", body: formData});
         const price = await response.text();
 
         console.log(price);

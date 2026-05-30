@@ -1,4 +1,7 @@
 package app.controllers;
+import app.entities.QuoteMaterialLine;
+import app.persistence.QuoteMaterialLineMapper;
+import app.util.GmailEmailSenderHTML;
 
 import app.Main;
 import app.entities.Carport;
@@ -16,7 +19,13 @@ import app.services.CarportCalculator;
 import io.javalin.http.Context;
 
 import java.time.LocalDate;
+
 import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import jakarta.mail.MessagingException;
 
 public class QuoteController {
 
@@ -55,6 +64,9 @@ public class QuoteController {
 
         QuotesMapper quotesMapper = new QuotesMapper(Main.getConnectionPool());
         OrderMapper orderMapper = new OrderMapper(Main.getConnectionPool());
+        CarportRequestMapper carportRequestMapper = new CarportRequestMapper(Main.getConnectionPool());
+        QuoteMaterialLineMapper quoteMaterialLineMapper = new QuoteMaterialLineMapper(Main.getConnectionPool());
+        MaterialMapper materialMapper = new MaterialMapper(Main.getConnectionPool());
 
         Quote quote = quotesMapper.getQuoteById(quoteId);
 
@@ -67,15 +79,90 @@ public class QuoteController {
 
         Order existingOrder = orderMapper.getOrderByQuoteId(quoteId);
 
+        boolean shouldSendPaymentEmail = false;
+
         if (existingOrder == null) {
             orderMapper.createOrder(quoteId);
+            shouldSendPaymentEmail = true;
         } else if (!"PAID".equals(existingOrder.getPaymentStatus())) {
             orderMapper.markOrderAsPaid(existingOrder.getOrderId());
+            shouldSendPaymentEmail = true;
+        }
+
+        if (shouldSendPaymentEmail) {
+            try {
+                CarportRequest carportRequest = carportRequestMapper.getCarportRequestById(quote.getRequestId());
+
+                if (carportRequest == null) {
+                    throw new RuntimeException("Could not find carport request for quote id: " + quoteId);
+                }
+
+                Carport carport = carportRequest.getCarport();
+
+                List<QuoteMaterialLine> quoteMaterialLines = quoteMaterialLineMapper.getQuoteMaterialLinesByQuoteId(quoteId);
+
+                if (quoteMaterialLines.isEmpty()) {
+                    List<Material> activeMaterials = materialMapper.getActiveMaterials();
+
+                    CarportCalculator calculator = new CarportCalculator();
+                    CarportCalculationResult result = calculator.calculate(carport, activeMaterials);
+
+                    quoteMaterialLines = result.createQuoteMaterialLines(quoteId);
+                    quoteMaterialLineMapper.addQuoteMaterialLines(quoteMaterialLines);
+                }
+
+                List<Map<String, Object>> materialLinesForEmail = new ArrayList<>();
+
+                for (QuoteMaterialLine line : quoteMaterialLines) {
+                    Material material = materialMapper.getMaterialById(line.getMaterialId());
+
+                    Map<String, Object> emailLine = new HashMap<>();
+                    emailLine.put("materialName", material != null ? material.getName() : "Ukendt materiale");
+                    emailLine.put("usageDescription", line.getUsageDescription());
+                    emailLine.put("formattedLength", line.getLengthCm() > 0 ? line.getLengthCm() + " cm" : "-");
+                    emailLine.put("formattedQuantity", line.getQuantity() + " " + line.getUnit());
+
+                    materialLinesForEmail.add(emailLine);
+                }
+
+                Map<String, Object> variables = new HashMap<>();
+                variables.put("customerName", currentUser.getFirstName());
+                variables.put("quoteId", quote.getQuoteId());
+                variables.put("totalPrice", quote.getTotalPrice());
+
+                variables.put("hasShed", carport.isHasShed());
+                variables.put("lengthCm", carport.getLengthCm());
+                variables.put("widthCm", carport.getWidthCm());
+                variables.put("heightCm", carport.getHeightCm());
+                variables.put("roofType", carport.getRoofType());
+                variables.put("shedWidthCm", carport.getShedWidthCm());
+                variables.put("shedLengthCm", carport.getShedLengthCm());
+
+                variables.put("materialLines", materialLinesForEmail);
+
+                GmailEmailSenderHTML emailSender = new GmailEmailSenderHTML();
+
+                String html = emailSender.renderTemplate("payment_confirmation_email", variables);
+
+                emailSender.sendHtmlEmail(
+                        currentUser.getEmail(),
+                        "Tak for din betaling - Fog Custom Carport",
+                        html
+                );
+
+                System.out.println("Payment confirmation email sent to " + currentUser.getEmail());
+
+            } catch (MessagingException e) {
+                System.out.println("Could not send payment confirmation email");
+                e.printStackTrace();
+            } catch (Exception e) {
+                System.out.println("Could not prepare payment confirmation email");
+                e.printStackTrace();
+            }
         }
 
         ctx.redirect("/profile");
     }
-
     public static void createQuoteFromRequest(Context ctx) {
         User currentUser = ctx.sessionAttribute("currentUser");
 
