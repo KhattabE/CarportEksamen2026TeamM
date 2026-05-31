@@ -2,6 +2,7 @@
 <html lang="da" xmlns:th="http://www.thymeleaf.org">
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <title>Admin request details</title>
 
@@ -229,9 +230,14 @@
 
                                 <div class="materialsScroll">
                                     <div class="materialLine" th:each="materialLine : ${calculationResult.materialLines}">
-                                        <span class="materialName" th:text="${materialLine.materialName}">
-                                            Materiale
-                                        </span>
+                                        <div class="materialInfo">
+                                            <span class="materialName" th:text="${materialLine.materialName}">
+                                                Materiale
+                                            </span>
+                                            <span class="materialDescription" th:text="${materialLine.usageDescription}">
+                                                Anvendelse
+                                            </span>
+                                        </div>
 
                                         <span class="materialLength"
                                               th:text="${materialLine.lengthCm > 0 ? materialLine.lengthCm + ' cm' : '-'}">
@@ -239,7 +245,7 @@
                                         </span>
 
                                         <span class="materialQuantity" th:text="${materialLine.quantity + ' ' + materialLine.unit}">
-                                            0 stk.
+                                            0 stk
                                         </span>
                                     </div>
                                 </div>

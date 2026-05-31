@@ -72,7 +72,7 @@ public class GmailEmailSenderHTML {
                 "message", "Dette er en HTML-mail genereret med Thymeleaf og sendt med Gmail SMTP."
         );
 
-        String html = sender.renderTemplate("email.html", variables); // bruger templates/email.html
+        String html = sender.renderTemplate("email", variables); // bruger templates/email.html
 
         try {
             sender.sendHtmlEmail(to, "HTML mail test", html);

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Tak for din betaling</title>
+</head>
+<body style="margin:0; padding:0; background-color:#f3f3f3; font-family:Arial, Helvetica, sans-serif; color:#1f1f1f;">
+
+<table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f3f3f3; padding:24px 0;">
+    <tr>
+        <td align="center">
+
+            <table width="680" cellpadding="0" cellspacing="0" style="background-color:#ffffff; border-collapse:collapse; border:1px solid #dddddd;">
+
+                <tr>
+                    <td style="background-color:#00752D; padding:22px 28px; color:#ffffff;">
+                        <h1 style="margin:0; font-size:26px;">Fog Custom Carport</h1>
+                        <p style="margin:4px 0 0 0; font-size:14px;">Tak for din betaling</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding:28px;">
+                        <p style="margin:0 0 12px 0; font-size:15px;">
+                            Hej <strong th:text="${customerName}">Kunde</strong>,
+                        </p>
+
+                        <p style="margin:0 0 18px 0; font-size:15px; line-height:1.5;">
+                            Tak for din betaling. Vi har modtaget din ordre, og din carport går nu videre i ordreprocessen.
+                        </p>
+
+                        <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse; margin-bottom:22px;">
+                            <tr>
+                                <td style="padding:8px 0; border-bottom:1px solid #eeeeee; color:#777777; font-size:14px;">Tilbudsnummer</td>
+                                <td align="right" style="padding:8px 0; border-bottom:1px solid #eeeeee; font-size:14px;" th:text="${quoteId}">1</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:8px 0; border-bottom:1px solid #eeeeee; color:#777777; font-size:14px;">Samlet pris inkl. moms</td>
+                                <td align="right" style="padding:8px 0; border-bottom:1px solid #eeeeee; font-size:14px; font-weight:bold;" th:text="${totalPrice + ' DKK'}">0 DKK</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:8px 0; border-bottom:1px solid #eeeeee; color:#777777; font-size:14px;">Betalingsstatus</td>
+                                <td align="right" style="padding:8px 0; border-bottom:1px solid #eeeeee; font-size:14px; color:#00752D; font-weight:bold;">Betalt</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:8px 0; border-bottom:1px solid #eeeeee; color:#777777; font-size:14px;">Forventet levering</td>
+                                <td align="right" style="padding:8px 0; border-bottom:1px solid #eeeeee; font-size:14px;">30-45 dage</td>
+                            </tr>
+                        </table>
+
+                        <h2 style="margin:0 0 10px 0; font-size:18px;">Carport oplysninger</h2>
+
+                        <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse; margin-bottom:24px;">
+                            <tr>
+                                <td style="padding:7px 0; border-bottom:1px solid #eeeeee; color:#777777; font-size:14px;">Type</td>
+                                <td align="right" style="padding:7px 0; border-bottom:1px solid #eeeeee; font-size:14px;"
+                                    th:text="${hasShed ? 'Carport med skur' : 'Carport uden skur'}">Carport</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:7px 0; border-bottom:1px solid #eeeeee; color:#777777; font-size:14px;">Mål</td>
+                                <td align="right" style="padding:7px 0; border-bottom:1px solid #eeeeee; font-size:14px;"
+                                    th:text="${lengthCm + ' x ' + widthCm + ' x ' + heightCm + ' cm'}">0 x 0 x 0 cm</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:7px 0; border-bottom:1px solid #eeeeee; color:#777777; font-size:14px;">Tagtype</td>
+                                <td align="right" style="padding:7px 0; border-bottom:1px solid #eeeeee; font-size:14px;" th:text="${roofType}">Fladt tag</td>
+                            </tr>
+                            <tr th:if="${hasShed}">
+                                <td style="padding:7px 0; border-bottom:1px solid #eeeeee; color:#777777; font-size:14px;">Skur mål</td>
+                                <td align="right" style="padding:7px 0; border-bottom:1px solid #eeeeee; font-size:14px;"
+                                    th:text="${shedWidthCm + ' x ' + shedLengthCm + ' cm'}">0 x 0 cm</td>
+                            </tr>
+                        </table>
+
+                        <h2 style="margin:0 0 10px 0; font-size:18px;">Stykliste</h2>
+
+                        <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse; margin-bottom:22px;">
+                            <thead>
+                            <tr>
+                                <th align="left" style="padding:9px 6px; background-color:#f2f2f2; border:1px solid #dddddd; font-size:13px;">Materiale</th>
+                                <th align="right" style="padding:9px 6px; background-color:#f2f2f2; border:1px solid #dddddd; font-size:13px;">Længde</th>
+                                <th align="right" style="padding:9px 6px; background-color:#f2f2f2; border:1px solid #dddddd; font-size:13px;">Antal</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="line : ${materialLines}">
+                                <td style="padding:9px 6px; border:1px solid #dddddd; font-size:13px; vertical-align:top;">
+                                    <strong th:text="${line['materialName']}">Materiale</strong>
+                                    <br/>
+                                    <span style="color:#777777; font-size:12px;" th:text="${line['usageDescription']}">Anvendelse</span>
+                                </td>
+                                <td align="right" style="padding:9px 6px; border:1px solid #dddddd; font-size:13px; vertical-align:top;"
+                                    th:text="${line['formattedLength']}">-</td>
+                                <td align="right" style="padding:9px 6px; border:1px solid #dddddd; font-size:13px; vertical-align:top;"
+                                    th:text="${line['formattedQuantity']}">0 stk.</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <p th:if="${#lists.isEmpty(materialLines)}" style="margin:0 0 20px 0; color:#777777; font-size:14px;">
+                            Der blev ikke fundet nogen materialelinjer til dette tilbud.
+                        </p>
+
+                        <p style="margin:0 0 8px 0; font-size:14px; line-height:1.5;">
+                            Du kan finde dit tilbud og din ordre under din profil.
+                        </p>
+                    </td>
+                </tr>
+
+            </table>
+
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
