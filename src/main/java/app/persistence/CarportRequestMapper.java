@@ -42,7 +42,7 @@ public class CarportRequestMapper {
             preparedStatement.setInt(4, carport.getHeightCm());
             preparedStatement.setBoolean(5, carport.isHasShed());
 
-            // If there is no shed, these can just be 0 in your current Carport class
+            // If there is no shed, these will be 0
             preparedStatement.setInt(6, carport.getShedWidthCm());
             preparedStatement.setInt(7, carport.getShedLengthCm());
 
@@ -84,12 +84,11 @@ public class CarportRequestMapper {
 
             if (rs.next()) {
                 int userId = rs.getInt("user_id");
-
                 int widthCm = rs.getInt("width_cm");
                 int lengthCm = rs.getInt("length_cm");
                 int heightCm = rs.getInt("height_cm");
-                boolean hasShed = rs.getBoolean("has_shed");
 
+                boolean hasShed = rs.getBoolean("has_shed");
                 int shedWidthCm = rs.getInt("shed_width_cm");
                 int shedLengthCm = rs.getInt("shed_length_cm");
 
@@ -147,15 +146,7 @@ public class CarportRequestMapper {
 
                 LocalDateTime createdAt = rs.getTimestamp("created_at").toLocalDateTime();
 
-                Carport carport = new Carport(
-                        widthCm,
-                        lengthCm,
-                        heightCm,
-                        hasShed,
-                        shedWidthCm,
-                        shedLengthCm,
-                        roofType
-                );
+                Carport carport = new Carport(widthCm, lengthCm, heightCm, hasShed, shedWidthCm, shedLengthCm, roofType);
 
                 CarportRequest carportRequest = new CarportRequest(requestId, userId, carport, status, customerComment, createdAt);
 

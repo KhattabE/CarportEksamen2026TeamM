@@ -63,10 +63,7 @@ public class MainController {
 
         CarportCalculator calculator = new CarportCalculator();
 
-        CarportCalculationResult calculationResult = calculator.calculate(
-                carportRequest.getCarport(),
-                materialMapper.getActiveMaterials()
-        );
+        CarportCalculationResult calculationResult = calculator.calculate(carportRequest.getCarport(), materialMapper.getActiveMaterials());
 
         ctx.attribute("currentPage", "requests");
         ctx.attribute("carportRequest", carportRequest);

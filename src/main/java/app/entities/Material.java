@@ -10,18 +10,18 @@ public class Material {
     private String category;
     private String unit;
     private BigDecimal pricePerUnit;
-    private boolean isActive; // hedder "active" i databasen, skal vi skifte navnet til "isActive" i stedet?
+    private boolean active;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Material(int materialId, String name, String description, String category, String unit, BigDecimal pricePerUnit, boolean isActive, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Material(int materialId, String name, String description, String category, String unit, BigDecimal pricePerUnit, boolean active, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.materialId = materialId;
         this.name = name;
         this.description = description;
         this.category = category;
         this.unit = unit;
         this.pricePerUnit = pricePerUnit;
-        this.isActive = isActive;
+        this.active = active;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -32,10 +32,6 @@ public class Material {
 
     public String getName() {
         return name;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public String getCategory() {
@@ -50,10 +46,6 @@ public class Material {
         return pricePerUnit;
     }
 
-    public boolean isActive() {
-        return isActive;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -62,35 +54,15 @@ public class Material {
         return updatedAt;
     }
 
-    public void setMaterialId(int materialId) {
-        this.materialId = materialId;
+    public boolean isActive() {
+        return active;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public void setPricePerUnit(BigDecimal pricePerUnit) {
-        this.pricePerUnit = pricePerUnit;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 }

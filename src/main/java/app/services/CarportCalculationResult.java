@@ -9,6 +9,7 @@ import java.util.List;
 
 public class CarportCalculationResult {
 
+    //Moms
     private static final BigDecimal MARKUP_FACTOR = new BigDecimal("1.25");
 
     private List<CalculatedMaterialLine> materialLines;
