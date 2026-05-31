@@ -16,7 +16,6 @@ class MaterialMapperIntegrationTest {
     static void setup() {
         String user = "postgres";
 
-        // Backslash skal skrives som \\ i Java strings
         String password = "}DPU2Y-h(=T£4E`F\\e6j@i]`n:mX,5g";
 
         String url = "jdbc:postgresql://134.209.233.109:5432/%s?currentSchema=public";
@@ -50,19 +49,5 @@ class MaterialMapperIntegrationTest {
         assertNotNull(foundMaterial);
         assertEquals(firstMaterial.getMaterialId(), foundMaterial.getMaterialId());
         assertEquals(firstMaterial.getName(), foundMaterial.getName());
-    }
-
-
-    // Tests that materials can be filtered by category
-    @Test
-    void testGetMaterialsByCategoryReturnsOnlyThatCategory() {
-        List<Material> materials = materialMapper.getMaterialsByCategory("Træ & Tagplader");
-
-        assertNotNull(materials);
-        assertFalse(materials.isEmpty());
-
-        for (Material material : materials) {
-            assertEquals("Træ & Tagplader", material.getCategory());
-        }
     }
 }

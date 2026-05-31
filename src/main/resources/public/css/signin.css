@@ -7,10 +7,7 @@ body{
     color: white;
 }
 
-input,
-button,
-textarea,
-select {
+input, button, textarea, select {
     font-family: "Kdam Thmor Pro", sans-serif;
 }
 
@@ -286,13 +283,11 @@ select {
     position: relative;
 }
 
-#signinMail input,
-#signinPassword input {
+#signinMail input, #signinPassword input {
     padding-left: 70px;
 }
 
-#signinMail i,
-#signinPassword i {
+#signinMail i, #signinPassword i {
     position: absolute;
     left: 22px;
     top: 50%;

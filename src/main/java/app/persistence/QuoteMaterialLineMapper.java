@@ -56,14 +56,7 @@ public class QuoteMaterialLineMapper {
         List<QuoteMaterialLine> quoteMaterialLines = new ArrayList<>();
 
         String sql = """
-            SELECT qml.quote_line_id,
-                   qml.quote_id,
-                   qml.material_id,
-                   qml.length_cm,
-                   qml.quantity,
-                   qml.unit_price,
-                   qml.usage_description,
-                   m.unit
+            SELECT qml.quote_line_id,qml.quote_id, qml.material_id, qml.length_cm,qml.quantity, qml.unit_price, qml.usage_description, m.unit
             FROM quote_material_lines qml
             JOIN materials m ON qml.material_id = m.material_id
             WHERE qml.quote_id = ?
@@ -88,16 +81,7 @@ public class QuoteMaterialLineMapper {
                 String unit = rs.getString("unit");
                 String usageDescription = rs.getString("usage_description");
 
-                QuoteMaterialLine quoteMaterialLine = new QuoteMaterialLine(
-                        quoteLineId,
-                        quoteId,
-                        materialId,
-                        lengthCm,
-                        quantity,
-                        unitPrice,
-                        unit,
-                        usageDescription
-                );
+                QuoteMaterialLine quoteMaterialLine = new QuoteMaterialLine(quoteLineId, quoteId, materialId, lengthCm, quantity, unitPrice, unit, usageDescription);
 
                 quoteMaterialLines.add(quoteMaterialLine);
             }

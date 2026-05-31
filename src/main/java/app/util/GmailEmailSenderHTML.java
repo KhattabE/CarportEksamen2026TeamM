@@ -57,27 +57,4 @@ public class GmailEmailSenderHTML {
         Transport.send(message);
         System.out.println("HTML-mail sendt til " + to);
     }
-
-    // 🧪 Main-metode til test
-    public static void main(String[] args) {
-        GmailEmailSenderHTML sender = new GmailEmailSenderHTML();
-
-        String to = "rasullhossein250@gmail.com";   // Erstat med din modtager
-        String subject = "HTML test med Thymeleaf";
-
-        // Opret en Thymeleaf kontekst med variabler. Tilføj dine egne værdier.
-        Map<String, Object> variables = Map.of(
-                "title", "Velkommen!",
-                "name", "Jon",
-                "message", "Dette er en HTML-mail genereret med Thymeleaf og sendt med Gmail SMTP."
-        );
-
-        String html = sender.renderTemplate("email", variables); // bruger templates/email.html
-
-        try {
-            sender.sendHtmlEmail(to, "HTML mail test", html);
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
-    }
 }
