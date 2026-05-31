@@ -1,6 +1,7 @@
 package app.controllers;
 import app.entities.QuoteMaterialLine;
 import app.persistence.QuoteMaterialLineMapper;
+import app.services.Svg;
 import app.util.GmailEmailSenderHTML;
 
 import app.Main;
@@ -144,11 +145,10 @@ public class QuoteController {
 
                 String html = emailSender.renderTemplate("payment_confirmation_email", variables);
 
-                emailSender.sendHtmlEmail(
-                        currentUser.getEmail(),
-                        "Tak for din betaling - Fog Custom Carport",
-                        html
-                );
+                Svg carportSvg = SvgController.createCarportSvgObject(carport);
+                byte[] pdfBytes = carportSvg.toPdfBytes();
+
+                emailSender.sendHtmlEmailWithPdfAttachment(currentUser.getEmail(), "Tak for din betaling - Fog Custom Carport", html, pdfBytes, "carport-tegning.pdf");
 
                 System.out.println("Payment confirmation email sent to " + currentUser.getEmail());
 

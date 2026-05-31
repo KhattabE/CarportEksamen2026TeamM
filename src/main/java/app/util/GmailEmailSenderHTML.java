@@ -1,9 +1,14 @@
 package app.util;
 
 import app.config.ThymeleafConfig;
+import jakarta.activation.DataHandler;
+import jakarta.activation.DataSource;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeBodyPart;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.internet.MimeMultipart;
+import jakarta.mail.util.ByteArrayDataSource;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
@@ -17,7 +22,6 @@ public class GmailEmailSenderHTML {
     private final TemplateEngine templateEngine;
 
     public GmailEmailSenderHTML() {
-        // Hent login fra miljøvariabler
         this.username = System.getenv("MAIL_USERNAME");
         this.password = System.getenv("MAIL_PASSWORD");
 
@@ -25,7 +29,6 @@ public class GmailEmailSenderHTML {
             throw new IllegalStateException("MAIL_USERNAME og MAIL_PASSWORD miljøvariabler skal være sat.");
         }
 
-        // Genbrug konfiguration fra ThymeleafConfig
         this.templateEngine = ThymeleafConfig.templateEngine();
     }
 
@@ -36,6 +39,42 @@ public class GmailEmailSenderHTML {
     }
 
     public void sendHtmlEmail(String to, String subject, String htmlBody) throws MessagingException {
+        Message message = createBaseMessage(to, subject);
+        message.setContent(htmlBody, "text/html; charset=UTF-8");
+
+        Transport.send(message);
+        System.out.println("HTML-mail sendt til " + to);
+    }
+
+    public void sendHtmlEmailWithPdfAttachment(
+            String to,
+            String subject,
+            String htmlBody,
+            byte[] pdfBytes,
+            String pdfFileName
+    ) throws MessagingException {
+
+        Message message = createBaseMessage(to, subject);
+
+        MimeBodyPart htmlPart = new MimeBodyPart();
+        htmlPart.setContent(htmlBody, "text/html; charset=UTF-8");
+
+        MimeBodyPart pdfAttachmentPart = new MimeBodyPart();
+        DataSource pdfDataSource = new ByteArrayDataSource(pdfBytes, "application/pdf");
+        pdfAttachmentPart.setDataHandler(new DataHandler(pdfDataSource));
+        pdfAttachmentPart.setFileName(pdfFileName);
+
+        Multipart multipart = new MimeMultipart();
+        multipart.addBodyPart(htmlPart);
+        multipart.addBodyPart(pdfAttachmentPart);
+
+        message.setContent(multipart);
+
+        Transport.send(message);
+        System.out.println("HTML-mail med PDF sendt til " + to);
+    }
+
+    private Message createBaseMessage(String to, String subject) throws MessagingException {
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -52,32 +91,7 @@ public class GmailEmailSenderHTML {
         message.setFrom(new InternetAddress(username));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
         message.setSubject(subject);
-        message.setContent(htmlBody, "text/html; charset=UTF-8");
 
-        Transport.send(message);
-        System.out.println("HTML-mail sendt til " + to);
-    }
-
-    // 🧪 Main-metode til test
-    public static void main(String[] args) {
-        GmailEmailSenderHTML sender = new GmailEmailSenderHTML();
-
-        String to = "rasullhossein250@gmail.com";   // Erstat med din modtager
-        String subject = "HTML test med Thymeleaf";
-
-        // Opret en Thymeleaf kontekst med variabler. Tilføj dine egne værdier.
-        Map<String, Object> variables = Map.of(
-                "title", "Velkommen!",
-                "name", "Jon",
-                "message", "Dette er en HTML-mail genereret med Thymeleaf og sendt med Gmail SMTP."
-        );
-
-        String html = sender.renderTemplate("email", variables); // bruger templates/email.html
-
-        try {
-            sender.sendHtmlEmail(to, "HTML mail test", html);
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
+        return message;
     }
 }

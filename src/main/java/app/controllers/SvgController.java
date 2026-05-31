@@ -6,7 +6,10 @@ import app.services.Svg;
 public class SvgController {
 
     public static String createCarportSvg(Carport carport) {
+        return createCarportSvgObject(carport).toString();
+    }
 
+    public static Svg createCarportSvgObject(Carport carport) {
         int lengthCm = carport.getLengthCm();
         int widthCm = carport.getWidthCm();
 
@@ -55,6 +58,6 @@ public class SvgController {
 
         svg.addRotatedText(margin - 55, margin + widthCm / 2, -90, widthCm + " cm");
 
-        return svg.toString();
+        return svg;
     }
 }
