@@ -72,7 +72,5 @@ public class SvgController {
         svg.addRotatedText(margin - 55, margin + widthCm / 2, -90, widthCm + " cm");
 
         return svg;
-        // Returnerer SVGen som tekst så den kan vises i HTML
-        return svg.toString();
     }
 }

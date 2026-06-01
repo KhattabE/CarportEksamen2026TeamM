@@ -160,7 +160,6 @@ public class QuoteController {
                 byte[] pdfBytes = carportSvg.toPdfBytes();
 
                 emailSender.sendHtmlEmailWithPdfAttachment(currentUser.getEmail(), "Tak for din betaling - Fog Custom Carport", html, pdfBytes, "carport-tegning.pdf");
-                emailSender.sendHtmlEmail(currentUser.getEmail(), "Tak for din betaling - Fog Custom Carport", html);
 
                 System.out.println("Payment confirmation email sent to " + currentUser.getEmail());
 
