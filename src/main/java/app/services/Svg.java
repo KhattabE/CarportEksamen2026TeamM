@@ -1,8 +1,19 @@
 package app.services;
 
+import org.apache.batik.transcoder.TranscoderException;
+import org.apache.batik.transcoder.TranscoderInput;
+import org.apache.batik.transcoder.TranscoderOutput;
+import org.apache.fop.svg.PDFTranscoder;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.StringReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 public class Svg {
 
-    private StringBuilder svg;
+    private final StringBuilder svg;
 
     public Svg(int width, int height, String viewBox) {
 
@@ -81,7 +92,7 @@ public class Svg {
         svg.append("y='").append(y).append("' ");
         svg.append("text-anchor='middle' ");
         svg.append("style='fill:black; font-size:18px;'>");
-        svg.append(text);
+        svg.append(escapeXml(text));
         svg.append("</text>");
     }
 
@@ -93,8 +104,36 @@ public class Svg {
         svg.append("text-anchor='middle' ");
         svg.append("transform='rotate(").append(rotation).append(" ").append(x).append(" ").append(y).append(")' ");
         svg.append("style='fill:black; font-size:18px;'>");
-        svg.append(text);
+        svg.append(escapeXml(text));
         svg.append("</text>");
+    }
+
+    public byte[] toPdfBytes() throws IOException, TranscoderException {
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+            PDFTranscoder transcoder = new PDFTranscoder();
+            TranscoderInput input = new TranscoderInput(new StringReader(toString()));
+            TranscoderOutput output = new TranscoderOutput(outputStream);
+
+            transcoder.transcode(input, output);
+            return outputStream.toByteArray();
+        }
+    }
+
+    public void saveAsPdf(Path outputPath) throws IOException, TranscoderException {
+        Files.write(outputPath, toPdfBytes());
+    }
+
+    private String escapeXml(String text) {
+        if (text == null) {
+            return "";
+        }
+
+        return text
+                .replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\"", "&quot;")
+                .replace("'", "&apos;");
     }
 
     @Override
