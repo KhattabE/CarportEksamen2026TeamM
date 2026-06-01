@@ -7,10 +7,7 @@ body{
     color: white;
 }
 
-input,
-button,
-textarea,
-select {
+input, button, textarea, select {
     font-family: "Kdam Thmor Pro", sans-serif;
 }
 
@@ -291,8 +288,6 @@ select {
     text-align: center;
 }
 
-
-
 .createUser p {
     font-size: 18px;
     margin-bottom: 20px;
@@ -320,10 +315,7 @@ select {
     margin-bottom: 15px;
 }
 
-#signupPhone,
-#signupAddress,
-#signupPostalCode,
-#signupCity {
+#signupPhone, #signupAddress, #signupPostalCode, #signupCity {
     width: 100%;
     display: block;
 }
@@ -334,22 +326,11 @@ select {
     margin: 0 0 2px 0;
 }
 
-#signupFirstName,
-#signupLastName,
-#signupMail,
-#signupPassword,
-#signupPhone,
-#signupAddress,
-#signupPostalCode,
-#signupCity {
+#signupFirstName, #signupLastName, #signupMail, #signupPassword, #signupPhone, #signupAddress, #signupPostalCode, #signupCity {
     position: relative;
 }
 
-#signupFirstName i,
-#signupLastName i,
-#signupMail i,
-#signupPassword i
-{
+#signupFirstName i, #signupLastName i, #signupMail i, #signupPassword i {
     position: absolute;
     left: 20px;
     top: 40%;
@@ -357,10 +338,7 @@ select {
     z-index: 2;
 }
 
-#signupPhone i,
-#signupAddress i,
-#signupPostalCode i,
-#signupCity i {
+#signupPhone i, #signupAddress i, #signupPostalCode i, #signupCity i {
     position: absolute;
     left: 20px;
     top: 50%;

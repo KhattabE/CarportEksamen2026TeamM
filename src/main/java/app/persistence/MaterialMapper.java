@@ -35,8 +35,6 @@ public class MaterialMapper {
                 PreparedStatement preparedStatement = connection.prepareStatement(sql);
                 ResultSet rs = preparedStatement.executeQuery()
         ) {
-
-            // Goes through every row returned from the database
             while (rs.next()) {
                 int materialId = rs.getInt("material_id");
                 String name = rs.getString("name");
@@ -49,10 +47,8 @@ public class MaterialMapper {
                 LocalDateTime createdAt = rs.getTimestamp("created_at").toLocalDateTime();
                 LocalDateTime updatedAt = rs.getTimestamp("updated_at").toLocalDateTime();
 
-                // Creates a Material object from the database row
                 Material material = new Material(materialId, name, description, category, unit, pricePerUnit, active, createdAt, updatedAt);
 
-                // Adds the material object to the list
                 materials.add(material);
             }
 
@@ -116,13 +112,10 @@ public class MaterialMapper {
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql)
         ) {
-
-            // Sets the material_id in the SQL query
             preparedStatement.setInt(1, materialId);
 
             ResultSet rs = preparedStatement.executeQuery();
 
-            // If a material with this id exists, create and return a Material object
             if (rs.next()) {
                 String name = rs.getString("name");
                 String description = rs.getString("description");
@@ -141,83 +134,6 @@ public class MaterialMapper {
             throw new RuntimeException("Could not get material by id", sqle);
         }
 
-
         return null;
-    }
-
-
-    // Updates only the price of a material.
-    public void updateMaterialPrice(int materialId, BigDecimal newPrice) {
-        String sql = """
-                UPDATE materials
-                SET price_per_unit = ?,
-                    updated_at = CURRENT_TIMESTAMP
-                WHERE material_id = ?;
-                """;
-
-        try (
-                Connection connection = connectionPool.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(sql)
-        ) {
-
-            // Sets the new price and chooses which material to update
-            preparedStatement.setBigDecimal(1, newPrice);
-            preparedStatement.setInt(2, materialId);
-
-            int rowsUpdated = preparedStatement.executeUpdate();
-
-            if (rowsUpdated == 0) {
-                throw new RuntimeException("No material found with id: " + materialId);
-            }
-
-        } catch (SQLException sqle) {
-            throw new RuntimeException("Could not update material price", sqle);
-        }
-    }
-
-
-
-    // Gets all materials from one specific category.
-    public List<Material> getMaterialsByCategory(String category) {
-        List<Material> materials = new ArrayList<>();
-
-        String sql = """
-                SELECT * FROM materials
-                WHERE category = ?
-                ORDER BY material_id;
-                """;
-
-        try (
-                Connection connection = connectionPool.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(sql)
-        ) {
-
-
-            preparedStatement.setString(1, category);
-
-            ResultSet rs = preparedStatement.executeQuery();
-
-            while (rs.next()) {
-                int materialId = rs.getInt("material_id");
-                String name = rs.getString("name");
-                String description = rs.getString("description");
-                String materialCategory = rs.getString("category");
-                String unit = rs.getString("unit");
-                BigDecimal pricePerUnit = rs.getBigDecimal("price_per_unit");
-                boolean active = rs.getBoolean("active");
-
-                LocalDateTime createdAt = rs.getTimestamp("created_at").toLocalDateTime();
-                LocalDateTime updatedAt = rs.getTimestamp("updated_at").toLocalDateTime();
-
-                Material material = new Material(materialId, name, description, materialCategory, unit, pricePerUnit, active, createdAt, updatedAt);
-
-                materials.add(material);
-            }
-
-        } catch (SQLException sqle) {
-            throw new RuntimeException("Could not get materials by category", sqle);
-        }
-
-        return materials;
     }
 }

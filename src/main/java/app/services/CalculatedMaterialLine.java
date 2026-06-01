@@ -25,18 +25,9 @@ public class CalculatedMaterialLine {
         this.pricePerMeter = pricePerMeter;
     }
 
-    public CalculatedMaterialLine(int materialId, String materialName, int lengthCm, int quantity, BigDecimal unitPrice, String usageDescription, boolean pricePerMeter) {
-        this(materialId, materialName, "stk.", lengthCm, quantity, unitPrice, usageDescription, pricePerMeter);
-    }
-
-    public CalculatedMaterialLine(int materialId, int lengthCm, int quantity, BigDecimal unitPrice, String usageDescription, boolean pricePerMeter) {
-        this(materialId, usageDescription, "stk.", lengthCm, quantity, unitPrice, usageDescription, pricePerMeter);
-    }
-
     public int getMaterialId() {
         return materialId;
     }
-
     public String getMaterialName() {
         return materialName;
     }
@@ -66,7 +57,6 @@ public class CalculatedMaterialLine {
 
         if (pricePerMeter) {
             BigDecimal lengthMeters = BigDecimal.valueOf(lengthCm).divide(BigDecimal.valueOf(100), 4, RoundingMode.HALF_UP);
-
             total = total.multiply(lengthMeters);
         }
 

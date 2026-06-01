@@ -7,10 +7,7 @@ body {
     color: white;
 }
 
-input,
-button,
-textarea,
-select {
+input, button, textarea, select {
     font-family: "Kdam Thmor Pro", sans-serif;
 }
 
@@ -261,9 +258,6 @@ select {
     background-color: #098B3B;
 }
 
-/* DASHBOARD SIDEBAR LOCK - copied from admin-dashboard.css */
-/* MAIN ADMIN LAYOUT */
-
 .adminContainer {
     width: 100%;
     height: 100%;
@@ -273,8 +267,6 @@ select {
     background-color: transparent;
     border: none;
 }
-
-/* SIDEBAR */
 
 .sidebar {
     width: 140px;
@@ -315,15 +307,13 @@ select {
     border-bottom: 1px solid #00A341;
     padding-bottom: 5px;
 }
-/* END DASHBOARD SIDEBAR LOCK */
 
 @media screen and (max-width: 600px) {
     * {
         box-sizing: border-box;
     }
 
-    html,
-    body {
+    html, body {
         width: 100%;
         max-width: 100%;
         overflow-x: hidden;

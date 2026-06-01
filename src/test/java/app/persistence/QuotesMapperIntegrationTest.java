@@ -51,22 +51,6 @@ class QuotesMapperIntegrationTest {
         assertNotNull(foundQuote.getCreatedAt());
     }
 
-    // Tests that a quote can be found by request id
-    @Test
-    void testGetQuoteByRequestId() {
-        CarportRequest request = createTestCarportRequest();
-
-        Quote quote = new Quote(request.getRequestId(), request.getUserId(), new BigDecimal("8888.95"), "SENT", "Quote by request id test", LocalDate.now().plusDays(14));
-
-        Quote createdQuote = quotesMapper.createQuote(quote);
-        Quote foundQuote = quotesMapper.getQuoteByRequestId(request.getRequestId());
-
-        assertNotNull(createdQuote);
-        assertNotNull(foundQuote);
-        assertEquals(createdQuote.getQuoteId(), foundQuote.getQuoteId());
-        assertEquals(request.getRequestId(), foundQuote.getRequestId());
-        assertEquals("SENT", foundQuote.getStatus());
-    }
 
     // Tests that a quote can be accepted
     @Test

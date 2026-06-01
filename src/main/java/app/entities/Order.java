@@ -23,10 +23,6 @@ public class Order {
         return orderId;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
-    }
-
     public int getQuoteId() {
         return quoteId;
     }
@@ -39,16 +35,8 @@ public class Order {
         return orderStatus;
     }
 
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
-    }
-
     public String getPaymentStatus() {
         return paymentStatus;
-    }
-
-    public void setPaymentStatus(String paymentStatus) {
-        this.paymentStatus = paymentStatus;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -61,9 +49,5 @@ public class Order {
 
     public LocalDateTime getPaidAt() {
         return paidAt;
-    }
-
-    public void setPaidAt(LocalDateTime paidAt) {
-        this.paidAt = paidAt;
     }
 }

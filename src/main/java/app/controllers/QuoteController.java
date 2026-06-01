@@ -118,10 +118,21 @@ public class QuoteController {
                     Material material = materialMapper.getMaterialById(line.getMaterialId());
 
                     Map<String, Object> emailLine = new HashMap<>();
-                    emailLine.put("materialName", material != null ? material.getName() : "Ukendt materiale");
+
+                    if (material != null) {
+                        emailLine.put("materialName", material.getName());
+                    } else {
+                        emailLine.put("materialName", "Ukendt materiale");
+                    }
+
                     emailLine.put("usageDescription", line.getUsageDescription());
-                    emailLine.put("formattedLength", line.getLengthCm() > 0 ? line.getLengthCm() + " cm" : "-");
                     emailLine.put("formattedQuantity", line.getQuantity() + " " + line.getUnit());
+
+                    if (line.getLengthCm() > 0) {
+                        emailLine.put("formattedLength", line.getLengthCm() + " cm");
+                    } else {
+                        emailLine.put("formattedLength", "-");
+                    }
 
                     materialLinesForEmail.add(emailLine);
                 }
@@ -149,6 +160,7 @@ public class QuoteController {
                 byte[] pdfBytes = carportSvg.toPdfBytes();
 
                 emailSender.sendHtmlEmailWithPdfAttachment(currentUser.getEmail(), "Tak for din betaling - Fog Custom Carport", html, pdfBytes, "carport-tegning.pdf");
+                emailSender.sendHtmlEmail(currentUser.getEmail(), "Tak for din betaling - Fog Custom Carport", html);
 
                 System.out.println("Payment confirmation email sent to " + currentUser.getEmail());
 
@@ -195,19 +207,9 @@ public class QuoteController {
 
         CarportCalculator calculator = new CarportCalculator();
 
-        CarportCalculationResult result = calculator.calculate(
-                carportRequest.getCarport(),
-                materials
-        );
+        CarportCalculationResult result = calculator.calculate(carportRequest.getCarport(), materials);
 
-        Quote quote = new Quote(
-                requestId,
-                currentUser.getUserId(),
-                result.getTotalPrice(),
-                "SENT",
-                "Automatisk genereret tilbud",
-                LocalDate.now().plusDays(14)
-        );
+        Quote quote = new Quote(requestId, currentUser.getUserId(), result.getTotalPrice(), "SENT", "Automatisk genereret tilbud", LocalDate.now().plusDays(14));
 
         quotesMapper.createQuote(quote);
 

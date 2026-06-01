@@ -1,7 +1,5 @@
 package app.entities;
 
-import java.time.LocalDateTime;
-
 public class Carport {
     private int widthCm;
     private int lengthCm;
