@@ -46,14 +46,7 @@ public class GmailEmailSenderHTML {
         System.out.println("HTML-mail sendt til " + to);
     }
 
-    public void sendHtmlEmailWithPdfAttachment(
-            String to,
-            String subject,
-            String htmlBody,
-            byte[] pdfBytes,
-            String pdfFileName
-    ) throws MessagingException {
-
+    public void sendHtmlEmailWithPdfAttachment(String to, String subject, String htmlBody, byte[] pdfBytes, String pdfFileName) throws MessagingException {
         Message message = createBaseMessage(to, subject);
 
         MimeBodyPart htmlPart = new MimeBodyPart();
