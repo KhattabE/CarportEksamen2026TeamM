@@ -16,9 +16,9 @@ class MaterialMapperIntegrationTest {
     static void setup() {
         String user = "postgres";
 
-        String password = "}DPU2Y-h(=T£4E`F\\e6j@i]`n:mX,5g";
+        String password = System.getenv("JDBC_PASSWORD");
 
-        String url = "jdbc:postgresql://134.209.233.109:5432/%s?currentSchema=public";
+        String url = System.getenv("JDBC_CONNECTION_STRING");
         String db = "carport";
 
         ConnectionPool connectionPool = ConnectionPool.getInstance(user, password, url, db);
