@@ -19,7 +19,7 @@ import java.util.List;
 public class MainController {
 
     public static void index(Context ctx) {
-        ctx.render("index-Frontpage.html");
+        ctx.render("Frontpage.html");
     }
 
     public static void adminDashboard(Context ctx) {
@@ -63,10 +63,7 @@ public class MainController {
 
         CarportCalculator calculator = new CarportCalculator();
 
-        CarportCalculationResult calculationResult = calculator.calculate(
-                carportRequest.getCarport(),
-                materialMapper.getActiveMaterials()
-        );
+        CarportCalculationResult calculationResult = calculator.calculate(carportRequest.getCarport(), materialMapper.getActiveMaterials());
 
         ctx.attribute("currentPage", "requests");
         ctx.attribute("carportRequest", carportRequest);

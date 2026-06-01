@@ -7,10 +7,7 @@ body {
     color: white;
 }
 
-input,
-button,
-textarea,
-select {
+input, button, textarea, select {
     font-family: "Kdam Thmor Pro", sans-serif;
 }
 
@@ -416,8 +413,7 @@ select {
     border-bottom: 1px solid #333333;
 }
 
-.materialsTableHeader,
-.materialLine {
+.materialsTableHeader, .materialLine {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 64px 58px;
     column-gap: 10px;
@@ -431,10 +427,7 @@ select {
     font-size: 10px;
 }
 
-.materialsTableHeader span:nth-child(2),
-.materialsTableHeader span:nth-child(3),
-.materialLength,
-.materialQuantity {
+.materialsTableHeader span:nth-child(2), .materialsTableHeader span:nth-child(3), .materialLength, .materialQuantity {
     text-align: right;
 }
 
@@ -540,9 +533,6 @@ select {
     color: #00A341;
 }
 
-/* DASHBOARD SIDEBAR LOCK - copied from admin-dashboard.css */
-/* MAIN ADMIN LAYOUT */
-
 .adminContainer {
     width: 100%;
     height: 100%;
@@ -552,8 +542,6 @@ select {
     background-color: transparent;
     border: none;
 }
-
-/* SIDEBAR */
 
 .sidebar {
     width: 140px;
@@ -594,15 +582,13 @@ select {
     border-bottom: 1px solid #00A341;
     padding-bottom: 5px;
 }
-/* END DASHBOARD SIDEBAR LOCK */
 
 @media screen and (max-width: 600px) {
     * {
         box-sizing: border-box;
     }
 
-    html,
-    body {
+    html, body {
         width: 100%;
         max-width: 100%;
         overflow-x: hidden;
@@ -713,8 +699,7 @@ select {
         min-width: 0;
     }
 
-    .requestButtons button,
-    .requestStatusBadge {
+    .requestButtons button, .requestStatusBadge {
         width: 100%;
         height: 34px;
         font-size: 9px;
@@ -782,8 +767,7 @@ select {
         margin-top: 6px;
     }
 
-    .materialsTableHeader,
-    .materialLine {
+    .materialsTableHeader, .materialLine {
         grid-template-columns: minmax(0, 1fr) 46px 44px;
         column-gap: 6px;
     }
@@ -798,10 +782,7 @@ select {
         padding: 6px 0;
     }
 
-    .materialsTableHeader,
-    .materialName,
-    .materialLength,
-    .materialQuantity {
+    .materialsTableHeader, .materialName, .materialLength, .materialQuantity {
         font-size: 8px;
     }
 
@@ -819,8 +800,7 @@ select {
         bottom: auto;
     }
 
-    .statusRow p,
-    .statusRow span {
+    .statusRow p, .statusRow span {
         font-size: 9px;
     }
 

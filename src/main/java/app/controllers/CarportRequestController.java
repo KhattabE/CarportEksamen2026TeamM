@@ -77,7 +77,6 @@ public class CarportRequestController {
 
             carportRequestMapper.createCarportRequest(carportRequest);
 
-            ctx.sessionAttribute("message", "Your carport request has been sent.");
             ctx.redirect("/build-your-carport");
 
         } catch (Exception e) {

@@ -120,19 +120,7 @@ public class UserController {
 
         String hashPassword = BCrypt.withDefaults().hashToString(12, password.toCharArray());
 
-        User user = new User(
-                0,
-                firstName,
-                lastName,
-                email,
-                hashPassword,
-                phoneNumber,
-                address,
-                postalCode,
-                city,
-                "customer",
-                null
-        );
+        User user = new User(0, firstName, lastName, email, hashPassword, phoneNumber, address, postalCode, city, "customer", null);
 
         userMapper.createUser(user);
 

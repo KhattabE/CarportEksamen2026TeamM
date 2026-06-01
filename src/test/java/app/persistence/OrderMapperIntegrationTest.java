@@ -89,45 +89,6 @@ class OrderMapperIntegrationTest {
         assertNotNull(paidOrder.getPaidAt());
     }
 
-    // Tests that order status can be updated
-    @Test
-    void testUpdateOrderStatus() {
-        Quote quote = createTestQuote();
-
-        Order createdOrder = orderMapper.createOrder(quote.getQuoteId());
-
-        orderMapper.updateOrderStatus(createdOrder.getOrderId(), "COMPLETED");
-
-        Order updatedOrder = orderMapper.getOrderById(createdOrder.getOrderId());
-
-        assertNotNull(updatedOrder);
-        assertEquals("COMPLETED", updatedOrder.getOrderStatus());
-    }
-
-    // Tests that orders for one customer can be loaded
-    @Test
-    void testGetOrdersByUserId() {
-        Quote quote = createTestQuote();
-
-        Order createdOrder = orderMapper.createOrder(quote.getQuoteId());
-
-        CarportRequest request = carportRequestMapper.getCarportRequestById(quote.getRequestId());
-
-        List<Order> orders = orderMapper.getOrdersByUserId(request.getUserId());
-
-        assertNotNull(orders);
-        assertFalse(orders.isEmpty());
-
-        boolean foundOrder = false;
-
-        for (Order order : orders) {
-            if (order.getOrderId() == createdOrder.getOrderId()) {
-                foundOrder = true;
-            }
-        }
-
-        assertTrue(foundOrder);
-    }
 
     // Tests that profile orders for one customer can be loaded
     @Test
@@ -159,6 +120,7 @@ class OrderMapperIntegrationTest {
 
         assertTrue(foundProfileOrder);
     }
+
 
     private Quote createTestQuote() {
         String uniqueEmail = "orderuser_" + UUID.randomUUID() + "@test.dk";
