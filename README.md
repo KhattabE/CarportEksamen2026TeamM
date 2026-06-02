@@ -8,4 +8,4 @@ Når kunden har udfyldt formularen, kan forespørgslen sendes videre til Fog, hv
 Projektet viser flowet fra kundens carportkonfiguration til sælgerens behandling af forespørgslen. 
 Nogle funktioner er ikke fuldt implementeret, men projektet indeholder de vigtigste dele af systemets grundlæggende funktionalitet.
 
-Projektet er udarbejdet af Amaan, Rasull, Khattab og Musa.
+Projektet er udarbejdet af Amaan, Khattab, Musa og Rasull.
